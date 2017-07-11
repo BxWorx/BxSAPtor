@@ -7,6 +7,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BxSAP_NCO", "BxSAP_NCO\BxSA
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BxSAP_Utilities", "BxSAP_Utilities\BxSAP_Utilities.vbproj", "{8C307410-C538-40FA-9CCA-9F1801E294DF}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BxSAP_Config", "BxSAP_Config\BxSAP_Config.vbproj", "{A48D98D6-2DD7-49E6-8487-6D4486248C74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8C307410-C538-40FA-9CCA-9F1801E294DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C307410-C538-40FA-9CCA-9F1801E294DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C307410-C538-40FA-9CCA-9F1801E294DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48D98D6-2DD7-49E6-8487-6D4486248C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A48D98D6-2DD7-49E6-8487-6D4486248C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A48D98D6-2DD7-49E6-8487-6D4486248C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A48D98D6-2DD7-49E6-8487-6D4486248C74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

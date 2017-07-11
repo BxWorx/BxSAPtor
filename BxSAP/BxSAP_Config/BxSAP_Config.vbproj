@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8C307410-C538-40FA-9CCA-9F1801E294DF}</ProjectGuid>
+    <ProjectGuid>{A48D98D6-2DD7-49E6-8487-6D4486248C74}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>BxSAP_Utilities</RootNamespace>
-    <AssemblyName>BxSAP_Utilities</AssemblyName>
+    <RootNamespace>BxSAP_Config</RootNamespace>
+    <AssemblyName>BxSAP_Config</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>BxSAP_Utilities.xml</DocumentationFile>
+    <DocumentationFile>BxSAP_Config.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <PlatformTarget>x64</PlatformTarget>
@@ -31,7 +31,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>BxSAP_Utilities.xml</DocumentationFile>
+    <DocumentationFile>BxSAP_Config.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -70,14 +70,34 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code Respository\Controller\Controller.vb" />
-    <Compile Include="Code Respository\Controller\iController.vb" />
-    <Compile Include="Code Respository\Utilities\Convertors\Clone.vb" />
-    <Compile Include="Code Respository\Utilities\Convertors\iClone.vb" />
-    <Compile Include="Code Respository\Utilities\IO\iServicesGeneric.vb" />
-    <Compile Include="Code Respository\Utilities\IO\ServicesGeneric.vb" />
-    <Compile Include="Code Respository\Utilities\Serialization\iSerialiser.vb" />
-    <Compile Include="Code Respository\Utilities\Serialization\Serialiser.vb" />
+    <Compile Include="Code Repository\Controller\Controllers\Controller.vb" />
+    <Compile Include="Code Repository\Controller\Controllers\iController.vb" />
+    <Compile Include="Code Repository\Logon\Options\iLogonOptionsDTO.vb" />
+    <Compile Include="Code Repository\Logon\Options\LogonOptionsDTO.vb" />
+    <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
+    <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Connection Setup\iLogonConnSetupDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Connection Setup\LogonConnSetupDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Connections\0LogonConnReposDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Connections\1LogonConnectionDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Connections\i0LogonConnReposDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Connections\i1LogonConnectionDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Options\iLogonOptionsDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Options\LogonOptionsDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Languages\iSysLanguagesDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Languages\SysLanguagesDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Logons\iSysLogon0ReposDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Logons\iSysLogon1DTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Logons\SysLogon0ReposDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Logons\SysLogon1DTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Repository\iSysRepos0DTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Repository\iSysRepos1SystemDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Repository\iSysRepos2ClientDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Repository\iSysRepos3UserDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos0DTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos1SystemDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos2ClientDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos3UserDTO.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -113,7 +133,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BxSAP_Utilities\BxSAP_Utilities.vbproj">
+      <Project>{8c307410-c538-40fa-9cca-9f1801e294df}</Project>
+      <Name>BxSAP_Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

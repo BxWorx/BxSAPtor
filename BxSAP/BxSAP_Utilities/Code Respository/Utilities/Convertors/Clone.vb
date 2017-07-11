@@ -14,7 +14,12 @@ Namespace Convertors
 
 				Dim lo_RetObj		As _class		= CType( Me.CreateInstance(Of _class)(), _class )
 				'..................................................
-				Me.TransferPropertiesValues(Of _iface)(_srcobj, lo_RetObj)
+				For Each lo_PI As PropertyInfo	In GetType(_iface).GetProperties()
+					Try
+							lo_PI.SetValue(lo_RetObj, lo_PI.GetValue(_srcobj))
+						Catch ex As Exception
+					End Try
+				Next
 				Return	lo_RetObj
 
 			End Function
@@ -25,7 +30,13 @@ Namespace Convertors
 
 				Dim lo_RetObj		As _iface		= CType( Me.CreateInstance(Of _class)(), _iface )
 				'..................................................
-				Me.TransferPropertiesValues(Of _iface)(_srcobj, lo_RetObj)
+				For Each lo_PI As PropertyInfo	In GetType(_iface).GetProperties()
+					Try
+							lo_PI.SetValue(lo_RetObj, lo_PI.GetValue(_srcobj))
+						Catch ex As Exception
+					End Try
+				Next
+
 				Return	lo_RetObj
 
 			End Function
@@ -34,18 +45,6 @@ Namespace Convertors
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Methods: Private"
 
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Sub TransferPropertiesValues(Of _iface)(ByRef	_srceobj	As Object,
-																											ByRef _trgtobj	As Object)
-
-				For Each lo_PI As PropertyInfo	In GetType(_iface).GetProperties()
-					Try
-							lo_PI.SetValue(_trgtobj, lo_PI.GetValue(_srceobj))
-						Catch ex As Exception
-					End Try
-				Next
-
-			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Private Function CreateInstance(Of _class)()	As Object
 
