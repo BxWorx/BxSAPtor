@@ -1,0 +1,279 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+BxSAP_Excel
+</name>
+</assembly>
+<members>
+<member name="T:BxSAP_Excel.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources._2000px_SAP_2011_logo_svg">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources._Erase">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.About">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Add">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Bitmap_editor">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Cancel">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Color_balance">
+<summary>
+  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Color_balance1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.connect_icon">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Delete">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.disconnect_icon">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Down">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Edit">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Help">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.HSL">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Info">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.l_s_tl_g">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.LAB_color_model">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.No">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Pantone">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Pinion">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Refresh">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Registry">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Revert">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.SAP_100">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.SAP_50">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.SAP_80">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Save">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Select_gpadient">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Settings">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Show">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Spiral">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Synchronize">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Target">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Target1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Test_line">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Up">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:BxSAP_Excel.My.Resources.Resources.Wrong">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="T:BxSAP_Excel.ThisRibbonCollection">
+
+</member>
+<member name="M:BxSAP_Excel.ThisRibbonCollection.#ctor(Microsoft.Office.Tools.Ribbon.RibbonFactory)">
+
+</member>
+<member name="T:BxSAP_Excel.ThisAddIn">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.#ctor(Microsoft.Office.Tools.Excel.ApplicationFactory,System.IServiceProvider)">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.Initialize">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.FinishInitialization">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.InitializeDataBindings">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.InitializeCachedData">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.InitializeData">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.BindToData">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.StartCaching(System.String)">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.StopCaching(System.String)">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.IsCached(System.String)">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.BeginInitialization">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.EndInitialization">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.InitializeControls">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.InitializeComponents">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.NeedsFill(System.String)">
+
+</member>
+<member name="M:BxSAP_Excel.ThisAddIn.OnShutdown">
+
+</member>
+<member name="T:BxSAP_Excel.Globals">
+
+</member>
+<member name="M:BxSAP_Excel.Globals.#ctor">
+
+</member>
+</members>
+</doc>
