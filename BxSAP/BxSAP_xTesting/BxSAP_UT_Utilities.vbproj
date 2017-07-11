@@ -1,17 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A48D98D6-2DD7-49E6-8487-6D4486248C74}</ProjectGuid>
+    <ProjectGuid>{5C290650-7F63-442A-878B-26B4CE00C31A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>BxSAP_Config</RootNamespace>
-    <AssemblyName>BxSAP_Config</AssemblyName>
+    <RootNamespace>BxSAP_xTesting</RootNamespace>
+    <AssemblyName>BxSAP_xTesting</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,11 +23,8 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>BxSAP_Config.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
-    <PlatformTarget>x64</PlatformTarget>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DocumentationFile>BxSAP_xTesting.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,10 +32,8 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>BxSAP_Config.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DocumentationFile>BxSAP_xTesting.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -43,7 +42,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>On</OptionStrict>
+    <OptionStrict>Off</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
@@ -51,13 +50,25 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
@@ -68,34 +79,9 @@
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
+    <Import Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code Repository\Controller\Controllers\Controller.vb" />
-    <Compile Include="Code Repository\Controller\Controllers\iController.vb" />
-    <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
-    <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Connection Setup\iLogonConnSetupDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Connection Setup\LogonConnSetupDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Connections\0LogonConnReposDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Connections\1LogonConnectionDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Connections\i0LogonConnReposDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Connections\i1LogonConnectionDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Options\iLogonOptionsDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Options\LogonOptionsDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Languages\iSysLanguagesDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Languages\SysLanguagesDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Logons\iSysLogon0ReposDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Logons\iSysLogon1DTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Logons\SysLogon0ReposDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Logons\SysLogon1DTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Repository\iSysRepos0DTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Repository\iSysRepos1SystemDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Repository\iSysRepos2ClientDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Repository\iSysRepos3UserDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos0DTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos1SystemDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos2ClientDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos3UserDTO.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -111,6 +97,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Test Cases\UT_Utilities.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -131,12 +118,25 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BxSAP_Utilities\BxSAP_Utilities.vbproj">
-      <Project>{8c307410-c538-40fa-9cca-9f1801e294df}</Project>
-      <Name>BxSAP_Utilities</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
