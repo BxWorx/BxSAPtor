@@ -369,6 +369,14 @@ Friend Class xSAPtorRB
 
 	Private Sub xbtn_SAPConnectStatus_Click(sender As Object, e As RibbonControlEventArgs) Handles xbtn_SAPConnectStatus.Click
 
+		Dim lo As Form1	= New Form1
+
+		lo.Show()
+
+
+		Return
+
+
 		Dim lo_XML				As iSapGuiXmlModel						= New SAPGuiXmlModel
 		Dim lo_Mod				As iLogonConnSetupModel	= New LogonConnSetupModel()
 		Dim lo_ConnSetup	As iLogonConnSetupDTO		= lo_Mod.Fetch()

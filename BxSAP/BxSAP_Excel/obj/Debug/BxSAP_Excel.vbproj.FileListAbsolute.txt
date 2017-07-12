@@ -49,3 +49,4 @@ C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Excel\obj\Debug\BxSAP_Excel.vbpro
 C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Excel\obj\Debug\BxSAP_Excel.dll
 C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Excel\obj\Debug\BxSAP_Excel.xml
 C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Excel\obj\Debug\BxSAP_Excel.pdb
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Excel\obj\Debug\BxSAP_Excel.Form1.resources
