@@ -98,14 +98,14 @@
     <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos1SystemDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos2ClientDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos3UserDTO.vb" />
-    <Compile Include="Code Repository\Model\Controller\iSapGuiXmlModel.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\iSapGuiXmlModel.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml2MsgService.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml3WorkSpace.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml4WSNode.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml1MsgServer.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml5WSNodeItem.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml0ReposDTO.vb" />
-    <Compile Include="Code Repository\Model\Controller\SAPGuiXmlModel.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

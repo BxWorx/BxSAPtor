@@ -18,9 +18,12 @@ Namespace Model.Sapgui.Xml
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Public Sub New()
 
+				Me.UUID					= String.Empty
+				Me.Name					= String.Empty
 				Me.ServiceID		= String.Empty
 				Me.IsItem				= False
-				Me.Items				=	New	Dictionary(Of String, SAPGuiXmlWorkspaceNodeItemDTO)
+
+				' dictionary must be initialised by user as not all nodes have sub nodes
 
 			End Sub
 

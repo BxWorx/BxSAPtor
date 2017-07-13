@@ -19,10 +19,10 @@ Namespace Model.Logon.ConnectionSetup
 			<DataMember>	Friend	Property  SNC_LibName32						As	String		Implements	iLogonConnSetupDTO.SNC_LibName32
 			<DataMember>	Friend	Property  SNC_LibName64						As	String		Implements	iLogonConnSetupDTO.SNC_LibName64
 			'....................................................
-			<DataMember>	Friend	Property	XML_Node								As	String		Implements	iLogonConnSetupDTO.XML_Node
+			<DataMember>	Friend	Property	XML_FromNode								As	String		Implements	iLogonConnSetupDTO.XML_FromNode
 			<DataMember>	Friend	Property	XML_FileName						As	String		Implements	iLogonConnSetupDTO.XML_FileName
 			<DataMember>	Friend	Property	XML_Path								As	String		Implements	iLogonConnSetupDTO.XML_Path
-			<DataMember>	Friend	Property  XML_OnlyGUI							As	Boolean		Implements	iLogonConnSetupDTO.XML_OnlyGUI
+			<DataMember>	Friend	Property  XML_OnlyLoadGUI							As	Boolean		Implements	iLogonConnSetupDTO.XML_OnlyLoadGUI
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -44,8 +44,8 @@ Namespace Model.Logon.ConnectionSetup
 				'..................................................
 				Me.XML_FileName	= "SAPUILandscapeS2A.xml"
 				Me.XML_Path			= String.Format("{0}\SAP", Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData))
-				Me.XML_Node			= "LEGACY SYSTEMS"
-				Me.XML_OnlyGUI	= True
+				Me.XML_FromNode			= "LEGACY SYSTEMS"
+				Me.XML_OnlyLoadGUI	= True
 
 			End Sub
 		

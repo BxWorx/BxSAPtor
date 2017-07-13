@@ -74,6 +74,13 @@ Namespace Controllers
 			Event			ev_LogonOptionsChanged()
 
 		#End Region
+		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+		#Region "Section: SAPGUI: XML"
+
+			Function	GetSAPGUIXMLRepository
+			
+
+		#End Region
 
 	End Interface
 
