@@ -3,6 +3,8 @@ Imports xSAPCnf	=	BxSAP_Config.Controllers
 Imports xSAPLog = BxSAP_Config.Model.Logon.Options
 Imports xSAPCon	= BxSAP_Config.Model.Logon.Connections
 Imports xSAPSys	= BxSAP_Config.Model.Logon.Systems
+Imports xSAPCCf	= BxSAP_Config.Model.Logon.ConnectionSetup
+Imports xSAPXML	= BxSAP_Config.Model.Sapgui.Xml
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Namespace UT_Config
 
@@ -24,6 +26,7 @@ Namespace UT_Config
 			End Set
 		End Property
 
+			Private Shared	cc_Path					As String
 			Private Shared	cc_FullName			As String
 			Private Shared	co_CntlrUtil		As xSAPUtl.iController
 
@@ -35,7 +38,8 @@ Namespace UT_Config
 			<ClassInitialize()>
 			Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
 
-				cc_FullName		= "c:\temp\xSAPtor\Config.xml"
+				cc_Path				= "c:\temp\xSAPtor"
+				cc_FullName		= cc_Path & "\Config.xml"
 				co_CntlrUtil	= xSAPUtl.Controller.Controller
 				
 			End Sub
@@ -55,6 +59,23 @@ Namespace UT_Config
 		#End Region
 
 		#Region "Test Units"
+
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			<TestMethod()>
+			Public Sub UT_Config_SAPGUI_XML()
+
+				Dim	lo_CntlrConf	As	xSAPCnf.iController
+				Dim lo_ConnSetup	As	xSAPCCf.iLogonConnSetupDTO
+				'..................................................
+				lo_CntlrConf		= New xSAPCnf.Controller(co_CntlrUtil, cc_FullName)
+				lo_ConnSetup		= lo_CntlrConf.GetLogonConnectionSetup()
+
+				Dim lo_SAPGUIXML	As xSAPXML.iSapGuiXmlModel		= New	xSAPXML.SapGuiXmlModel(lo_ConnSetup.XML_Path & "\" & lo_ConnSetup.XML_FileName	,
+																																										 lo_ConnSetup.XML_OnlyLoadGUI																)
+
+
+			End Sub
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			<TestMethod()>
@@ -162,6 +183,25 @@ Namespace UT_Config
 				lo_Repos	= lo_CntlrConf.GetLogonConnectionsRepository()
 
 				Assert.AreEqual( lo_Repos.ConnectionsList.Count,	2, "LogonRepos: Fail: Save/Load: 1")
+
+			End Sub
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			<TestMethod()>
+			Public Sub UT_Config_LogonConnSetup()
+
+				Dim	lo_CntlrConf	As	xSAPCnf.iController
+				Dim lo_ConnSetup	As	xSAPCCf.iLogonConnSetupDTO
+				'..................................................
+				lo_CntlrConf		= New xSAPCnf.Controller(co_CntlrUtil, cc_FullName)
+				lo_ConnSetup		= lo_CntlrConf.GetLogonConnectionSetup()
+
+				lo_ConnSetup.XML_UseSAPGUI		= True
+				lo_ConnSetup.XML_OnlyLoadGUI	= True
+				lo_ConnSetup.XML_Path					= cc_Path
+				lo_ConnSetup.XML_FileName			= "SAPUILandscapeS2A_001.xml"
+
+				lo_CntlrConf.UpdateLogonConnectionSetup(lo_ConnSetup)
+				lo_CntlrConf.Save()
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨

@@ -17,10 +17,10 @@ Namespace Model.Logon.ConnectionSetup
 			Property	SNC_LibName64					As	String
 			'....................................................
 			Property	XML_UseSAPGUI					As	Boolean
+			Property  XML_OnlyLoadGUI				As	Boolean
 			Property	XML_FromNode					As	String
 			Property	XML_FileName					As	String
 			Property	XML_Path							As	String
-			Property  XML_OnlyLoadGUI				As	Boolean
 
 		#End Region
 

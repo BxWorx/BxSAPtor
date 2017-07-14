@@ -19,10 +19,11 @@ Namespace Model.Logon.ConnectionSetup
 			<DataMember>	Friend	Property  SNC_LibName32						As	String		Implements	iLogonConnSetupDTO.SNC_LibName32
 			<DataMember>	Friend	Property  SNC_LibName64						As	String		Implements	iLogonConnSetupDTO.SNC_LibName64
 			'....................................................
-			<DataMember>	Friend	Property	XML_FromNode								As	String		Implements	iLogonConnSetupDTO.XML_FromNode
+			<DataMember>	Friend	Property	XML_UseSAPGUI						As	Boolean		Implements	iLogonConnSetupDTO.XML_UseSAPGUI
+			<DataMember>	Friend	Property  XML_OnlyLoadGUI					As	Boolean		Implements	iLogonConnSetupDTO.XML_OnlyLoadGUI
+			<DataMember>	Friend	Property	XML_FromNode						As	String		Implements	iLogonConnSetupDTO.XML_FromNode
 			<DataMember>	Friend	Property	XML_FileName						As	String		Implements	iLogonConnSetupDTO.XML_FileName
 			<DataMember>	Friend	Property	XML_Path								As	String		Implements	iLogonConnSetupDTO.XML_Path
-			<DataMember>	Friend	Property  XML_OnlyLoadGUI							As	Boolean		Implements	iLogonConnSetupDTO.XML_OnlyLoadGUI
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯

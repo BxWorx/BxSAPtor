@@ -1,9 +1,10 @@
 ﻿Imports System.Windows.Forms
 Imports System.Xml
+Imports BxSAP_Config.Model.Logon.Connections
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Namespace Model.Sapgui.Xml
 
-	Friend Class SAPGuiXmlModel
+	Public Class SAPGuiXmlModel
 								Implements	iSapGuiXmlModel
 
 		#Region "Definitions"
@@ -20,8 +21,50 @@ Namespace Model.Sapgui.Xml
 		#Region "Methods: Exposed"
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function GetSapGuiData(ByVal _id	As String)	As iLogonConnectionDTO _
-												Implements	iSapGuiXmlModel.GetSapGuiData
+			Friend Function GetConnectionData(ByVal _id	As String)	As iLogonConnectionDTO _
+												Implements	iSapGuiXmlModel.GetConnectionData
+
+				Return	Me.CompileConnectionData(_id)
+
+			End Function
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Function GetConnections()	As List(Of iLogonConnectionDTO) _
+												Implements	iSapGuiXmlModel.GetConnections
+
+				Return	Me.CompileConnectionList()
+
+			End Function
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Function GetConnectionTree()	As List(Of TreeNode) _
+												Implements	iSapGuiXmlModel.GetConnectionTree
+
+				Return	Me.CompileTree()
+
+			End Function
+
+		#End Region
+		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+		#Region "Constructor"
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Public Sub New(						ByVal	_xmlpathfilename	As String						,
+											Optional	ByVal	_onlysapgui				As Boolean	= True		)
+
+				Me.cc_FName			= _xmlpathfilename
+				Me.cb_OnlyGUI		= _onlysapgui
+				'..................................................
+				Me.ct_ItemNodes	= New	Dictionary(Of String, WSNodeItemDTO)
+				'..................................................
+				Me.LoadSapGuiXMLData()				
+
+			End Sub
+
+		#End Region
+		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+		#Region "Methods: Private: Connections"
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Private Function CompileConnectionData(ByVal _id	As String)	As iLogonConnectionDTO
 
 				Dim lo_ConnDTO	As New LogonConnectionDTO
 				'..................................................
@@ -64,31 +107,35 @@ Namespace Model.Sapgui.Xml
 				Return	lo_ConnDTO
 
 			End Function
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function GetSapGuiXmlTree(						ByVal _filepathname		As String	,
-																				Optional	ByVal	_onlysapgui			As Boolean	= True	) _
-												As List(Of TreeNode) _
-													Implements	iSapGuiXmlModel.GetSapGuiXmlTree
 
-				Dim lo_XMLDoc		As XmlDocument
-				Dim lt_Tree			As List(Of TreeNode)
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Private Function CompileConnectionList()	As List(Of iLogonConnectionDTO)
+
+				Dim lt_List		As New List(Of iLogonConnectionDTO)
 				'..................................................
-				lo_XMLDoc	= Me.LoadXMLDoc(_filepathname)
-				Me.LoadNodes(lo_XMLDoc)
-				lt_Tree		= Me.CompileTree(_onlysapgui)
+				For Each	lo	In	Me.ct_ItemNodes
+
+					If Me.co_Repos.Services.ContainsKey(lo.Value.serviceid)
+
+						Dim lo_SrvDTO	= Me.co_Repos.Services.Item(lo_ItemDTO.serviceid)
+					
+					End If
+					
+				Next
 				'..................................................
-				Return	lt_Tree
+				Return	lt_List
 
 			End Function
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-		#Region "Methods: Private"
+		#Region "Methods: Private: Tree Compiler"
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Function CompileTree(ByVal _onlygui	As Boolean)		As List(Of TreeNode)
+			Private Function CompileTree()	As List(Of TreeNode)
 
-				Dim lt_Tree		As New List(Of TreeNode)
+				Dim lt_List		As New List(Of TreeNode)
 				'..................................................
 				For Each lo_WS In Me.co_Repos.WorkSpaces
 
@@ -102,7 +149,7 @@ Namespace Model.Sapgui.Xml
 						If lo_WS.Value.NodeIsItem
 
 							Dim lo_NodeI	= CType(lo_Obj.Value, WSNodeItemDTO)
-							Dim lo_NodeIt	= Me.CreateItemNode(lo_NodeI.serviceid, _onlygui)
+							Dim lo_NodeIt	= Me.CreateItemNode(lo_NodeI.serviceid, Me.cb_OnlyGUI)
 
 							If Not IsNothing(lo_NodeIt)
 
@@ -123,7 +170,7 @@ Namespace Model.Sapgui.Xml
 
 							For Each lo_Item In lo_NodeN.Items
 
-								Dim lo_NodeIt	= Me.CreateItemNode(lo_Item.Value.serviceid, _onlygui)
+								Dim lo_NodeIt	= Me.CreateItemNode(lo_Item.Value.serviceid, Me.cb_OnlyGUI)
 
 								If Not IsNothing(lo_NodeIt)
 
@@ -144,13 +191,13 @@ Namespace Model.Sapgui.Xml
 					If lo_NodeWS.Nodes.Count > 0
 
 						lo_NodeWS.Collapse()
-						lt_Tree.Add(lo_NodeWS)
+						lt_List.Add(lo_NodeWS)
 
 					End If
 
 				Next
 				'..................................................
-				Return	lt_Tree
+				Return	lt_List
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -190,35 +237,6 @@ Namespace Model.Sapgui.Xml
 				Return	lo_Node
 
 			End Function
-
-		#End Region
-
-
-
-
-
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Sub LoadNodes(ByVal _xmldoc		As XmlDocument)
-
-				Me.ct_ItemNodes.Clear()
-			End Sub
-
-
-		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-		#Region "Constructor"
-
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Sub New(						ByVal	XMLFilePathName		As String						,
-											Optional	ByVal	OnlySAPGui				As Boolean	= True		)
-
-				Me.cc_FName			= XMLFilePathName
-				Me.cb_OnlyGUI		= OnlySAPGui
-				'..................................................
-				Me.LoadSapGuiXMLData()				
-
-				'Me.ct_ItemNodes	= New Dictionary(Of String, WSNodeItemDTO)
-
-			End Sub
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯

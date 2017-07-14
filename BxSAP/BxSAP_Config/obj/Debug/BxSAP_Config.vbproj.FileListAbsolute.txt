@@ -10,4 +10,3 @@ C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Config\obj\Debug\BxSAP_Config.vbp
 C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Config\obj\Debug\BxSAP_Config.dll
 C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Config\obj\Debug\BxSAP_Config.xml
 C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Config\obj\Debug\BxSAP_Config.pdb
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Config\obj\Debug\BxSAP_Config.Form1.resources

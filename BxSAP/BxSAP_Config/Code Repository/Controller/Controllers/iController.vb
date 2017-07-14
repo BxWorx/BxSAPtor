@@ -52,6 +52,7 @@ Namespace Controllers
 			Function	CreateLogonConnectionsRepositoryConnection()										As	iLogonConnectionDTO
 			Function	UpdateLogonConnectionsRepository(DTO	As iLogonConnReposDTO)		As	Boolean
 			Function	GetLogonConnectionsRepository()																	As	iLogonConnReposDTO
+			Function	GetLogonConnectionsView()																				As	List(Of iLogonConnViewDTO)
 
 			Event     ev_LogonConnectionsRepositoryChanged()
 
@@ -77,7 +78,7 @@ Namespace Controllers
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Section: SAPGUI: XML"
 
-			Function	GetSAPGUIXMLRepository
+			'Function	GetSAPGUIXMLRepository
 			
 
 		#End Region

@@ -3,6 +3,7 @@ Imports BxSAP_Config.Model.Logon.Options
 Imports BxSAP_Config.Model.Logon.ConnectionSetup
 Imports BxSAP_Config.Model.Logon.Connections
 Imports BxSAP_Config.Model.Logon.Systems
+Imports	BxSAP_Config.Model.Sapgui.Xml
 '..........................................................
 Imports	xSAPUtilCntlr = BxSAP_Utilities.Controllers
 Imports	xSAPUtilSerie	= BxSAP_Utilities.Serialization
@@ -14,8 +15,9 @@ Namespace Controllers
 
 		#Region "Definitions"
 
-			Private co_ConfigDTO		As iConfigDTO
-			Private co_Serialiser		As	xSAPUtilSerie.iSerialiser
+			Private co_ConfigDTO				As	iConfigDTO
+			Private	co_SAPGuiXMLModel		As	iSapGuiXmlModel
+			Private co_Serialiser				As	xSAPUtilSerie.iSerialiser
 			'....................................................
 			Private cb_Dirty				As Boolean
 			Private cc_FullName			As	String
@@ -277,6 +279,16 @@ Namespace Controllers
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Public Function	GetLogonConnectionsView()		As List(Of iLogonConnViewDTO) _
+												Implements	iController.GetLogonConnectionsView
+				
+				Dim lt_List		As	New	List(Of iLogonConnViewDTO)
+				'..................................................
+				'..................................................
+				Return	lt_List
+
+			End Function
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Public Event	ev_LogonConnectionsRepositoryChanged() _
 											Implements	iController.ev_LogonConnectionsRepositoryChanged
 
@@ -378,7 +390,18 @@ Namespace Controllers
 				Me.co_Serialiser		= _xsaputils.CreateSerialiser()
 				'..................................................
 				Me.LoadConfig()
+				'..................................................
+				If Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_UseSAPGUI
 
+					Dim lc_FullName		As String		=	Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_Path	& 
+																					"\"																								& 
+																					Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_FileName
+
+					Me.co_SAPGuiXMLModel	= New SAPGuiXmlModel(	lc_FullName																							,
+																											Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_OnlyLoadGUI		)
+
+				End If
+				'..................................................
 			End Sub
 
 		#End Region

@@ -82,6 +82,7 @@
     <Compile Include="Code Repository\Model\Logon\Connections\1LogonConnectionDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\i0LogonConnReposDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\i1LogonConnectionDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Connections\iLogonConn2ViewDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Options\iLogonOptionsDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Options\LogonOptionsDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Languages\iSysLanguagesDTO.vb" />
