@@ -8,7 +8,11 @@ Namespace Model.Sapgui.Xml
 
 		#Region "Definitions"
 
-			Private co_Repos				As SapGuiXmlRepos
+			Private co_Repos			As	SapGuiXmlRepos
+			'....................................................
+			Private	cc_FName			As	String
+			Private cb_OnlyGUI		As	Boolean
+
 			Private	ct_ItemNodes		As Dictionary(Of String,	WSNodeItemDTO)
 
 		#End Region
@@ -186,101 +190,113 @@ Namespace Model.Sapgui.Xml
 				Return	lo_Node
 
 			End Function
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Function GetAttrValue(ByVal _attr	As XmlNode)	As String
-
-				If IsNothing(_attr)
-					Return	String.Empty
-				Else
-					Return	_attr.Value
-				End If
-
-			End Function
 
 		#End Region
+
+
+
+
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Private Sub LoadNodes(ByVal _xmldoc		As XmlDocument)
+
+				Me.ct_ItemNodes.Clear()
+			End Sub
+
+
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Constructor"
 
-			Private	cc_FName			As	String
-			Private cb_OnlyGUI		As	Boolean
-
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Sub New(						ByVal	XMLFilePathName		As String	,
-											Optional	ByVal	OnlySAPGui				As Boolean	= True	)
+			Friend Sub New(						ByVal	XMLFilePathName		As String						,
+											Optional	ByVal	OnlySAPGui				As Boolean	= True		)
 
 				Me.cc_FName			= XMLFilePathName
 				Me.cb_OnlyGUI		= OnlySAPGui
 				'..................................................
-				Me.co_Repos		= New	SapGuiXmlRepos
-				'..................................................
 				Me.LoadSapGuiXMLData()				
 
-				Me.ct_ItemNodes	= New Dictionary(Of String, WSNodeItemDTO)
+				'Me.ct_ItemNodes	= New Dictionary(Of String, WSNodeItemDTO)
 
 			End Sub
 
 		#End Region
-
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Sub LoadNodes(ByVal _xmldoc		As XmlDocument)
-
-				Me.ct_ItemNodes.Clear()
-			End Sub
-
-
-
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-		#Region "Methods: Private"
-
-			Private Sub LoadSapGuiXMLData()
-
-				Dim lo_XMLDoc			As XmlDocument		= Me.LoadXMLDoc()
-
-				Dim	lo_WrkSpaces	As XmlNodeList		= lo_XMLDoc.GetElementsByTagName("Workspace")
-				Dim lo_MsgSrvrs		As XmlNodeList		= lo_XMLDoc.GetElementsByTagName("Messageserver")
-				Dim lo_Services		As XmlNodeList		= lo_XMLDoc.GetElementsByTagName("Service")
-				'......................................................
-				Me.co_Repos	= New SapGuiXmlRepos
-
-
-			End Sub
-
-		
-		
-		
-		
-		'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Function LoadXMLDoc()	As XmlDocument
-
-				Dim	lo_XMLDoc		As XmlDocument		= New XmlDocument
-				'..................................................
-				Try
-
-						lo_XMLDoc.Load(Me.cc_FName)
-
-					Catch ex As Exception
-
-				End Try
-				'..................................................
-				Return	lo_XMLDoc
-
-			End Function
-
-
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Sub LoadNodes(ByVal _xmldoc		As XmlDocument)
-
-				Me.ct_ItemNodes.Clear()
-			End Sub
-
-
-
+		#Region "Methods: Private: XML Sections"
 
 			'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-			#Region "Methods: Private: Workspace Section"
+			#Region "Methods: Private: XML: Header Section"
 
 				'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				Private Sub Load_WorkSpaces(_xmldoc As XmlDocument)
+				Private Sub LoadSapGuiXMLData()
+
+					Me.co_Repos		= New SapGuiXmlRepos
+					'......................................................
+					Dim lo_XMLDoc		As XmlDocument		= Me.LoadXMLDoc()
+
+					Me.Load_XML_Services(lo_XMLDoc)
+					Me.Load_XML_MsgServers(lo_XMLDoc)
+					Me.Load_XML_WorkSpaces(lo_XMLDoc)
+
+				End Sub
+				'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				Private Function LoadXMLDoc()	As XmlDocument
+
+					Dim	lo_XMLDoc		As XmlDocument		= New XmlDocument
+					'..................................................
+					Try
+
+							lo_XMLDoc.Load(Me.cc_FName)
+
+						Catch ex As Exception
+
+					End Try
+					'..................................................
+					Return	lo_XMLDoc
+
+				End Function
+				'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				Private Function GetAttrValue(ByVal _attr	As XmlNode)	As String
+
+					If IsNothing(_attr)
+						Return	String.Empty
+					Else
+						Return	_attr.Value
+					End If
+
+				End Function
+				'°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+				Private Class SapGuiXmlRepos
+
+					#Region "Methods: Exposed"
+
+						Friend Property	MsgServers		As Dictionary(Of String, MsgServerDTO)
+						Friend Property	WorkSpaces		As Dictionary(Of String, WorkspaceDTO)
+						Friend Property	Services			As Dictionary(Of String, MsgServiceDTO)
+
+					#End Region
+					'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+					#Region "Constructor"
+
+						'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+						Friend Sub New()
+
+							Me.MsgServers		= New Dictionary(Of String, MsgServerDTO)
+							Me.WorkSpaces		= New Dictionary(Of String, WorkspaceDTO)
+							Me.Services			= New Dictionary(Of String, MsgServiceDTO)
+
+						End Sub
+
+					#End Region
+
+				End Class
+
+			#End Region
+			'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+			#Region "Methods: Private: XML: Workspace Section"
+
+				'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				Private Sub Load_XML_WorkSpaces(_xmldoc As XmlDocument)
 
 					For Each	lo_WrkSpace As XmlElement		In _xmldoc.GetElementsByTagName("Workspace")
 
@@ -389,10 +405,10 @@ Namespace Model.Sapgui.Xml
 
 			#End Region
 			'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-			#Region "Methods: Private: Message Server Section"
+			#Region "Methods: Private: XML: Message Server Section"
 
 				'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				Private Sub Load_MsgServers(ByRef _xmldoc As XmlDocument)
+				Private Sub Load_XML_MsgServers(ByRef _xmldoc As XmlDocument)
 
 					For Each lo_MsgSvr As XmlElement	In _xmldoc.GetElementsByTagName("Messageserver")
 
@@ -429,21 +445,21 @@ Namespace Model.Sapgui.Xml
 
 			#End Region
 			'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-			#Region "Methods: Private: Services Section"
+			#Region "Methods: Private: XML: Services Section"
 
 				'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				Private Sub Load_Services(ByRef _xmldoc As XmlDocument)
+				Private Sub Load_XML_Services(ByRef _xmldoc As XmlDocument)
 
 					For Each	lo_Service As XmlElement	In _xmldoc.GetElementsByTagName("Service")
 
-						Dim lo_Srvdto	= Me.LoadSrvAttributtes(lo_Service.Attributes())
+						Dim lo_Srvdto	= Me.xLoadSrvAttributtes(lo_Service.Attributes())
 						Me.co_Repos.Services.Add(lo_Srvdto.uuid, lo_Srvdto)
 
 					Next
 
 				End Sub
 				'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				Private Function LoadSrvAttributtes(ByVal _attributes As XmlAttributeCollection)	As MsgServiceDTO
+				Private Function xLoadSrvAttributtes(ByVal _attributes As XmlAttributeCollection)	As MsgServiceDTO
 
 					Dim lo_DTO	As New MsgServiceDTO
 
@@ -482,37 +498,6 @@ Namespace Model.Sapgui.Xml
 				End Class
 
 			#End Region
-
-		#End Region
-		'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-
-		#Region "Classes: Private"
-
-			'°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
-			Private Class SapGuiXmlRepos
-
-				#Region "Methods: Exposed"
-
-					Friend Property	MsgServers		As Dictionary(Of String, MsgServerDTO)
-					Friend Property	WorkSpaces		As Dictionary(Of String, WorkspaceDTO)
-					Friend Property	Services			As Dictionary(Of String, MsgServiceDTO)
-
-				#End Region
-				'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-				#Region "Constructor"
-
-					'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					Friend Sub New()
-
-						Me.MsgServers		= New Dictionary(Of String, MsgServerDTO)
-						Me.WorkSpaces		= New Dictionary(Of String, WorkspaceDTO)
-						Me.Services			= New Dictionary(Of String, MsgServiceDTO)
-
-					End Sub
-
-				#End Region
-
-			End Class
 
 		#End Region
 

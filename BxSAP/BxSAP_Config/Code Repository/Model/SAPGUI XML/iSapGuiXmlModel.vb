@@ -15,6 +15,16 @@ Namespace Model.Sapgui.Xml
 			Function	LoadSapGuiXmlConnections()	As List(Of	iLogonConnectionDTO)
 
 
+
+
+			Property	Repository()			As	SapGuiXmlRepos
+
+			Property	MessageServers		As	Dictionary(Of String, MsgServerDTO)
+			Property	MessageServers		As	Dictionary(Of String, MsgServerDTO)
+			Property	MessageServers		As	Dictionary(Of String, MsgServerDTO)
+
+
+
 		#End Region
 
 	End Interface
