@@ -284,6 +284,18 @@ Namespace Controllers
 				
 				Dim lt_List		As	New	List(Of iLogonConnViewDTO)
 				'..................................................
+				For Each	lo As iLogonConnectionDTO		In Me.co_SAPGuiXMLModel.GetConnections
+
+					Dim lo_Conn		As iLogonConnViewDTO	= New	LogonConnViewDTO
+
+					lo_Conn.ID						= lo.ID
+					lo_Conn.Group					= lo.ID
+					lo_Conn.SAPID					= lo.SystemID
+					lo_Conn.Description		= lo.Name
+
+					lt_List.Add(lo_Conn)
+
+				Next
 				'..................................................
 				Return	lt_List
 
@@ -391,17 +403,12 @@ Namespace Controllers
 				'..................................................
 				Me.LoadConfig()
 				'..................................................
-				If Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_UseSAPGUI
-
-					Dim lc_FullName		As String		=	Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_Path	& 
-																					"\"																								& 
-																					Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_FileName
-
-					Me.co_SAPGuiXMLModel	= New SAPGuiXmlModel(	lc_FullName																							,
-																											Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_OnlyLoadGUI		)
-
+				If Not IsNothing(Me.co_ConfigDTO.LogonConnectionSetupDTO)
+					If Me.co_ConfigDTO.LogonConnectionSetupDTO.XML_UseSAPGUI
+						Me.co_SAPGuiXMLModel	= New SAPGuiXmlModel(Me.co_ConfigDTO.LogonConnectionSetupDTO)
+					End If
 				End If
-				'..................................................
+
 			End Sub
 
 		#End Region

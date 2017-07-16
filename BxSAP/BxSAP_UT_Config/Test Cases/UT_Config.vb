@@ -66,16 +66,38 @@ Namespace UT_Config
 			Public Sub UT_Config_SAPGUI_XML()
 
 				Dim	lo_CntlrConf	As	xSAPCnf.iController
-				Dim lo_ConnSetup	As	xSAPCCf.iLogonConnSetupDTO
+				Dim lt_List 			As	List(Of xSAPCon.iLogonConnViewDTO)
+				'..................................................
+				lo_CntlrConf		= New xSAPCnf.Controller(co_CntlrUtil, cc_FullName)
+				lt_List 				= lo_CntlrConf.GetLogonConnectionsView()
+
+			End Sub
+
+
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			<TestMethod()>
+			Public Sub UT_Config_SAPGUI_XML_Loader()
+
+				Dim	lo_CntlrConf		As xSAPCnf.iController
+				Dim lo_ConnSetup		As xSAPCCf.iLogonConnSetupDTO
+				Dim lo_XMLLoader		As xSAPXML.SAPGuiXmlLoader
 				'..................................................
 				lo_CntlrConf		= New xSAPCnf.Controller(co_CntlrUtil, cc_FullName)
 				lo_ConnSetup		= lo_CntlrConf.GetLogonConnectionSetup()
 
-				Dim lo_SAPGUIXML	As xSAPXML.iSapGuiXmlModel		= New	xSAPXML.SapGuiXmlModel(lo_ConnSetup.XML_Path & "\" & lo_ConnSetup.XML_FileName	,
-																																										 lo_ConnSetup.XML_OnlyLoadGUI																)
+				'lo_XMLLoader		= New	xSAPXML.SAPGuiXmlLoader(lo_ConnSetup)
 
+				lo_ConnSetup.XML_FromWorkspace	= "LEGACY SYSTEMS"
+				lo_ConnSetup.XML_FromNode				= "ZA"
+
+				lo_XMLLoader		= New	xSAPXML.SAPGuiXmlLoader(lo_ConnSetup)
 
 			End Sub
+
+
+
+
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			<TestMethod()>

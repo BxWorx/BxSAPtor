@@ -21,9 +21,16 @@ Namespace Model.Logon.ConnectionSetup
 			'....................................................
 			<DataMember>	Friend	Property	XML_UseSAPGUI						As	Boolean		Implements	iLogonConnSetupDTO.XML_UseSAPGUI
 			<DataMember>	Friend	Property  XML_OnlyLoadGUI					As	Boolean		Implements	iLogonConnSetupDTO.XML_OnlyLoadGUI
+			<DataMember>	Friend	Property	XML_FromWorkspace				As	String		Implements	iLogonConnSetupDTO.XML_FromWorkspace
 			<DataMember>	Friend	Property	XML_FromNode						As	String		Implements	iLogonConnSetupDTO.XML_FromNode
-			<DataMember>	Friend	Property	XML_FileName						As	String		Implements	iLogonConnSetupDTO.XML_FileName
 			<DataMember>	Friend	Property	XML_Path								As	String		Implements	iLogonConnSetupDTO.XML_Path
+			<DataMember>	Friend	Property	XML_FileName						As	String		Implements	iLogonConnSetupDTO.XML_FileName
+
+			ReadOnly			Friend	Property	XML_FullName						As	String		Implements	iLogonConnSetupDTO.XML_FullName
+				Get
+					Return	IO.Path.Combine(Me.XML_Path, Me.XML_FileName)
+				End Get
+			End Property
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -43,10 +50,14 @@ Namespace Model.Logon.ConnectionSetup
 				Me.SNC_LibName32	= "gsskrb5.dll"
 				Me.SNC_LibName64	= "gx64krb5.dll"
 				'..................................................
-				Me.XML_FileName	= "SAPUILandscapeS2A.xml"
-				Me.XML_Path			= String.Format("{0}\SAP", Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData))
-				Me.XML_FromNode			= "LEGACY SYSTEMS"
-				Me.XML_OnlyLoadGUI	= True
+				Me.XML_Path						=	IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SAP")
+				Me.XML_OnlyLoadGUI		= True
+
+				Me.XML_FileName				= "SAPUILandscapeS2A.xml"
+				Me.XML_FromWorkspace	= ""
+				Me.XML_FromNode				= ""
+				'Me.XML_FromWorkspace	= "LEGACY SYSTEMS"
+				'Me.XML_FromNode				= "ZA"
 
 			End Sub
 		

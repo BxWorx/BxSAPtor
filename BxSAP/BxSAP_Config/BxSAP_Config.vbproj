@@ -82,6 +82,7 @@
     <Compile Include="Code Repository\Model\Logon\Connections\1LogonConnectionDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\i0LogonConnReposDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\i1LogonConnectionDTO.vb" />
+    <Compile Include="Code Repository\Model\Logon\Connections\LogonConn2ViewDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\iLogonConn2ViewDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Options\iLogonOptionsDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Options\LogonOptionsDTO.vb" />
@@ -100,13 +101,16 @@
     <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos2ClientDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Repository\SysRepos3UserDTO.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\iSapGuiXmlModel.vb" />
-    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml2MsgService.vb" />
-    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml3WorkSpace.vb" />
-    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml4WSNode.vb" />
-    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml1MsgServer.vb" />
-    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml5WSNodeItem.vb" />
-    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXml0ReposDTO.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlReposDTO.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXml2MsgService.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXml3WorkSpace.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXml4WSNode.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXml1MsgServer.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXml5WSNodeItem.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXml0ReposDTO.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlLoader.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlModel.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXmlModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

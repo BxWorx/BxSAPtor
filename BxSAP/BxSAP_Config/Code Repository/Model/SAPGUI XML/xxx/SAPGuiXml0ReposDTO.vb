@@ -1,7 +1,7 @@
 ﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Namespace Model.Sapgui.Xml
 
-	Public Class SapGuiXmlReposDTO
+	Friend Class SapGuiXmlReposDTO
 
 		#Region "Properties"
 				Friend Property MsgServers		As Dictionary(Of String, SAPGuiXmlMsgServerDTO)
