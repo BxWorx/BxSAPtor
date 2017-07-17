@@ -393,9 +393,17 @@ Namespace Controllers
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Constructors"
 
+			Private	cdb_SAP	As SAPSysRepository
+
+			
+
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Public Sub New(ByVal _xsaputils		As xSAPUtilCntlr.iController	,
 										 ByVal _fullname		As String												)
+
+
+				'Dim x = 				cdb_SAP.ServiceDataTable
+
 
 				Me.cc_FullName			= _fullname
 				'..................................................

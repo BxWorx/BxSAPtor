@@ -6,9 +6,15 @@
 						 xmlns:local="clr-namespace:WpfControlLibrary1"
 						 mc:Ignorable="d" 
 						 d:DesignHeight="300" d:DesignWidth="300">
-		<Grid>
-			<DockPanel LastChildFill="False" >
-				<StackPanel DockPanel.Dock="Left" />
-			</DockPanel>
-		</Grid>
+	
+	<Grid>
+		<DockPanel LastChildFill="False" >
+			<Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="1" >
+				<StackPanel	MinWidth="100">
+						
+				</StackPanel>
+			</Border>
+		</DockPanel>
+	</Grid>
+	
 </UserControl>
