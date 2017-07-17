@@ -22,5 +22,40 @@ BxSAP_Config
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="T:BxSAP_Config.SAPSysRepository">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:BxSAP_Config.SAPSysRepository.ServiceDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:BxSAP_Config.SAPSysRepository.MsgServerDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:BxSAP_Config.SAPSysRepository.ServiceRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:BxSAP_Config.SAPSysRepository.MsgServerRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:BxSAP_Config.SAPSysRepository.ServiceRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:BxSAP_Config.SAPSysRepository.MsgServerRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
 </members>
 </doc>

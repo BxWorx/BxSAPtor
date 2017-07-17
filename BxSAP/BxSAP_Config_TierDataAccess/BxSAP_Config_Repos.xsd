@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BxSAP_Config_Repos" targetNamespace="http://tempuri.org/BxSAP_Config_Repos.xsd" xmlns:mstns="http://tempuri.org/BxSAP_Config_Repos.xsd" xmlns="http://tempuri.org/BxSAP_Config_Repos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DataSetFile="BxSAP_Config_Repos.Dataset.Designer.vb" DataSetProject="BxSAP_Config_TierDataEntity" DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="BxSAP_Config_Repos" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BxSAP_Config_Repos" msprop:Generator_UserDSName="BxSAP_Config_Repos">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Service" msprop:Generator_TableClassName="ServiceDataTable" msprop:Generator_TableVarName="tableService" msprop:Generator_RowChangedName="ServiceRowChanged" msprop:Generator_TablePropName="Service" msprop:Generator_RowDeletingName="ServiceRowDeleting" msprop:Generator_RowChangingName="ServiceRowChanging" msprop:Generator_RowEvHandlerName="ServiceRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceRowDeleted" msprop:Generator_RowClassName="ServiceRow" msprop:Generator_UserTableName="Service" msprop:Generator_RowEvArgName="ServiceRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UUID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnUUID" msprop:Generator_ColumnPropNameInRow="UUID" msprop:Generator_ColumnPropNameInTable="UUIDColumn" msprop:Generator_UserColumnName="UUID" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Host" msprop:Generator_ColumnVarNameInTable="columnHost" msprop:Generator_ColumnPropNameInRow="Host" msprop:Generator_ColumnPropNameInTable="HostColumn" msprop:Generator_UserColumnName="Host" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:Service" />
+      <xs:field xpath="mstns:UUID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

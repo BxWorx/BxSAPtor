@@ -393,8 +393,8 @@ Namespace Controllers
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Constructors"
 
-			Private	cdb_SAP	As SAPSysRepository
-
+			Private	cdb_SAP			As SAPSysRepository
+			Private cdb_TabSrv	As SAPSysRepository.ServiceDataTable
 			
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -402,7 +402,16 @@ Namespace Controllers
 										 ByVal _fullname		As String												)
 
 
-				'Dim x = 				cdb_SAP.ServiceDataTable
+				Me.cdb_SAP		=	New SAPSysRepository
+				Me.cdb_TabSrv	= New SAPSysRepository.ServiceDataTable()
+
+				Dim	cdb_TabSrvRow	= Me.cdb_TabSrv.NewServiceRow
+
+				cdb_TabSrvRow.UUID	= "123"
+				cdb_TabSrvRow.Name	= "yyyyy"
+
+				Me.cdb_TabSrv.AddServiceRow(cdb_TabSrvRow)
+
 
 
 				Me.cc_FullName			= _fullname
