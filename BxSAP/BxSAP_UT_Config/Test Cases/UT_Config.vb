@@ -69,7 +69,7 @@ Namespace UT_Config
 				Dim lt_List 			As	List(Of xSAPCon.iLogonConnViewDTO)
 				'..................................................
 				lo_CntlrConf		= New xSAPCnf.Controller(co_CntlrUtil, cc_FullName)
-				lt_List 				= lo_CntlrConf.GetLogonConnectionsView()
+				'lt_List 				= lo_CntlrConf.GetLogonConnectionsView()
 
 			End Sub
 

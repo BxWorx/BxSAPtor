@@ -402,7 +402,7 @@ Namespace Controllers
 										 ByVal _fullname		As String												)
 
 
-				Me.cdb_SAP		=	New SAPSysRepository
+					Me.cdb_SAP		=	New SAPSysRepository
 				Me.cdb_TabSrv	= New SAPSysRepository.ServiceDataTable()
 
 				Dim	cdb_TabSrvRow	= Me.cdb_TabSrv.NewServiceRow
@@ -412,6 +412,8 @@ Namespace Controllers
 
 				Me.cdb_TabSrv.AddServiceRow(cdb_TabSrvRow)
 
+
+				Me.cdb_TabSrv.Rows
 
 
 				Me.cc_FullName			= _fullname

@@ -293,6 +293,8 @@ Partial Public Class BxSAP_Config_Repos
         
         Private columnHost As Global.System.Data.DataColumn
         
+        Private columnMsgSvrID As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -353,6 +355,14 @@ Partial Public Class BxSAP_Config_Repos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property MsgSvrIDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMsgSvrID
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -389,9 +399,9 @@ Partial Public Class BxSAP_Config_Repos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddServiceRow(ByVal UUID As System.Guid, ByVal Name As String, ByVal Host As String) As ServiceRow
+        Public Overloads Function AddServiceRow(ByVal UUID As System.Guid, ByVal Name As String, ByVal Host As String, ByVal MsgSvrID As String) As ServiceRow
             Dim rowServiceRow As ServiceRow = CType(Me.NewRow,ServiceRow)
-            Dim columnValuesArray() As Object = New Object() {UUID, Name, Host}
+            Dim columnValuesArray() As Object = New Object() {UUID, Name, Host, MsgSvrID}
             rowServiceRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowServiceRow)
             Return rowServiceRow
@@ -417,6 +427,7 @@ Partial Public Class BxSAP_Config_Repos
             Me.columnUUID = MyBase.Columns("UUID")
             Me.columnName = MyBase.Columns("Name")
             Me.columnHost = MyBase.Columns("Host")
+            Me.columnMsgSvrID = MyBase.Columns("MsgSvrID")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -428,6 +439,8 @@ Partial Public Class BxSAP_Config_Repos
             MyBase.Columns.Add(Me.columnName)
             Me.columnHost = New Global.System.Data.DataColumn("Host", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnHost)
+            Me.columnMsgSvrID = New Global.System.Data.DataColumn("MsgSvrID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMsgSvrID)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnUUID}, false))
             Me.columnUUID.Unique = true
         End Sub
@@ -621,6 +634,21 @@ Partial Public Class BxSAP_Config_Repos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property MsgSvrID() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.MsgSvrIDColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'MsgSvrID' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.MsgSvrIDColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsUUIDNull() As Boolean
             Return Me.IsNull(Me.tableService.UUIDColumn)
         End Function
@@ -653,6 +681,18 @@ Partial Public Class BxSAP_Config_Repos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetHostNull()
             Me(Me.tableService.HostColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsMsgSvrIDNull() As Boolean
+            Return Me.IsNull(Me.tableService.MsgSvrIDColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetMsgSvrIDNull()
+            Me(Me.tableService.MsgSvrIDColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
