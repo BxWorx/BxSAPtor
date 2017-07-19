@@ -54,9 +54,9 @@ Namespace Model.Logon.ConnectionSetup
 				Me.XML_OnlyLoadGUI		= True
 
 				Me.XML_FileName				= "SAPUILandscapeS2A.xml"
-				Me.XML_FromWorkspace	= ""
+				'Me.XML_FromWorkspace	= ""
 				Me.XML_FromNode				= ""
-				'Me.XML_FromWorkspace	= "LEGACY SYSTEMS"
+				Me.XML_FromWorkspace	= "LEGACY SYSTEMS"
 				'Me.XML_FromNode				= "ZA"
 
 			End Sub

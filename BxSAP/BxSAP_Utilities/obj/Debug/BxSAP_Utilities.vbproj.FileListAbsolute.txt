@@ -1,11 +1,3 @@
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.dll
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.pdb
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.xml
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.Resources.resources
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.vbproj.GenerateResource.Cache
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.dll
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.xml
-C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.pdb
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.dll
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.pdb
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.xml
@@ -14,3 +6,11 @@ C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utiliti
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.dll
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.xml
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.pdb
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.dll
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.pdb
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\bin\Debug\BxSAP_Utilities.xml
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.Resources.resources
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.vbproj.GenerateResource.Cache
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.dll
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.xml
+C:\Users\BMA\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.pdb

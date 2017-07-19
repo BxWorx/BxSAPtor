@@ -1,8 +1,7 @@
-﻿Imports BxSAP_Config.Model.Sapgui.Xml
-'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-Namespace	Data.Access
+﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+Namespace	Model.Sapgui.Xml
 
-	Friend Class XMLRepositoryParser
+	Friend Class SAPGuiXmlParser
 
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Definitions"
@@ -25,6 +24,7 @@ Namespace	Data.Access
 				'....................................................
 				Me.ParseMsgServers()
 				Me.ParseServices()
+				Me.ParseWorkspaces()
 				'....................................................
 				Return	lb_Ret
 
@@ -45,9 +45,12 @@ Namespace	Data.Access
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Private Function Parse(ByVal DTOObject As WorkspaceDTO)	As SAPSysRepository.WorkspaceRow
 
-				Dim lo_Row	= Me.co_Repos.Workspace.NewWorkspaceRow()
+				Dim lo_Guid	As	Guid
+				Dim lo_Row	As	SAPSysRepository.WorkspaceRow		= Me.co_Repos.Workspace.NewWorkspaceRow()
 				'....................................................
-				Guid.TryParse( DTOObject.uuid, lo_Row.UUID )
+				Guid.TryParse( DTOObject.uuid, lo_Guid)
+
+				lo_Row.UUID					= lo_Guid
 				'....................................................
 				Return	lo_Row
 
@@ -66,10 +69,12 @@ Namespace	Data.Access
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Private Function Parse(ByVal DTOObject As MsgServiceDTO)	As SAPSysRepository.ServiceRow
 
-				Dim lo_Row	= Me.co_Repos.Service.NewServiceRow()
+				Dim lo_Guid	As	Guid
+				Dim lo_Row	As	SAPSysRepository.ServiceRow		= Me.co_Repos.Service.NewServiceRow()
 				'....................................................
-				Guid.TryParse( DTOObject.uuid, lo_Row.UUID )
+				Guid.TryParse( DTOObject.uuid, lo_Guid)
 
+				lo_Row.UUID					= lo_Guid
 				lo_Row.Name					= DTOObject.name
 				'....................................................
 				Return	lo_Row
@@ -89,10 +94,12 @@ Namespace	Data.Access
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Private Function Parse(ByVal	DTOObject	As MsgServerDTO)	As SAPSysRepository.MsgServerRow
 
-				Dim lo_Row	= Me.co_Repos.MsgServer.NewMsgServerRow()
+				Dim lo_Guid	As	Guid
+				Dim lo_Row	As	SAPSysRepository.MsgServerRow		= Me.co_Repos.MsgServer.NewMsgServerRow()
 				'....................................................
-				Guid.TryParse( DTOObject.uuid, lo_Row.UUID )
+				Guid.TryParse( DTOObject.uuid, lo_Guid)
 
+				lo_Row.UUID					= lo_Guid
 				lo_Row.Name					= DTOObject.name
 				lo_Row.Port					= DTOObject.port
 				lo_Row.Description	= DTOObject.description

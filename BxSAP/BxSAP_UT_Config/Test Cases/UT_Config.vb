@@ -63,13 +63,25 @@ Namespace UT_Config
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			<TestMethod()>
-			Public Sub UT_Config_SAPGUI_XML()
+			Public Sub UT_Config_SAPGUI_XML_Parser()
 
-				Dim	lo_CntlrConf	As	xSAPCnf.iController
-				Dim lt_List 			As	List(Of xSAPCon.iLogonConnViewDTO)
+				Dim	lo_CntlrConf		As xSAPCnf.iController
+				Dim lo_ConnSetup		As xSAPCCf.iLogonConnSetupDTO
+				Dim lo_XMLLoader		As xSAPXML.SAPGuiXmlLoader
+				Dim lo_XMLParser		As xSAPXML.SAPGuiXmlParser
+				Dim lo_SysRepos			As BxSAP_Config.SAPSysRepository
 				'..................................................
 				lo_CntlrConf		= New xSAPCnf.Controller(co_CntlrUtil, cc_FullName)
-				'lt_List 				= lo_CntlrConf.GetLogonConnectionsView()
+				lo_ConnSetup		= lo_CntlrConf.GetLogonConnectionSetup()
+
+				lo_ConnSetup.XML_FromWorkspace	= "LEGACY SYSTEMS"
+				lo_ConnSetup.XML_FromNode				= ""
+
+				lo_XMLLoader		= New	xSAPXML.SAPGuiXmlLoader(lo_ConnSetup)
+				lo_SysRepos			= New BxSAP_Config.SAPSysRepository
+				lo_XMLParser		= New xSAPXML.SAPGuiXmlParser
+				'..................................................
+				lo_XMLParser.Parse(lo_XMLLoader, lo_SysRepos)
 
 			End Sub
 

@@ -75,7 +75,7 @@
   <ItemGroup>
     <Compile Include="Code Repository\Controller\Controllers\Controller.vb" />
     <Compile Include="Code Repository\Controller\Controllers\iController.vb" />
-    <Compile Include="Code Repository\Data\XMLRepositoryParser.vb" />
+    <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlParser.vb" />
     <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connection Setup\iLogonConnSetupDTO.vb" />

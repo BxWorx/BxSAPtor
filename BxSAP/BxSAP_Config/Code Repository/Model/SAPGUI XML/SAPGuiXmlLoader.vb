@@ -9,7 +9,7 @@ Namespace Model.Sapgui.Xml
 		#Region "Definitions"
 
 			Private co_Repos						As	SapGuiXmlRepos
-			Private	co_ConnOptions			As	iLogonConnSetupDTO
+			Private	co_ConnSetup				As	iLogonConnSetupDTO
 			'....................................................
 			Private	ct_UnUsedSrvList		As	New	List(Of String)
 
@@ -47,9 +47,9 @@ Namespace Model.Sapgui.Xml
 		#Region "Constructor"
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Sub New(	ByVal _connoptions	As	iLogonConnSetupDTO)
+			Friend Sub New(	ByVal _connsetup	As	iLogonConnSetupDTO)
 
-				Me.co_ConnOptions	= _connoptions
+				Me.co_ConnSetup	= _connsetup
 				'..................................................
 				Me.LoadSapGuiXML()				
 
@@ -69,8 +69,8 @@ Namespace Model.Sapgui.Xml
 					'......................................................
 					Dim lo_XMLDoc		As XmlDocument		= Me.LoadXMLDoc()
 
-					Me.Load_XML_Services(lo_XMLDoc)
 					Me.Load_XML_MsgServers(lo_XMLDoc)
+					Me.Load_XML_Services(lo_XMLDoc)
 					Me.Load_XML_WorkSpaces(lo_XMLDoc)
 					Me.Load_XML_Cleanup()
 
@@ -82,7 +82,7 @@ Namespace Model.Sapgui.Xml
 					'..................................................
 					Try
 
-							lo_XMLDoc.Load(Me.co_ConnOptions.XML_FullName)
+							lo_XMLDoc.Load(Me.co_ConnSetup.XML_FullName)
 
 						Catch ex As Exception
 
@@ -112,9 +112,11 @@ Namespace Model.Sapgui.Xml
 
 					For Each	lo_WrkSpace As XmlElement		In _xmldoc.GetElementsByTagName("Workspace")
 
-						If Not Me.co_ConnOptions.XML_FromWorkspace.Length.Equals(0)
-							If Not lo_WrkSpace.GetAttribute("name").Equals(Me.co_ConnOptions.XML_FromWorkspace)
-								Continue For
+						If Not IsNothing(Me.co_ConnSetup.XML_FromWorkspace)
+							If Not Me.co_ConnSetup.XML_FromWorkspace.Length.Equals(0)
+								If Not lo_WrkSpace.GetAttribute("name").Equals(Me.co_ConnSetup.XML_FromWorkspace)
+									Continue For
+								End If
 							End If
 						End If
 						'..............................................
@@ -122,9 +124,11 @@ Namespace Model.Sapgui.Xml
 						'..............................................
 						For Each	lo_Node As XmlElement		In lo_WrkSpace.GetElementsByTagName("Node")
 
-							If Not Me.co_ConnOptions.XML_FromNode.Length.Equals(0)
-								If Not lo_Node.GetAttribute("name").Equals(Me.co_ConnOptions.XML_FromNode)
-									Continue For
+							If Not IsNothing(Me.co_ConnSetup.XML_FromNode)
+								If Not Me.co_ConnSetup.XML_FromNode.Length.Equals(0)
+									If Not lo_Node.GetAttribute("name").Equals(Me.co_ConnSetup.XML_FromNode)
+										Continue For
+									End If
 								End If
 							End If
 							'............................................
@@ -220,7 +224,7 @@ Namespace Model.Sapgui.Xml
 				'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				Private Sub Load_XML_MsgServers(ByRef _xmldoc As XmlDocument)
 
-					For Each lo_MsgSvr As XmlElement	In _xmldoc.GetElementsByTagName("Messageserver")
+					For Each	lo_MsgSvr As XmlElement		In _xmldoc.GetElementsByTagName("Messageserver")
 						Me.LoadMsgServer(lo_MsgSvr)
 					Next
 
@@ -257,7 +261,7 @@ Namespace Model.Sapgui.Xml
 
 					Dim lc_Type		As String	=	_xmlelement.GetAttribute("type")
 					'................................................
-					If Me.co_ConnOptions.XML_OnlyLoadGUI
+					If Me.co_ConnSetup.XML_OnlyLoadGUI
 						If Not lc_Type.Equals("SAPGUI")
 							Return
 						End If
