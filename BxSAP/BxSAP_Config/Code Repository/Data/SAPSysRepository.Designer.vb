@@ -22,14 +22,18 @@ Option Explicit On
  Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema"),  _
  Global.System.Xml.Serialization.XmlRootAttribute("SAPSysRepository"),  _
  Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")>  _
-Partial Public Class SAPSysRepository
+Partial Friend Class SAPSysRepository
     Inherits Global.System.Data.DataSet
     
     Private tableService As ServiceDataTable
     
     Private tableMsgServer As MsgServerDataTable
     
+    Private tableWorkspace As WorkspaceDataTable
+    
     Private relationMsgServer_Service As Global.System.Data.DataRelation
+    
+    Private relationWorkspace_Service As Global.System.Data.DataRelation
     
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
@@ -66,6 +70,9 @@ Partial Public Class SAPSysRepository
             If (Not (ds.Tables("MsgServer")) Is Nothing) Then
                 MyBase.Tables.Add(New MsgServerDataTable(ds.Tables("MsgServer")))
             End If
+            If (Not (ds.Tables("Workspace")) Is Nothing) Then
+                MyBase.Tables.Add(New WorkspaceDataTable(ds.Tables("Workspace")))
+            End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
             Me.Namespace = ds.Namespace
@@ -100,6 +107,16 @@ Partial Public Class SAPSysRepository
     Public ReadOnly Property MsgServer() As MsgServerDataTable
         Get
             Return Me.tableMsgServer
+        End Get
+    End Property
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+     Global.System.ComponentModel.Browsable(false),  _
+     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
+    Public ReadOnly Property Workspace() As WorkspaceDataTable
+        Get
+            Return Me.tableWorkspace
         End Get
     End Property
     
@@ -176,6 +193,9 @@ Partial Public Class SAPSysRepository
             If (Not (ds.Tables("MsgServer")) Is Nothing) Then
                 MyBase.Tables.Add(New MsgServerDataTable(ds.Tables("MsgServer")))
             End If
+            If (Not (ds.Tables("Workspace")) Is Nothing) Then
+                MyBase.Tables.Add(New WorkspaceDataTable(ds.Tables("Workspace")))
+            End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
             Me.Namespace = ds.Namespace
@@ -220,7 +240,14 @@ Partial Public Class SAPSysRepository
                 Me.tableMsgServer.InitVars
             End If
         End If
+        Me.tableWorkspace = CType(MyBase.Tables("Workspace"),WorkspaceDataTable)
+        If (initTable = true) Then
+            If (Not (Me.tableWorkspace) Is Nothing) Then
+                Me.tableWorkspace.InitVars
+            End If
+        End If
         Me.relationMsgServer_Service = Me.Relations("MsgServer_Service")
+        Me.relationWorkspace_Service = Me.Relations("Workspace_Service")
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -235,8 +262,18 @@ Partial Public Class SAPSysRepository
         MyBase.Tables.Add(Me.tableService)
         Me.tableMsgServer = New MsgServerDataTable()
         MyBase.Tables.Add(Me.tableMsgServer)
+        Me.tableWorkspace = New WorkspaceDataTable()
+        MyBase.Tables.Add(Me.tableWorkspace)
+        Dim fkc As Global.System.Data.ForeignKeyConstraint
+        fkc = New Global.System.Data.ForeignKeyConstraint("MsgServer_Service", New Global.System.Data.DataColumn() {Me.tableMsgServer.UUIDColumn}, New Global.System.Data.DataColumn() {Me.tableService.MsgSvrIDColumn})
+        Me.tableService.Constraints.Add(fkc)
+        fkc.AcceptRejectRule = Global.System.Data.AcceptRejectRule.None
+        fkc.DeleteRule = Global.System.Data.Rule.None
+        fkc.UpdateRule = Global.System.Data.Rule.None
         Me.relationMsgServer_Service = New Global.System.Data.DataRelation("MsgServer_Service", New Global.System.Data.DataColumn() {Me.tableMsgServer.UUIDColumn}, New Global.System.Data.DataColumn() {Me.tableService.MsgSvrIDColumn}, false)
         Me.Relations.Add(Me.relationMsgServer_Service)
+        Me.relationWorkspace_Service = New Global.System.Data.DataRelation("Workspace_Service", New Global.System.Data.DataColumn() {Me.tableWorkspace.Service_uuidColumn}, New Global.System.Data.DataColumn() {Me.tableService.UUIDColumn}, false)
+        Me.Relations.Add(Me.relationWorkspace_Service)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -248,6 +285,12 @@ Partial Public Class SAPSysRepository
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Private Function ShouldSerializeMsgServer() As Boolean
+        Return false
+    End Function
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+    Private Function ShouldSerializeWorkspace() As Boolean
         Return false
     End Function
     
@@ -314,6 +357,9 @@ Partial Public Class SAPSysRepository
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Public Delegate Sub MsgServerRowChangeEventHandler(ByVal sender As Object, ByVal e As MsgServerRowChangeEvent)
+    
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+    Public Delegate Sub WorkspaceRowChangeEventHandler(ByVal sender As Object, ByVal e As WorkspaceRowChangeEvent)
     
     '''<summary>
     '''Represents the strongly named DataTable class.
@@ -435,9 +481,12 @@ Partial Public Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddServiceRow(ByVal UUID As String, ByVal Name As String, ByVal Host As String, ByVal parentMsgServerRowByMsgServer_Service As MsgServerRow) As ServiceRow
+        Public Overloads Function AddServiceRow(ByVal parentWorkspaceRowByWorkspace_Service As WorkspaceRow, ByVal Name As String, ByVal Host As String, ByVal parentMsgServerRowByMsgServer_Service As MsgServerRow) As ServiceRow
             Dim rowServiceRow As ServiceRow = CType(Me.NewRow,ServiceRow)
-            Dim columnValuesArray() As Object = New Object() {UUID, Name, Host, Nothing}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Name, Host, Nothing}
+            If (Not (parentWorkspaceRowByWorkspace_Service) Is Nothing) Then
+                columnValuesArray(0) = parentWorkspaceRowByWorkspace_Service(3)
+            End If
             If (Not (parentMsgServerRowByMsgServer_Service) Is Nothing) Then
                 columnValuesArray(3) = parentMsgServerRowByMsgServer_Service(0)
             End If
@@ -448,7 +497,7 @@ Partial Public Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function FindByUUID(ByVal UUID As String) As ServiceRow
+        Public Function FindByUUID(ByVal UUID As System.Guid) As ServiceRow
             Return CType(Me.Rows.Find(New Object() {UUID}),ServiceRow)
         End Function
         
@@ -478,7 +527,7 @@ Partial Public Class SAPSysRepository
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitClass()
-            Me.columnUUID = New Global.System.Data.DataColumn("UUID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnUUID = New Global.System.Data.DataColumn("UUID", GetType(Global.System.Guid), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnUUID)
             Me.columnName = New Global.System.Data.DataColumn("Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnName)
@@ -630,6 +679,12 @@ Partial Public Class SAPSysRepository
         
         Private columnName As Global.System.Data.DataColumn
         
+        Private columnHost As Global.System.Data.DataColumn
+        
+        Private columnPort As Global.System.Data.DataColumn
+        
+        Private columnDescription As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -682,6 +737,30 @@ Partial Public Class SAPSysRepository
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property HostColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnHost
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property PortColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPort
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property DescriptionColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDescription
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -718,9 +797,9 @@ Partial Public Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddMsgServerRow(ByVal UUID As System.Guid, ByVal Name As String) As MsgServerRow
+        Public Overloads Function AddMsgServerRow(ByVal UUID As System.Guid, ByVal Name As String, ByVal Host As String, ByVal Port As String, ByVal Description As String) As MsgServerRow
             Dim rowMsgServerRow As MsgServerRow = CType(Me.NewRow,MsgServerRow)
-            Dim columnValuesArray() As Object = New Object() {UUID, Name}
+            Dim columnValuesArray() As Object = New Object() {UUID, Name, Host, Port, Description}
             rowMsgServerRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowMsgServerRow)
             Return rowMsgServerRow
@@ -745,6 +824,9 @@ Partial Public Class SAPSysRepository
         Friend Sub InitVars()
             Me.columnUUID = MyBase.Columns("UUID")
             Me.columnName = MyBase.Columns("Name")
+            Me.columnHost = MyBase.Columns("Host")
+            Me.columnPort = MyBase.Columns("Port")
+            Me.columnDescription = MyBase.Columns("Description")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -754,6 +836,12 @@ Partial Public Class SAPSysRepository
             MyBase.Columns.Add(Me.columnUUID)
             Me.columnName = New Global.System.Data.DataColumn("Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnName)
+            Me.columnHost = New Global.System.Data.DataColumn("Host", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnHost)
+            Me.columnPort = New Global.System.Data.DataColumn("Port", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPort)
+            Me.columnDescription = New Global.System.Data.DataColumn("Description", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDescription)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnUUID}, false))
             Me.columnUUID.Unique = true
         End Sub
@@ -886,6 +974,306 @@ Partial Public Class SAPSysRepository
     End Class
     
     '''<summary>
+    '''Represents the strongly named DataTable class.
+    '''</summary>
+    <Global.System.Serializable(),  _
+     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
+    Partial Public Class WorkspaceDataTable
+        Inherits Global.System.Data.TypedTableBase(Of WorkspaceRow)
+        
+        Private columnUUID As Global.System.Data.DataColumn
+        
+        Private columnDescription As Global.System.Data.DataColumn
+        
+        Private columnParent_uuid As Global.System.Data.DataColumn
+        
+        Private columnService_uuid As Global.System.Data.DataColumn
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub New()
+            MyBase.New
+            Me.TableName = "Workspace"
+            Me.BeginInit
+            Me.InitClass
+            Me.EndInit
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Friend Sub New(ByVal table As Global.System.Data.DataTable)
+            MyBase.New
+            Me.TableName = table.TableName
+            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                Me.CaseSensitive = table.CaseSensitive
+            End If
+            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                Me.Locale = table.Locale
+            End If
+            If (table.Namespace <> table.DataSet.Namespace) Then
+                Me.Namespace = table.Namespace
+            End If
+            Me.Prefix = table.Prefix
+            Me.MinimumCapacity = table.MinimumCapacity
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+            MyBase.New(info, context)
+            Me.InitVars
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property UUIDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnUUID
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property DescriptionColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDescription
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Parent_uuidColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnParent_uuid
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Service_uuidColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnService_uuid
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Browsable(false)>  _
+        Public ReadOnly Property Count() As Integer
+            Get
+                Return Me.Rows.Count
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Default ReadOnly Property Item(ByVal index As Integer) As WorkspaceRow
+            Get
+                Return CType(Me.Rows(index),WorkspaceRow)
+            End Get
+        End Property
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Event WorkspaceRowChanging As WorkspaceRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Event WorkspaceRowChanged As WorkspaceRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Event WorkspaceRowDeleting As WorkspaceRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Event WorkspaceRowDeleted As WorkspaceRowChangeEventHandler
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Overloads Sub AddWorkspaceRow(ByVal row As WorkspaceRow)
+            Me.Rows.Add(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Overloads Function AddWorkspaceRow(ByVal UUID As System.Guid, ByVal Description As String, ByVal Parent_uuid As System.Guid, ByVal Service_uuid As System.Guid) As WorkspaceRow
+            Dim rowWorkspaceRow As WorkspaceRow = CType(Me.NewRow,WorkspaceRow)
+            Dim columnValuesArray() As Object = New Object() {UUID, Description, Parent_uuid, Service_uuid}
+            rowWorkspaceRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowWorkspaceRow)
+            Return rowWorkspaceRow
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function FindByUUID(ByVal UUID As System.Guid) As WorkspaceRow
+            Return CType(Me.Rows.Find(New Object() {UUID}),WorkspaceRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Overrides Function Clone() As Global.System.Data.DataTable
+            Dim cln As WorkspaceDataTable = CType(MyBase.Clone,WorkspaceDataTable)
+            cln.InitVars
+            Return cln
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+            Return New WorkspaceDataTable()
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Friend Sub InitVars()
+            Me.columnUUID = MyBase.Columns("UUID")
+            Me.columnDescription = MyBase.Columns("Description")
+            Me.columnParent_uuid = MyBase.Columns("Parent_uuid")
+            Me.columnService_uuid = MyBase.Columns("Service_uuid")
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Private Sub InitClass()
+            Me.columnUUID = New Global.System.Data.DataColumn("UUID", GetType(Global.System.Guid), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnUUID)
+            Me.columnDescription = New Global.System.Data.DataColumn("Description", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDescription)
+            Me.columnParent_uuid = New Global.System.Data.DataColumn("Parent_uuid", GetType(Global.System.Guid), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnParent_uuid)
+            Me.columnService_uuid = New Global.System.Data.DataColumn("Service_uuid", GetType(Global.System.Guid), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnService_uuid)
+            Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnUUID}, true))
+            Me.columnUUID.AllowDBNull = false
+            Me.columnUUID.Unique = true
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function NewWorkspaceRow() As WorkspaceRow
+            Return CType(Me.NewRow,WorkspaceRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+            Return New WorkspaceRow(builder)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Function GetRowType() As Global.System.Type
+            Return GetType(WorkspaceRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanged(e)
+            If (Not (Me.WorkspaceRowChangedEvent) Is Nothing) Then
+                RaiseEvent WorkspaceRowChanged(Me, New WorkspaceRowChangeEvent(CType(e.Row,WorkspaceRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanging(e)
+            If (Not (Me.WorkspaceRowChangingEvent) Is Nothing) Then
+                RaiseEvent WorkspaceRowChanging(Me, New WorkspaceRowChangeEvent(CType(e.Row,WorkspaceRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleted(e)
+            If (Not (Me.WorkspaceRowDeletedEvent) Is Nothing) Then
+                RaiseEvent WorkspaceRowDeleted(Me, New WorkspaceRowChangeEvent(CType(e.Row,WorkspaceRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleting(e)
+            If (Not (Me.WorkspaceRowDeletingEvent) Is Nothing) Then
+                RaiseEvent WorkspaceRowDeleting(Me, New WorkspaceRowChangeEvent(CType(e.Row,WorkspaceRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub RemoveWorkspaceRow(ByVal row As WorkspaceRow)
+            Me.Rows.Remove(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+            Dim ds As SAPSysRepository = New SAPSysRepository()
+            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+            any1.MinOccurs = New Decimal(0)
+            any1.MaxOccurs = Decimal.MaxValue
+            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any1)
+            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+            any2.MinOccurs = New Decimal(1)
+            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any2)
+            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute1.Name = "namespace"
+            attribute1.FixedValue = ds.Namespace
+            type.Attributes.Add(attribute1)
+            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute2.Name = "tableTypeName"
+            attribute2.FixedValue = "WorkspaceDataTable"
+            type.Attributes.Add(attribute2)
+            type.Particle = sequence
+            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+            If xs.Contains(dsSchema.TargetNamespace) Then
+                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Try 
+                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                    dsSchema.Write(s1)
+                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                    Do While schemas.MoveNext
+                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
+                        s2.SetLength(0)
+                        schema.Write(s2)
+                        If (s1.Length = s2.Length) Then
+                            s1.Position = 0
+                            s2.Position = 0
+                            
+                            Do While ((s1.Position <> s1.Length)  _
+                                        AndAlso (s1.ReadByte = s2.ReadByte))
+                                
+                                
+                            Loop
+                            If (s1.Position = s1.Length) Then
+                                Return type
+                            End If
+                        End If
+                        
+                    Loop
+                Finally
+                    If (Not (s1) Is Nothing) Then
+                        s1.Close
+                    End If
+                    If (Not (s2) Is Nothing) Then
+                        s2.Close
+                    End If
+                End Try
+            End If
+            xs.Add(dsSchema)
+            Return type
+        End Function
+    End Class
+    
+    '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
     Partial Public Class ServiceRow
@@ -902,9 +1290,9 @@ Partial Public Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property UUID() As String
+        Public Property UUID() As System.Guid
             Get
-                Return CType(Me(Me.tableService.UUIDColumn),String)
+                Return CType(Me(Me.tableService.UUIDColumn),Global.System.Guid)
             End Get
             Set
                 Me(Me.tableService.UUIDColumn) = value
@@ -964,6 +1352,17 @@ Partial Public Class SAPSysRepository
             End Get
             Set
                 Me.SetParentRow(value, Me.Table.ParentRelations("MsgServer_Service"))
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property WorkspaceRow() As WorkspaceRow
+            Get
+                Return CType(Me.GetParentRow(Me.Table.ParentRelations("Workspace_Service")),WorkspaceRow)
+            End Get
+            Set
+                Me.SetParentRow(value, Me.Table.ParentRelations("Workspace_Service"))
             End Set
         End Property
         
@@ -1051,6 +1450,51 @@ Partial Public Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Host() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableMsgServer.HostColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Host' in table 'MsgServer' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMsgServer.HostColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Port() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableMsgServer.PortColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Port' in table 'MsgServer' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMsgServer.PortColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Description() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableMsgServer.DescriptionColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Description' in table 'MsgServer' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMsgServer.DescriptionColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsUUIDNull() As Boolean
             Return Me.IsNull(Me.tableMsgServer.UUIDColumn)
         End Function
@@ -1075,11 +1519,165 @@ Partial Public Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsHostNull() As Boolean
+            Return Me.IsNull(Me.tableMsgServer.HostColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetHostNull()
+            Me(Me.tableMsgServer.HostColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsPortNull() As Boolean
+            Return Me.IsNull(Me.tableMsgServer.PortColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetPortNull()
+            Me(Me.tableMsgServer.PortColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsDescriptionNull() As Boolean
+            Return Me.IsNull(Me.tableMsgServer.DescriptionColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetDescriptionNull()
+            Me(Me.tableMsgServer.DescriptionColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function GetServiceRows() As ServiceRow()
             If (Me.Table.ChildRelations("MsgServer_Service") Is Nothing) Then
                 Return New ServiceRow(-1) {}
             Else
                 Return CType(MyBase.GetChildRows(Me.Table.ChildRelations("MsgServer_Service")),ServiceRow())
+            End If
+        End Function
+    End Class
+    
+    '''<summary>
+    '''Represents strongly named DataRow class.
+    '''</summary>
+    Partial Public Class WorkspaceRow
+        Inherits Global.System.Data.DataRow
+        
+        Private tableWorkspace As WorkspaceDataTable
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+            MyBase.New(rb)
+            Me.tableWorkspace = CType(Me.Table,WorkspaceDataTable)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property UUID() As System.Guid
+            Get
+                Return CType(Me(Me.tableWorkspace.UUIDColumn),Global.System.Guid)
+            End Get
+            Set
+                Me(Me.tableWorkspace.UUIDColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Description() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableWorkspace.DescriptionColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Description' in table 'Workspace' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableWorkspace.DescriptionColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Parent_uuid() As System.Guid
+            Get
+                Try 
+                    Return CType(Me(Me.tableWorkspace.Parent_uuidColumn),Global.System.Guid)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Parent_uuid' in table 'Workspace' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableWorkspace.Parent_uuidColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Service_uuid() As System.Guid
+            Get
+                Try 
+                    Return CType(Me(Me.tableWorkspace.Service_uuidColumn),Global.System.Guid)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Service_uuid' in table 'Workspace' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableWorkspace.Service_uuidColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsDescriptionNull() As Boolean
+            Return Me.IsNull(Me.tableWorkspace.DescriptionColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetDescriptionNull()
+            Me(Me.tableWorkspace.DescriptionColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsParent_uuidNull() As Boolean
+            Return Me.IsNull(Me.tableWorkspace.Parent_uuidColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetParent_uuidNull()
+            Me(Me.tableWorkspace.Parent_uuidColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsService_uuidNull() As Boolean
+            Return Me.IsNull(Me.tableWorkspace.Service_uuidColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetService_uuidNull()
+            Me(Me.tableWorkspace.Service_uuidColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function GetServiceRows() As ServiceRow()
+            If (Me.Table.ChildRelations("Workspace_Service") Is Nothing) Then
+                Return New ServiceRow(-1) {}
+            Else
+                Return CType(MyBase.GetChildRows(Me.Table.ChildRelations("Workspace_Service")),ServiceRow())
             End If
         End Function
     End Class
@@ -1142,6 +1740,42 @@ Partial Public Class SAPSysRepository
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property Row() As MsgServerRow
+            Get
+                Return Me.eventRow
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+            Get
+                Return Me.eventAction
+            End Get
+        End Property
+    End Class
+    
+    '''<summary>
+    '''Row event argument class
+    '''</summary>
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+    Public Class WorkspaceRowChangeEvent
+        Inherits Global.System.EventArgs
+        
+        Private eventRow As WorkspaceRow
+        
+        Private eventAction As Global.System.Data.DataRowAction
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub New(ByVal row As WorkspaceRow, ByVal action As Global.System.Data.DataRowAction)
+            MyBase.New
+            Me.eventRow = row
+            Me.eventAction = action
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Row() As WorkspaceRow
             Get
                 Return Me.eventRow
             End Get

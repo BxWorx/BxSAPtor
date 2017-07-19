@@ -401,21 +401,6 @@ Namespace Controllers
 			Public Sub New(ByVal _xsaputils		As xSAPUtilCntlr.iController	,
 										 ByVal _fullname		As String												)
 
-
-					Me.cdb_SAP		=	New SAPSysRepository
-				Me.cdb_TabSrv	= New SAPSysRepository.ServiceDataTable()
-
-				Dim	cdb_TabSrvRow	= Me.cdb_TabSrv.NewServiceRow
-
-				cdb_TabSrvRow.UUID	= "123"
-				cdb_TabSrvRow.Name	= "yyyyy"
-
-				Me.cdb_TabSrv.AddServiceRow(cdb_TabSrvRow)
-
-
-				Me.cdb_TabSrv.Rows
-
-
 				Me.cc_FullName			= _fullname
 				'..................................................
 				Me.co_Serialiser		= _xsaputils.CreateSerialiser()

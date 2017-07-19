@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Code Repository\Controller\Controllers\Controller.vb" />
     <Compile Include="Code Repository\Controller\Controllers\iController.vb" />
+    <Compile Include="Code Repository\Data\XMLRepositoryParser.vb" />
     <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connection Setup\iLogonConnSetupDTO.vb" />
@@ -127,12 +128,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SAPSysRepository.Designer.vb">
+    <Compile Include="Code Repository\Data\SAPSysRepository.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SAPSysRepository.xsd</DependentUpon>
     </Compile>
-    <Compile Include="SAPSysRepository.vb">
+    <Compile Include="Code Repository\Data\SAPSysRepository.vb">
       <DependentUpon>SAPSysRepository.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -154,15 +155,15 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="SAPSysRepository.xsc">
+    <None Include="Code Repository\Data\SAPSysRepository.xsc">
       <DependentUpon>SAPSysRepository.xsd</DependentUpon>
     </None>
-    <None Include="SAPSysRepository.xsd">
+    <None Include="Code Repository\Data\SAPSysRepository.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>SAPSysRepository.Designer.vb</LastGenOutput>
     </None>
-    <None Include="SAPSysRepository.xss">
+    <None Include="Code Repository\Data\SAPSysRepository.xss">
       <DependentUpon>SAPSysRepository.xsd</DependentUpon>
     </None>
   </ItemGroup>

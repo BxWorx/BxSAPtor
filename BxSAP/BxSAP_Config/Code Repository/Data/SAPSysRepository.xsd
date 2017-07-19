@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="SAPSysRepository" targetNamespace="http://tempuri.org/SAPSysRepository.xsd" xmlns:mstns="http://tempuri.org/SAPSysRepository.xsd" xmlns="http://tempuri.org/SAPSysRepository.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="NotPublic" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="SAPSysRepository" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="SAPSysRepository" msprop:Generator_UserDSName="SAPSysRepository">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Service" msprop:Generator_TableClassName="ServiceDataTable" msprop:Generator_TableVarName="tableService" msprop:Generator_TablePropName="Service" msprop:Generator_RowDeletingName="ServiceRowDeleting" msprop:Generator_RowChangingName="ServiceRowChanging" msprop:Generator_RowEvHandlerName="ServiceRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceRowDeleted" msprop:Generator_UserTableName="Service" msprop:Generator_RowChangedName="ServiceRowChanged" msprop:Generator_RowEvArgName="ServiceRowChangeEvent" msprop:Generator_RowClassName="ServiceRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UUID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnUUID" msprop:Generator_ColumnPropNameInRow="UUID" msprop:Generator_ColumnPropNameInTable="UUIDColumn" msprop:Generator_UserColumnName="UUID" type="xs:string" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Host" msprop:Generator_ColumnVarNameInTable="columnHost" msprop:Generator_ColumnPropNameInRow="Host" msprop:Generator_ColumnPropNameInTable="HostColumn" msprop:Generator_UserColumnName="Host" type="xs:string" minOccurs="0" />
+              <xs:element name="MsgSvrID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnMsgSvrID" msprop:Generator_ColumnPropNameInRow="MsgSvrID" msprop:Generator_ColumnPropNameInTable="MsgSvrIDColumn" msprop:Generator_UserColumnName="MsgSvrID" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MsgServer" msprop:Generator_TableClassName="MsgServerDataTable" msprop:Generator_TableVarName="tableMsgServer" msprop:Generator_RowChangedName="MsgServerRowChanged" msprop:Generator_TablePropName="MsgServer" msprop:Generator_RowDeletingName="MsgServerRowDeleting" msprop:Generator_RowChangingName="MsgServerRowChanging" msprop:Generator_RowEvHandlerName="MsgServerRowChangeEventHandler" msprop:Generator_RowDeletedName="MsgServerRowDeleted" msprop:Generator_RowClassName="MsgServerRow" msprop:Generator_UserTableName="MsgServer" msprop:Generator_RowEvArgName="MsgServerRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UUID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnUUID" msprop:Generator_ColumnPropNameInRow="UUID" msprop:Generator_ColumnPropNameInTable="UUIDColumn" msprop:Generator_UserColumnName="UUID" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Host" msprop:Generator_ColumnVarNameInTable="columnHost" msprop:Generator_ColumnPropNameInRow="Host" msprop:Generator_ColumnPropNameInTable="HostColumn" msprop:Generator_UserColumnName="Host" type="xs:string" minOccurs="0" />
+              <xs:element name="Port" msprop:Generator_ColumnVarNameInTable="columnPort" msprop:Generator_ColumnPropNameInRow="Port" msprop:Generator_ColumnPropNameInTable="PortColumn" msprop:Generator_UserColumnName="Port" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Workspace" msprop:Generator_TableClassName="WorkspaceDataTable" msprop:Generator_TableVarName="tableWorkspace" msprop:Generator_RowChangedName="WorkspaceRowChanged" msprop:Generator_TablePropName="Workspace" msprop:Generator_RowDeletingName="WorkspaceRowDeleting" msprop:Generator_RowChangingName="WorkspaceRowChanging" msprop:Generator_RowEvHandlerName="WorkspaceRowChangeEventHandler" msprop:Generator_RowDeletedName="WorkspaceRowDeleted" msprop:Generator_RowClassName="WorkspaceRow" msprop:Generator_UserTableName="Workspace" msprop:Generator_RowEvArgName="WorkspaceRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UUID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnUUID" msprop:Generator_ColumnPropNameInRow="UUID" msprop:Generator_ColumnPropNameInTable="UUIDColumn" msprop:Generator_UserColumnName="UUID" type="xs:string" />
+              <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Parent_uuid" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnParent_uuid" msprop:Generator_ColumnPropNameInRow="Parent_uuid" msprop:Generator_ColumnPropNameInTable="Parent_uuidColumn" msprop:Generator_UserColumnName="Parent_uuid" type="xs:string" minOccurs="0" />
+              <xs:element name="Service_uuid" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnService_uuid" msprop:Generator_ColumnPropNameInRow="Service_uuid" msprop:Generator_ColumnPropNameInTable="Service_uuidColumn" msprop:Generator_UserColumnName="Service_uuid" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Service" />
+      <xs:field xpath="mstns:UUID" />
+    </xs:unique>
+    <xs:unique name="MsgServer_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:MsgServer" />
+      <xs:field xpath="mstns:UUID" />
+    </xs:unique>
+    <xs:unique name="Workspace_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Workspace" />
+      <xs:field xpath="mstns:UUID" />
+    </xs:unique>
+    <xs:keyref name="MsgServer_Service" refer="MsgServer_Constraint1" msprop:rel_Generator_UserChildTable="Service" msprop:rel_Generator_ChildPropName="GetServiceRows" msprop:rel_Generator_UserRelationName="MsgServer_Service" msprop:rel_Generator_ParentPropName="MsgServerRow" msprop:rel_Generator_RelationVarName="relationMsgServer_Service" msprop:rel_Generator_UserParentTable="MsgServer" msdata:UpdateRule="None" msdata:DeleteRule="None">
+      <xs:selector xpath=".//mstns:Service" />
+      <xs:field xpath="mstns:MsgSvrID" />
+    </xs:keyref>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Workspace_Service" msdata:parent="Workspace" msdata:child="Service" msdata:parentkey="Service_uuid" msdata:childkey="UUID" msprop:Generator_UserChildTable="Service" msprop:Generator_ChildPropName="GetServiceRows" msprop:Generator_UserRelationName="Workspace_Service" msprop:Generator_RelationVarName="relationWorkspace_Service" msprop:Generator_UserParentTable="Workspace" msprop:Generator_ParentPropName="WorkspaceRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>
