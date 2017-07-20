@@ -1078,7 +1078,7 @@ Partial Friend Class SAPSysRepository
         
         Private columnService_uuid As Global.System.Data.DataColumn
         
-        Private columnHierachy_Notation As Global.System.Data.DataColumn
+        Private columnHierarchyID As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -1149,9 +1149,9 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Hierachy_NotationColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property HierarchyIDColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnHierachy_Notation
+                Return Me.columnHierarchyID
             End Get
         End Property
         
@@ -1192,9 +1192,9 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddWorkspaceRow(ByVal UUID As System.Guid, ByVal Description As String, ByVal Parent_uuid As System.Guid, ByVal Service_uuid As System.Guid, ByVal Hierachy_Notation As String) As WorkspaceRow
+        Public Overloads Function AddWorkspaceRow(ByVal UUID As System.Guid, ByVal Description As String, ByVal Parent_uuid As System.Guid, ByVal Service_uuid As System.Guid, ByVal HierarchyID As String) As WorkspaceRow
             Dim rowWorkspaceRow As WorkspaceRow = CType(Me.NewRow,WorkspaceRow)
-            Dim columnValuesArray() As Object = New Object() {UUID, Description, Parent_uuid, Service_uuid, Hierachy_Notation}
+            Dim columnValuesArray() As Object = New Object() {UUID, Description, Parent_uuid, Service_uuid, HierarchyID}
             rowWorkspaceRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowWorkspaceRow)
             Return rowWorkspaceRow
@@ -1227,7 +1227,7 @@ Partial Friend Class SAPSysRepository
             Me.columnDescription = MyBase.Columns("Description")
             Me.columnParent_uuid = MyBase.Columns("Parent_uuid")
             Me.columnService_uuid = MyBase.Columns("Service_uuid")
-            Me.columnHierachy_Notation = MyBase.Columns("Hierachy_Notation")
+            Me.columnHierarchyID = MyBase.Columns("HierarchyID")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1241,8 +1241,8 @@ Partial Friend Class SAPSysRepository
             MyBase.Columns.Add(Me.columnParent_uuid)
             Me.columnService_uuid = New Global.System.Data.DataColumn("Service_uuid", GetType(Global.System.Guid), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnService_uuid)
-            Me.columnHierachy_Notation = New Global.System.Data.DataColumn("Hierachy_Notation", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnHierachy_Notation)
+            Me.columnHierarchyID = New Global.System.Data.DataColumn("HierarchyID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnHierarchyID)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnUUID}, true))
             Me.columnUUID.AllowDBNull = false
             Me.columnUUID.Unique = true
@@ -1928,16 +1928,16 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Hierachy_Notation() As String
+        Public Property HierarchyID() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableWorkspace.Hierachy_NotationColumn),String)
+                    Return CType(Me(Me.tableWorkspace.HierarchyIDColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Hierachy_Notation' in table 'Workspace' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'HierarchyID' in table 'Workspace' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableWorkspace.Hierachy_NotationColumn) = value
+                Me(Me.tableWorkspace.HierarchyIDColumn) = value
             End Set
         End Property
         
@@ -1979,14 +1979,14 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsHierachy_NotationNull() As Boolean
-            Return Me.IsNull(Me.tableWorkspace.Hierachy_NotationColumn)
+        Public Function IsHierarchyIDNull() As Boolean
+            Return Me.IsNull(Me.tableWorkspace.HierarchyIDColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetHierachy_NotationNull()
-            Me(Me.tableWorkspace.Hierachy_NotationColumn) = Global.System.Convert.DBNull
+        Public Sub SetHierarchyIDNull()
+            Me(Me.tableWorkspace.HierarchyIDColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

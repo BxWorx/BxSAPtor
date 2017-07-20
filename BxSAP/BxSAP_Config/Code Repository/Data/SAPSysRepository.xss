@@ -8,21 +8,9 @@
   <Shapes>
     <Shape ID="DesignTable:Service" ZOrder="4" X="70" Y="70" Height="238" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:MsgServer" ZOrder="5" X="69" Y="375" Height="124" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="120" />
-    <Shape ID="DesignTable:Workspace" ZOrder="2" X="282" Y="71" Height="105" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
+    <Shape ID="DesignTable:Workspace" ZOrder="2" X="282" Y="71" Height="125" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
   </Shapes>
   <Connectors>
-    <Connector ID="DesignRelation:MsgServer_Service" ZOrder="3" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>144</X>
-          <Y>375</Y>
-        </Point>
-        <Point>
-          <X>144</X>
-          <Y>308</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
     <Connector ID="DesignRelation:Workspace_Service" ZOrder="1" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -32,6 +20,18 @@
         <Point>
           <X>220</X>
           <Y>123</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:MsgServer_Service" ZOrder="3" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>144</X>
+          <Y>375</Y>
+        </Point>
+        <Point>
+          <X>144</X>
+          <Y>308</Y>
         </Point>
       </RoutePoints>
     </Connector>

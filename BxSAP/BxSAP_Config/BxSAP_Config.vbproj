@@ -75,6 +75,11 @@
   <ItemGroup>
     <Compile Include="Code Repository\Controller\Controllers\Controller.vb" />
     <Compile Include="Code Repository\Controller\Controllers\iController.vb" />
+    <Compile Include="Code Repository\Data\BxSAPConfig_Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlParser.vb" />
     <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
@@ -113,6 +118,7 @@
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlLoader.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlModel.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXmlModel.vb" />
+    <Compile Include="Code Repository\Model\SettingsModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -146,6 +152,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Code Repository\Data\BxSAPConfig_Settings.xsc">
+      <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>
+    </None>
+    <None Include="Code Repository\Data\BxSAPConfig_Settings.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BxSAPConfig_Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Code Repository\Data\BxSAPConfig_Settings.xss">
+      <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

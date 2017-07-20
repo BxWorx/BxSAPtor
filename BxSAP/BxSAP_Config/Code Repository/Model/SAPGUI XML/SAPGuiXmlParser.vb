@@ -46,44 +46,35 @@ Namespace	Model.Sapgui.Xml
 			Private Sub ParseWorkspaces()
 
 				For Each	lo_WS		In Me.co_XMLRepos.WorkSpaces
-
 					If Me.Parse(lo_WS.Value)
+						'..............................................
+						For Each	lo_Node		In lo_WS.Value.Nodes
+							If Me.Parse(lo_Node.Value, lo_WS.Value.uuid)
+							'............................................
+								For Each	lo_Item		In lo_Node.Value.Items
+									If Me.Parse(lo_Item.Value, lo_Node.Value.uuid)
 
+									End If
+								Next
+							End If
+						Next
 					End If
-
-					'ln_HLev2	= 0
-					'For Each	lo_Node		In lo_WS.Value.Nodes
-
-					'	ln_HLev2	+= 1
-					'	lc_HLev2	= String.Format("{0}.{1}",lc_HLev1, ln_HLev2.ToString("D2") )
-					'	Me.co_Repos.Workspace.AddWorkspaceRow(Me.Parse(lo_Node.Value, lc_HLev2))
-
-					'	ln_HLev3	= 0
-					'	For Each	lo_Item		In lo_Node.Value.Items
-
-					'		ln_HLev3	+= 1
-					'		lc_HLev3	= String.Format("{0}.{1}",lc_HLev2, ln_HLev3.ToString("D2") )
-					'		Me.co_Repos.Workspace.AddWorkspaceRow(Me.Parse(lo_Node.Value, lc_HLev3))
-
-					'	Next
-
-					'Next
-
 				Next
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Private Function Parse(ByVal _dto As WorkspaceDTO)	As Boolean
 
-				Dim lb_Ret	As Boolean
-				Dim lc_Lev	As String
-				Dim lo_Row	As SAPSysRepository.WorkspaceRow
+				Dim lb_Ret		As Boolean
+				Dim lc_Lev		As String
+				Dim lo_Row		As SAPSysRepository.WorkspaceRow
 				'....................................................
 				Me.cn_Lev1	+= 1
-
-				lc_Lev			= Me.cn_Lev1.ToString("D2")
-				lo_Row			= Me.CreateWSRow(	_dto.uuid, _dto.name, lc_Lev, "", "" )
-				lb_Ret			= True
+				Me.cn_Lev2	 = 0
+				'....................................................
+				lc_Lev	= Me.cn_Lev1.ToString("D2")
+				lo_Row	= Me.CreateWSRow(	_dto.uuid, _dto.name, lc_Lev, "", "" )
+				lb_Ret	= True
 				'....................................................
 				If IsNothing(lo_Row)
 					lb_Ret			= False
@@ -96,38 +87,55 @@ Namespace	Model.Sapgui.Xml
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Function Parse(ByVal _dto	As WSNodeDTO	, 
-														 ByVal _hier		As String				)	As SAPSysRepository.WorkspaceRow
+			Private Function Parse(ByVal _dto					As WSNodeDTO	,
+														 ByVal _parentuuid	As String				)	As Boolean
 
-				'Return	Me.CreateWSRow(_dto.uuid, _dto.name, _hier, Nothing, Nothing)
-
-				'Dim lo_Guid	As	Guid
-				'Dim lo_Row	As	SAPSysRepository.WorkspaceRow		= Me.co_Repos.Workspace.NewWorkspaceRow()
-				''....................................................
-				'Guid.TryParse( _dto.uuid, lo_Guid)
-
-				'lo_Row.UUID								= lo_Guid
-				'lo_Row.Description				= _dto.name
-				'lo_Row.Hierachy_Notation	= _hier
-				''....................................................
-				'Return	lo_Row
+				Dim lb_Ret		As Boolean
+				Dim lc_Lev		As String
+				Dim lo_Row		As SAPSysRepository.WorkspaceRow
+				'....................................................
+				Me.cn_Lev2	+= 1
+				Me.cn_Lev3	 = 0
+				'....................................................
+				lc_Lev	= String.Format( "{0}.{1}",	Me.cn_Lev1.ToString("D2")	,
+																						Me.cn_Lev2.ToString("D2")		)
+				lo_Row	= Me.CreateWSRow(	_dto.uuid, _dto.name, lc_Lev,	_parentuuid, "" )
+				lb_Ret	= True
+				'....................................................
+				If IsNothing(lo_Row)
+					lb_Ret			= False
+					Me.cn_Lev2	-= 1
+				Else
+					Me.co_Repos.Workspace.AddWorkspaceRow(lo_Row)
+				End If
+				'....................................................
+				Return	lb_Ret
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Function Parse(ByVal _dto	As WSNodeItemDTO	, 
-														 ByVal _hier		As String						)	As SAPSysRepository.WorkspaceRow
+			Private Function Parse(ByVal _dto					As WSNodeItemDTO	, 
+														 ByVal _parentuuid	As String						)	As Boolean
 
-				'Return	Me.CreateWSRow(_dto.uuid, _dto.name, _hier, Nothing, Nothing)
-
-				'Dim lo_Guid	As	Guid
-				'Dim lo_Row	As	SAPSysRepository.WorkspaceRow		= Me.co_Repos.Workspace.NewWorkspaceRow()
-				''....................................................
-				'Guid.TryParse( _dto.uuid, lo_Guid)
-
-				'lo_Row.UUID								= lo_Guid
-				'lo_Row.Hierachy_Notation	= _hier
-				''....................................................
-				'Return	lo_Row
+				Dim lb_Ret		As Boolean
+				Dim lc_Lev		As String
+				Dim lo_Row		As SAPSysRepository.WorkspaceRow
+				'....................................................
+				Me.cn_Lev3	+= 1
+				'....................................................
+				lc_Lev	= String.Format( "{0}.{1}.{2}",	Me.cn_Lev1.ToString("D2")	,
+																								Me.cn_Lev2.ToString("D2")	,
+																								Me.cn_Lev3.ToString("D2")		)
+				lo_Row	= Me.CreateWSRow(	_dto.uuid, "", lc_Lev,	_parentuuid, _dto.serviceid )
+				lb_Ret	= True
+				'....................................................
+				If IsNothing(lo_Row)
+					lb_Ret			= False
+					Me.cn_Lev3	-= 1
+				Else
+					Me.co_Repos.Workspace.AddWorkspaceRow(lo_Row)
+				End If
+				'....................................................
+				Return	lb_Ret
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -151,14 +159,14 @@ Namespace	Model.Sapgui.Xml
 
 				If IsNothing(lo_uGuid)		Then	Return	Nothing
 				'....................................................
-				If Not _par.Length.Equals(0)	Then	Guid.TryParse( _id, lo_pGuid)
-				If Not _ser.Length.Equals(0)	Then	Guid.TryParse( _id, lo_sGuid)
+				If Not _par.Length.Equals(0)	Then	Guid.TryParse( _par, lo_pGuid)
+				If Not _ser.Length.Equals(0)	Then	Guid.TryParse( _ser, lo_sGuid)
 				'....................................................
-				lo_Row.UUID								= lo_uGuid
-				lo_Row.Parent_uuid				= lo_pGuid
-				lo_Row.Service_uuid				= lo_sGuid
-
-				lo_Row.Hierachy_Notation	= _not
+				lo_Row.UUID						= lo_uGuid
+				lo_Row.Parent_uuid		= lo_pGuid
+				lo_Row.Service_uuid		= lo_sGuid
+				'....................................................
+				lo_Row.HierarchyID		= _not
 				'....................................................
 				Return	lo_Row
 

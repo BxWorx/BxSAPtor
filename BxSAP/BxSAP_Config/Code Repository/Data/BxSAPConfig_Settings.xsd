@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BxSAPConfig_Settings" targetNamespace="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns:mstns="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="BxSAPConfig_Settings" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BxSAPConfig_Settings" msprop:Generator_UserDSName="BxSAPConfig_Settings">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="LogonSettings" msprop:Generator_TableClassName="LogonSettingsDataTable" msprop:Generator_TableVarName="tableLogonSettings" msprop:Generator_TablePropName="LogonSettings" msprop:Generator_RowDeletingName="LogonSettingsRowDeleting" msprop:Generator_RowChangingName="LogonSettingsRowChanging" msprop:Generator_RowEvHandlerName="LogonSettingsRowChangeEventHandler" msprop:Generator_RowDeletedName="LogonSettingsRowDeleted" msprop:Generator_UserTableName="LogonSettings" msprop:Generator_RowChangedName="LogonSettingsRowChanged" msprop:Generator_RowEvArgName="LogonSettingsRowChangeEvent" msprop:Generator_RowClassName="LogonSettingsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Version" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnVersion" msprop:Generator_ColumnPropNameInRow="Version" msprop:Generator_ColumnPropNameInTable="VersionColumn" msprop:Generator_UserColumnName="Version" type="xs:short" />
+              <xs:element name="TimeStamp" msprop:Generator_ColumnVarNameInTable="columnTimeStamp" msprop:Generator_ColumnPropNameInRow="TimeStamp" msprop:Generator_ColumnPropNameInTable="TimeStampColumn" msprop:Generator_UserColumnName="TimeStamp" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DefLang" msprop:Generator_ColumnVarNameInTable="columnDefLang" msprop:Generator_ColumnPropNameInRow="DefLang" msprop:Generator_ColumnPropNameInTable="DefLangColumn" msprop:Generator_UserColumnName="DefLang" default="EN">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShowPwrd" msdata:Caption="Show Password" msprop:Generator_ColumnVarNameInTable="columnShowPwrd" msprop:Generator_ColumnPropNameInRow="ShowPwrd" msprop:Generator_ColumnPropNameInTable="ShowPwrdColumn" msprop:Generator_UserColumnName="ShowPwrd" type="xs:boolean" default="false" />
+              <xs:element name="SavePwrd" msprop:Generator_ColumnVarNameInTable="columnSavePwrd" msprop:Generator_ColumnPropNameInRow="SavePwrd" msprop:Generator_ColumnPropNameInTable="SavePwrdColumn" msprop:Generator_UserColumnName="SavePwrd" type="xs:boolean" default="true" />
+              <xs:element name="AutoSave" msprop:Generator_ColumnVarNameInTable="columnAutoSave" msprop:Generator_ColumnPropNameInRow="AutoSave" msprop:Generator_ColumnPropNameInTable="AutoSaveColumn" msprop:Generator_UserColumnName="AutoSave" type="xs:boolean" default="true" />
+              <xs:element name="AutoConnect" msprop:Generator_ColumnVarNameInTable="columnAutoConnect" msprop:Generator_ColumnPropNameInRow="AutoConnect" msprop:Generator_ColumnPropNameInTable="AutoConnectColumn" msprop:Generator_UserColumnName="AutoConnect" type="xs:boolean" default="true" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ConnectionSetup" msprop:Generator_TableClassName="ConnectionSetupDataTable" msprop:Generator_TableVarName="tableConnectionSetup" msprop:Generator_TablePropName="ConnectionSetup" msprop:Generator_RowDeletingName="ConnectionSetupRowDeleting" msprop:Generator_RowChangingName="ConnectionSetupRowChanging" msprop:Generator_RowEvHandlerName="ConnectionSetupRowChangeEventHandler" msprop:Generator_RowDeletedName="ConnectionSetupRowDeleted" msprop:Generator_UserTableName="ConnectionSetup" msprop:Generator_RowChangedName="ConnectionSetupRowChanged" msprop:Generator_RowEvArgName="ConnectionSetupRowChangeEvent" msprop:Generator_RowClassName="ConnectionSetupRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Version" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnVersion" msprop:Generator_ColumnPropNameInRow="Version" msprop:Generator_ColumnPropNameInTable="VersionColumn" msprop:Generator_UserColumnName="Version" type="xs:short" />
+              <xs:element name="TimeStamp" msdata:DateTimeMode="Utc" msprop:Generator_ColumnVarNameInTable="columnTimeStamp" msprop:Generator_ColumnPropNameInRow="TimeStamp" msprop:Generator_ColumnPropNameInTable="TimeStampColumn" msprop:Generator_UserColumnName="TimeStamp" type="xs:dateTime" />
+              <xs:element name="PeakConnectionLimit" msprop:Generator_ColumnVarNameInTable="columnPeakConnectionLimit" msprop:Generator_ColumnPropNameInRow="PeakConnectionLimit" msprop:Generator_ColumnPropNameInTable="PeakConnectionLimitColumn" msprop:Generator_UserColumnName="PeakConnectionLimit" type="xs:unsignedShort" />
+              <xs:element name="PoolSize" msprop:Generator_ColumnVarNameInTable="columnPoolSize" msprop:Generator_ColumnPropNameInRow="PoolSize" msprop:Generator_ColumnPropNameInTable="PoolSizeColumn" msprop:Generator_UserColumnName="PoolSize" type="xs:unsignedShort" />
+              <xs:element name="IdleCheckTime" msprop:Generator_ColumnVarNameInTable="columnIdleCheckTime" msprop:Generator_ColumnPropNameInRow="IdleCheckTime" msprop:Generator_ColumnPropNameInTable="IdleCheckTimeColumn" msprop:Generator_UserColumnName="IdleCheckTime" type="xs:unsignedShort" />
+              <xs:element name="IdleTimeout" msprop:Generator_ColumnVarNameInTable="columnIdleTimeout" msprop:Generator_ColumnPropNameInRow="IdleTimeout" msprop:Generator_ColumnPropNameInTable="IdleTimeoutColumn" msprop:Generator_UserColumnName="IdleTimeout" type="xs:unsignedShort" />
+              <xs:element name="SNC_LibPath" msprop:Generator_ColumnVarNameInTable="columnSNC_LibPath" msprop:Generator_ColumnPropNameInRow="SNC_LibPath" msprop:Generator_ColumnPropNameInTable="SNC_LibPathColumn" msprop:Generator_UserColumnName="SNC_LibPath" type="xs:string" />
+              <xs:element name="SNC_LibName32" msprop:Generator_ColumnVarNameInTable="columnSNC_LibName32" msprop:Generator_ColumnPropNameInRow="SNC_LibName32" msprop:Generator_ColumnPropNameInTable="SNC_LibName32Column" msprop:Generator_UserColumnName="SNC_LibName32" type="xs:string" />
+              <xs:element name="SNC_LibName64" msprop:Generator_ColumnVarNameInTable="columnSNC_LibName64" msprop:Generator_ColumnPropNameInRow="SNC_LibName64" msprop:Generator_ColumnPropNameInTable="SNC_LibName64Column" msprop:Generator_UserColumnName="SNC_LibName64" type="xs:string" />
+              <xs:element name="XML_UseSAPGUI" msprop:Generator_ColumnVarNameInTable="columnXML_UseSAPGUI" msprop:Generator_ColumnPropNameInRow="XML_UseSAPGUI" msprop:Generator_ColumnPropNameInTable="XML_UseSAPGUIColumn" msprop:Generator_UserColumnName="XML_UseSAPGUI" type="xs:boolean" default="true" />
+              <xs:element name="XML_OnlyLoadGUI" msprop:Generator_ColumnVarNameInTable="columnXML_OnlyLoadGUI" msprop:Generator_ColumnPropNameInRow="XML_OnlyLoadGUI" msprop:Generator_ColumnPropNameInTable="XML_OnlyLoadGUIColumn" msprop:Generator_UserColumnName="XML_OnlyLoadGUI" type="xs:boolean" default="true" />
+              <xs:element name="XML_FromWorkspace" msprop:Generator_ColumnVarNameInTable="columnXML_FromWorkspace" msprop:Generator_ColumnPropNameInRow="XML_FromWorkspace" msprop:Generator_ColumnPropNameInTable="XML_FromWorkspaceColumn" msprop:Generator_UserColumnName="XML_FromWorkspace" type="xs:string" />
+              <xs:element name="XML_FromNode" msprop:Generator_ColumnVarNameInTable="columnXML_FromNode" msprop:Generator_ColumnPropNameInRow="XML_FromNode" msprop:Generator_ColumnPropNameInTable="XML_FromNodeColumn" msprop:Generator_UserColumnName="XML_FromNode" type="xs:string" />
+              <xs:element name="XML_Path" msprop:Generator_ColumnVarNameInTable="columnXML_Path" msprop:Generator_ColumnPropNameInRow="XML_Path" msprop:Generator_ColumnPropNameInTable="XML_PathColumn" msprop:Generator_UserColumnName="XML_Path" type="xs:string" />
+              <xs:element name="XML_FileName" msprop:Generator_ColumnVarNameInTable="columnXML_FileName" msprop:Generator_ColumnPropNameInRow="XML_FileName" msprop:Generator_ColumnPropNameInTable="XML_FileNameColumn" msprop:Generator_UserColumnName="XML_FileName" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:LogonSettings" />
+      <xs:field xpath="mstns:Version" />
+    </xs:unique>
+    <xs:unique name="ConnectionSetup_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ConnectionSetup" />
+      <xs:field xpath="mstns:Version" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

@@ -83,10 +83,9 @@ Namespace UT_Config
 				'..................................................
 				lo_XMLParser.Parse(lo_XMLLoader, lo_SysRepos)
 
+				lo_SysRepos.WriteXml("C:\Temp\xSAPtor\SysRepos.xml")
+
 			End Sub
-
-
-
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			<TestMethod()>
 			Public Sub UT_Config_SAPGUI_XML_Loader()
