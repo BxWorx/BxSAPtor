@@ -31,9 +31,9 @@ Partial Friend Class SAPSysRepository
     
     Private tableWorkspace As WorkspaceDataTable
     
-    Private relationMsgServer_Service As Global.System.Data.DataRelation
-    
     Private relationWorkspace_Service As Global.System.Data.DataRelation
+    
+    Private relationMsgServer_Service As Global.System.Data.DataRelation
     
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
@@ -246,8 +246,8 @@ Partial Friend Class SAPSysRepository
                 Me.tableWorkspace.InitVars
             End If
         End If
-        Me.relationMsgServer_Service = Me.Relations("MsgServer_Service")
         Me.relationWorkspace_Service = Me.Relations("Workspace_Service")
+        Me.relationMsgServer_Service = Me.Relations("MsgServer_Service")
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -264,16 +264,10 @@ Partial Friend Class SAPSysRepository
         MyBase.Tables.Add(Me.tableMsgServer)
         Me.tableWorkspace = New WorkspaceDataTable()
         MyBase.Tables.Add(Me.tableWorkspace)
-        Dim fkc As Global.System.Data.ForeignKeyConstraint
-        fkc = New Global.System.Data.ForeignKeyConstraint("MsgServer_Service", New Global.System.Data.DataColumn() {Me.tableMsgServer.UUIDColumn}, New Global.System.Data.DataColumn() {Me.tableService.MsgSvrIDColumn})
-        Me.tableService.Constraints.Add(fkc)
-        fkc.AcceptRejectRule = Global.System.Data.AcceptRejectRule.None
-        fkc.DeleteRule = Global.System.Data.Rule.None
-        fkc.UpdateRule = Global.System.Data.Rule.None
-        Me.relationMsgServer_Service = New Global.System.Data.DataRelation("MsgServer_Service", New Global.System.Data.DataColumn() {Me.tableMsgServer.UUIDColumn}, New Global.System.Data.DataColumn() {Me.tableService.MsgSvrIDColumn}, false)
-        Me.Relations.Add(Me.relationMsgServer_Service)
         Me.relationWorkspace_Service = New Global.System.Data.DataRelation("Workspace_Service", New Global.System.Data.DataColumn() {Me.tableWorkspace.Service_uuidColumn}, New Global.System.Data.DataColumn() {Me.tableService.UUIDColumn}, false)
         Me.Relations.Add(Me.relationWorkspace_Service)
+        Me.relationMsgServer_Service = New Global.System.Data.DataRelation("MsgServer_Service", New Global.System.Data.DataColumn() {Me.tableMsgServer.UUIDColumn}, New Global.System.Data.DataColumn() {Me.tableService.MsgSvrIDColumn}, false)
+        Me.Relations.Add(Me.relationMsgServer_Service)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -373,9 +367,23 @@ Partial Friend Class SAPSysRepository
         
         Private columnName As Global.System.Data.DataColumn
         
-        Private columnHost As Global.System.Data.DataColumn
+        Private columnDescription As Global.System.Data.DataColumn
+        
+        Private columnType As Global.System.Data.DataColumn
+        
+        Private columnServer As Global.System.Data.DataColumn
+        
+        Private columnSystemID As Global.System.Data.DataColumn
         
         Private columnMsgSvrID As Global.System.Data.DataColumn
+        
+        Private columnSNCName As Global.System.Data.DataColumn
+        
+        Private columnSAPCodePage As Global.System.Data.DataColumn
+        
+        Private columnDownUpCodePage As Global.System.Data.DataColumn
+        
+        Private columnSNCOP As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -430,9 +438,33 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property HostColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property DescriptionColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnHost
+                Return Me.columnDescription
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property TypeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnType
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property ServerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnServer
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property SystemIDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSystemID
             End Get
         End Property
         
@@ -441,6 +473,38 @@ Partial Friend Class SAPSysRepository
         Public ReadOnly Property MsgSvrIDColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnMsgSvrID
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property SNCNameColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSNCName
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property SAPCodePageColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSAPCodePage
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property DownUpCodePageColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDownUpCodePage
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property SNCOPColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSNCOP
             End Get
         End Property
         
@@ -481,14 +545,14 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddServiceRow(ByVal parentWorkspaceRowByWorkspace_Service As WorkspaceRow, ByVal Name As String, ByVal Host As String, ByVal parentMsgServerRowByMsgServer_Service As MsgServerRow) As ServiceRow
+        Public Overloads Function AddServiceRow(ByVal parentWorkspaceRowByWorkspace_Service As WorkspaceRow, ByVal Name As String, ByVal Description As String, ByVal Type As String, ByVal Server As String, ByVal SystemID As String, ByVal parentMsgServerRowByMsgServer_Service As MsgServerRow, ByVal SNCName As String, ByVal SAPCodePage As String, ByVal DownUpCodePage As String, ByVal SNCOP As Short) As ServiceRow
             Dim rowServiceRow As ServiceRow = CType(Me.NewRow,ServiceRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Name, Host, Nothing}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Name, Description, Type, Server, SystemID, Nothing, SNCName, SAPCodePage, DownUpCodePage, SNCOP}
             If (Not (parentWorkspaceRowByWorkspace_Service) Is Nothing) Then
                 columnValuesArray(0) = parentWorkspaceRowByWorkspace_Service(3)
             End If
             If (Not (parentMsgServerRowByMsgServer_Service) Is Nothing) Then
-                columnValuesArray(3) = parentMsgServerRowByMsgServer_Service(0)
+                columnValuesArray(6) = parentMsgServerRowByMsgServer_Service(0)
             End If
             rowServiceRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowServiceRow)
@@ -520,8 +584,15 @@ Partial Friend Class SAPSysRepository
         Friend Sub InitVars()
             Me.columnUUID = MyBase.Columns("UUID")
             Me.columnName = MyBase.Columns("Name")
-            Me.columnHost = MyBase.Columns("Host")
+            Me.columnDescription = MyBase.Columns("Description")
+            Me.columnType = MyBase.Columns("Type")
+            Me.columnServer = MyBase.Columns("Server")
+            Me.columnSystemID = MyBase.Columns("SystemID")
             Me.columnMsgSvrID = MyBase.Columns("MsgSvrID")
+            Me.columnSNCName = MyBase.Columns("SNCName")
+            Me.columnSAPCodePage = MyBase.Columns("SAPCodePage")
+            Me.columnDownUpCodePage = MyBase.Columns("DownUpCodePage")
+            Me.columnSNCOP = MyBase.Columns("SNCop")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -531,10 +602,28 @@ Partial Friend Class SAPSysRepository
             MyBase.Columns.Add(Me.columnUUID)
             Me.columnName = New Global.System.Data.DataColumn("Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnName)
-            Me.columnHost = New Global.System.Data.DataColumn("Host", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnHost)
+            Me.columnDescription = New Global.System.Data.DataColumn("Description", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDescription)
+            Me.columnType = New Global.System.Data.DataColumn("Type", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnType)
+            Me.columnServer = New Global.System.Data.DataColumn("Server", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnServer)
+            Me.columnSystemID = New Global.System.Data.DataColumn("SystemID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSystemID)
             Me.columnMsgSvrID = New Global.System.Data.DataColumn("MsgSvrID", GetType(Global.System.Guid), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnMsgSvrID)
+            Me.columnSNCName = New Global.System.Data.DataColumn("SNCName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSNCName)
+            Me.columnSAPCodePage = New Global.System.Data.DataColumn("SAPCodePage", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSAPCodePage)
+            Me.columnDownUpCodePage = New Global.System.Data.DataColumn("DownUpCodePage", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDownUpCodePage)
+            Me.columnSNCOP = New Global.System.Data.DataColumn("SNCop", GetType(Short), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnSNCOP.ExtendedProperties.Add("Generator_ColumnPropNameInRow", "SNCOP")
+            Me.columnSNCOP.ExtendedProperties.Add("Generator_ColumnPropNameInTable", "SNCOPColumn")
+            Me.columnSNCOP.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "columnSNCOP")
+            Me.columnSNCOP.ExtendedProperties.Add("Generator_UserColumnName", "SNCop")
+            MyBase.Columns.Add(Me.columnSNCOP)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnUUID}, true))
             Me.columnUUID.AllowDBNull = false
             Me.columnUUID.Unique = true
@@ -989,6 +1078,8 @@ Partial Friend Class SAPSysRepository
         
         Private columnService_uuid As Global.System.Data.DataColumn
         
+        Private columnHierachy_Notation As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -1057,6 +1148,14 @@ Partial Friend Class SAPSysRepository
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Hierachy_NotationColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnHierachy_Notation
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1093,9 +1192,9 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddWorkspaceRow(ByVal UUID As System.Guid, ByVal Description As String, ByVal Parent_uuid As System.Guid, ByVal Service_uuid As System.Guid) As WorkspaceRow
+        Public Overloads Function AddWorkspaceRow(ByVal UUID As System.Guid, ByVal Description As String, ByVal Parent_uuid As System.Guid, ByVal Service_uuid As System.Guid, ByVal Hierachy_Notation As String) As WorkspaceRow
             Dim rowWorkspaceRow As WorkspaceRow = CType(Me.NewRow,WorkspaceRow)
-            Dim columnValuesArray() As Object = New Object() {UUID, Description, Parent_uuid, Service_uuid}
+            Dim columnValuesArray() As Object = New Object() {UUID, Description, Parent_uuid, Service_uuid, Hierachy_Notation}
             rowWorkspaceRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowWorkspaceRow)
             Return rowWorkspaceRow
@@ -1128,6 +1227,7 @@ Partial Friend Class SAPSysRepository
             Me.columnDescription = MyBase.Columns("Description")
             Me.columnParent_uuid = MyBase.Columns("Parent_uuid")
             Me.columnService_uuid = MyBase.Columns("Service_uuid")
+            Me.columnHierachy_Notation = MyBase.Columns("Hierachy_Notation")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1141,6 +1241,8 @@ Partial Friend Class SAPSysRepository
             MyBase.Columns.Add(Me.columnParent_uuid)
             Me.columnService_uuid = New Global.System.Data.DataColumn("Service_uuid", GetType(Global.System.Guid), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnService_uuid)
+            Me.columnHierachy_Notation = New Global.System.Data.DataColumn("Hierachy_Notation", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnHierachy_Notation)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnUUID}, true))
             Me.columnUUID.AllowDBNull = false
             Me.columnUUID.Unique = true
@@ -1316,16 +1418,61 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Host() As String
+        Public Property Description() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableService.HostColumn),String)
+                    Return CType(Me(Me.tableService.DescriptionColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Host' in table 'Service' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Description' in table 'Service' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableService.HostColumn) = value
+                Me(Me.tableService.DescriptionColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Type() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.TypeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Type' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.TypeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Server() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.ServerColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Server' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.ServerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property SystemID() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.SystemIDColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SystemID' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.SystemIDColumn) = value
             End Set
         End Property
         
@@ -1346,12 +1493,61 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property MsgServerRow() As MsgServerRow
+        Public Property SNCName() As String
             Get
-                Return CType(Me.GetParentRow(Me.Table.ParentRelations("MsgServer_Service")),MsgServerRow)
+                Try 
+                    Return CType(Me(Me.tableService.SNCNameColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SNCName' in table 'Service' is DBNull.", e)
+                End Try
             End Get
             Set
-                Me.SetParentRow(value, Me.Table.ParentRelations("MsgServer_Service"))
+                Me(Me.tableService.SNCNameColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property SAPCodePage() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.SAPCodePageColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SAPCodePage' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.SAPCodePageColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property DownUpCodePage() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.DownUpCodePageColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'DownUpCodePage' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.DownUpCodePageColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property SNCOP() As Short
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.SNCOPColumn),Short)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SNCop' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.SNCOPColumn) = value
             End Set
         End Property
         
@@ -1363,6 +1559,17 @@ Partial Friend Class SAPSysRepository
             End Get
             Set
                 Me.SetParentRow(value, Me.Table.ParentRelations("Workspace_Service"))
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property MsgServerRow() As MsgServerRow
+            Get
+                Return CType(Me.GetParentRow(Me.Table.ParentRelations("MsgServer_Service")),MsgServerRow)
+            End Get
+            Set
+                Me.SetParentRow(value, Me.Table.ParentRelations("MsgServer_Service"))
             End Set
         End Property
         
@@ -1380,14 +1587,50 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsHostNull() As Boolean
-            Return Me.IsNull(Me.tableService.HostColumn)
+        Public Function IsDescriptionNull() As Boolean
+            Return Me.IsNull(Me.tableService.DescriptionColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetHostNull()
-            Me(Me.tableService.HostColumn) = Global.System.Convert.DBNull
+        Public Sub SetDescriptionNull()
+            Me(Me.tableService.DescriptionColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsTypeNull() As Boolean
+            Return Me.IsNull(Me.tableService.TypeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetTypeNull()
+            Me(Me.tableService.TypeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsServerNull() As Boolean
+            Return Me.IsNull(Me.tableService.ServerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetServerNull()
+            Me(Me.tableService.ServerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsSystemIDNull() As Boolean
+            Return Me.IsNull(Me.tableService.SystemIDColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetSystemIDNull()
+            Me(Me.tableService.SystemIDColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1400,6 +1643,54 @@ Partial Friend Class SAPSysRepository
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetMsgSvrIDNull()
             Me(Me.tableService.MsgSvrIDColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsSNCNameNull() As Boolean
+            Return Me.IsNull(Me.tableService.SNCNameColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetSNCNameNull()
+            Me(Me.tableService.SNCNameColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsSAPCodePageNull() As Boolean
+            Return Me.IsNull(Me.tableService.SAPCodePageColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetSAPCodePageNull()
+            Me(Me.tableService.SAPCodePageColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsDownUpCodePageNull() As Boolean
+            Return Me.IsNull(Me.tableService.DownUpCodePageColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetDownUpCodePageNull()
+            Me(Me.tableService.DownUpCodePageColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsSNCOPNull() As Boolean
+            Return Me.IsNull(Me.tableService.SNCOPColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetSNCOPNull()
+            Me(Me.tableService.SNCOPColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -1637,6 +1928,21 @@ Partial Friend Class SAPSysRepository
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Hierachy_Notation() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableWorkspace.Hierachy_NotationColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Hierachy_Notation' in table 'Workspace' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableWorkspace.Hierachy_NotationColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsDescriptionNull() As Boolean
             Return Me.IsNull(Me.tableWorkspace.DescriptionColumn)
         End Function
@@ -1669,6 +1975,18 @@ Partial Friend Class SAPSysRepository
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetService_uuidNull()
             Me(Me.tableWorkspace.Service_uuidColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsHierachy_NotationNull() As Boolean
+            Return Me.IsNull(Me.tableWorkspace.Hierachy_NotationColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetHierachy_NotationNull()
+            Me(Me.tableWorkspace.Hierachy_NotationColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

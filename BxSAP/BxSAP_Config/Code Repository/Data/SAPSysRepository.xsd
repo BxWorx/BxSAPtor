@@ -17,8 +17,15 @@
             <xs:sequence>
               <xs:element name="UUID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnUUID" msprop:Generator_ColumnPropNameInRow="UUID" msprop:Generator_ColumnPropNameInTable="UUIDColumn" msprop:Generator_UserColumnName="UUID" type="xs:string" />
               <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
-              <xs:element name="Host" msprop:Generator_ColumnVarNameInTable="columnHost" msprop:Generator_ColumnPropNameInRow="Host" msprop:Generator_ColumnPropNameInTable="HostColumn" msprop:Generator_UserColumnName="Host" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Type" msprop:Generator_ColumnVarNameInTable="columnType" msprop:Generator_ColumnPropNameInRow="Type" msprop:Generator_ColumnPropNameInTable="TypeColumn" msprop:Generator_UserColumnName="Type" type="xs:string" minOccurs="0" />
+              <xs:element name="Server" msprop:Generator_ColumnVarNameInTable="columnServer" msprop:Generator_ColumnPropNameInRow="Server" msprop:Generator_ColumnPropNameInTable="ServerColumn" msprop:Generator_UserColumnName="Server" type="xs:string" minOccurs="0" />
+              <xs:element name="SystemID" msprop:Generator_ColumnVarNameInTable="columnSystemID" msprop:Generator_ColumnPropNameInRow="SystemID" msprop:Generator_ColumnPropNameInTable="SystemIDColumn" msprop:Generator_UserColumnName="SystemID" type="xs:string" minOccurs="0" />
               <xs:element name="MsgSvrID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnMsgSvrID" msprop:Generator_ColumnPropNameInRow="MsgSvrID" msprop:Generator_ColumnPropNameInTable="MsgSvrIDColumn" msprop:Generator_UserColumnName="MsgSvrID" type="xs:string" minOccurs="0" />
+              <xs:element name="SNCName" msprop:Generator_ColumnVarNameInTable="columnSNCName" msprop:Generator_ColumnPropNameInRow="SNCName" msprop:Generator_ColumnPropNameInTable="SNCNameColumn" msprop:Generator_UserColumnName="SNCName" type="xs:string" minOccurs="0" />
+              <xs:element name="SAPCodePage" msprop:Generator_ColumnVarNameInTable="columnSAPCodePage" msprop:Generator_ColumnPropNameInRow="SAPCodePage" msprop:Generator_ColumnPropNameInTable="SAPCodePageColumn" msprop:Generator_UserColumnName="SAPCodePage" type="xs:string" minOccurs="0" />
+              <xs:element name="DownUpCodePage" msprop:Generator_ColumnVarNameInTable="columnDownUpCodePage" msprop:Generator_ColumnPropNameInRow="DownUpCodePage" msprop:Generator_ColumnPropNameInTable="DownUpCodePageColumn" msprop:Generator_UserColumnName="DownUpCodePage" type="xs:string" minOccurs="0" />
+              <xs:element name="SNCop" msprop:Generator_ColumnVarNameInTable="columnSNCOP" msprop:Generator_ColumnPropNameInRow="SNCOP" msprop:Generator_ColumnPropNameInTable="SNCOPColumn" msprop:Generator_UserColumnName="SNCop" type="xs:short" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -40,6 +47,7 @@
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
               <xs:element name="Parent_uuid" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnParent_uuid" msprop:Generator_ColumnPropNameInRow="Parent_uuid" msprop:Generator_ColumnPropNameInTable="Parent_uuidColumn" msprop:Generator_UserColumnName="Parent_uuid" type="xs:string" minOccurs="0" />
               <xs:element name="Service_uuid" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnService_uuid" msprop:Generator_ColumnPropNameInRow="Service_uuid" msprop:Generator_ColumnPropNameInTable="Service_uuidColumn" msprop:Generator_UserColumnName="Service_uuid" type="xs:string" minOccurs="0" />
+              <xs:element name="Hierachy_Notation" msprop:Generator_ColumnVarNameInTable="columnHierachy_Notation" msprop:Generator_ColumnPropNameInRow="Hierachy_Notation" msprop:Generator_ColumnPropNameInTable="Hierachy_NotationColumn" msprop:Generator_UserColumnName="Hierachy_Notation" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -57,14 +65,11 @@
       <xs:selector xpath=".//mstns:Workspace" />
       <xs:field xpath="mstns:UUID" />
     </xs:unique>
-    <xs:keyref name="MsgServer_Service" refer="MsgServer_Constraint1" msprop:rel_Generator_UserChildTable="Service" msprop:rel_Generator_ChildPropName="GetServiceRows" msprop:rel_Generator_UserRelationName="MsgServer_Service" msprop:rel_Generator_ParentPropName="MsgServerRow" msprop:rel_Generator_RelationVarName="relationMsgServer_Service" msprop:rel_Generator_UserParentTable="MsgServer" msdata:UpdateRule="None" msdata:DeleteRule="None">
-      <xs:selector xpath=".//mstns:Service" />
-      <xs:field xpath="mstns:MsgSvrID" />
-    </xs:keyref>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
       <msdata:Relationship name="Workspace_Service" msdata:parent="Workspace" msdata:child="Service" msdata:parentkey="Service_uuid" msdata:childkey="UUID" msprop:Generator_UserChildTable="Service" msprop:Generator_ChildPropName="GetServiceRows" msprop:Generator_UserRelationName="Workspace_Service" msprop:Generator_RelationVarName="relationWorkspace_Service" msprop:Generator_UserParentTable="Workspace" msprop:Generator_ParentPropName="WorkspaceRow" />
+      <msdata:Relationship name="MsgServer_Service" msdata:parent="MsgServer" msdata:child="Service" msdata:parentkey="UUID" msdata:childkey="MsgSvrID" msprop:Generator_UserChildTable="Service" msprop:Generator_ChildPropName="GetServiceRows" msprop:Generator_UserRelationName="MsgServer_Service" msprop:Generator_RelationVarName="relationMsgServer_Service" msprop:Generator_UserParentTable="MsgServer" msprop:Generator_ParentPropName="MsgServerRow" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>
