@@ -5,6 +5,7 @@ Imports xSAPCon	= BxSAP_Config.Model.Logon.Connections
 Imports xSAPSys	= BxSAP_Config.Model.Logon.Systems
 Imports xSAPCCf	= BxSAP_Config.Model.Logon.ConnectionSetup
 Imports xSAPXML	= BxSAP_Config.Model.Sapgui.Xml
+Imports xSAPSet	= BxSAP_Config.Model.Settings
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Namespace UT_Config
 
@@ -60,7 +61,28 @@ Namespace UT_Config
 
 		#Region "Test Units"
 
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			<TestMethod()>
+			Public Sub UT_Config_Settings_Model()
 
+				Dim lo_SysSet	As BxSAP_Config.BxSAPConfig_Settings	= New BxSAP_Config.BxSAPConfig_Settings
+				Dim lo_SetMdl	As xSAPSet.SettingsModel	= New xSAPSet.SettingsModel(lo_SysSet.LogonSettings)
+
+				Dim lo_Row0		As	BxSAP_Config.BxSAPConfig_Settings.LogonSettingsRow
+				Dim lo_Row1		As	BxSAP_Config.BxSAPConfig_Settings.LogonSettingsRow
+
+				lo_Row0	= lo_SetMdl.GetOptions()
+				lo_Row1	= lo_SetMdl.GetOptions(1)
+
+				lo_Row0.DefLang	= "XX"
+				lo_SetMdl.UpdateOptions(lo_Row0)
+
+				lo_Row1	= lo_SetMdl.GetOptions()
+
+				Assert.AreEqual( lo_Row1.DefLang,	"XX", "Settings: Fail: Save/Load: Systems")
+
+
+			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			<TestMethod()>
 			Public Sub UT_Config_SAPGUI_XML_Parser()

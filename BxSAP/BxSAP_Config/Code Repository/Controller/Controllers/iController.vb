@@ -69,7 +69,7 @@ Namespace Controllers
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Section: Logon: Options"
 
-			Function	GetLogonOptions(Optional ByVal VersionNo As UInt16	= 0)	As BxSAPConfig_Settings.LogonSettingsRow
+			'Function	GetLogonOptions(Optional ByVal VersionNo As UInt16	= 0)	As BxSAPConfig_Settings.LogonSettingsRow
 
 
 			Function	GetLogonOptions()																														As	iLogonOptionsDTO

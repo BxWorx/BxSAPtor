@@ -332,6 +332,8 @@ Partial Public Class BxSAPConfig_Settings
         
         Private columnAutoConnect As Global.System.Data.DataColumn
         
+        Private Shared columnTimeStamp_defaultValue As Date = Date.Parse("2013-12-06T00:00:00")
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -522,6 +524,9 @@ Partial Public Class BxSAPConfig_Settings
             Me.columnVersion.AllowDBNull = false
             Me.columnVersion.ReadOnly = true
             Me.columnVersion.Unique = true
+            Me.columnTimeStamp.AllowDBNull = false
+            Me.columnTimeStamp.ReadOnly = true
+            Me.columnTimeStamp.DefaultValue = CType(LogonSettingsDataTable.columnTimeStamp_defaultValue,Date)
             Me.columnDefLang.AllowDBNull = false
             Me.columnDefLang.DefaultValue = CType("EN",String)
             Me.columnDefLang.MaxLength = 2
@@ -1155,11 +1160,7 @@ Partial Public Class BxSAPConfig_Settings
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property TimeStamp() As Date
             Get
-                Try 
-                    Return CType(Me(Me.tableLogonSettings.TimeStampColumn),Date)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'TimeStamp' in table 'LogonSettings' is DBNull.", e)
-                End Try
+                Return CType(Me(Me.tableLogonSettings.TimeStampColumn),Date)
             End Get
             Set
                 Me(Me.tableLogonSettings.TimeStampColumn) = value
@@ -1220,18 +1221,6 @@ Partial Public Class BxSAPConfig_Settings
                 Me(Me.tableLogonSettings.AutoConnectColumn) = value
             End Set
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsTimeStampNull() As Boolean
-            Return Me.IsNull(Me.tableLogonSettings.TimeStampColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetTimeStampNull()
-            Me(Me.tableLogonSettings.TimeStampColumn) = Global.System.Convert.DBNull
-        End Sub
     End Class
     
     '''<summary>
