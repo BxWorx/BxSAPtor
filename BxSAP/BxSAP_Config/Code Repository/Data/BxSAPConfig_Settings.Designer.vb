@@ -26,9 +26,9 @@ Namespace Model.Settings
     Partial Public Class BxSAPConfig_Settings
         Inherits Global.System.Data.DataSet
         
-        Private tableLogonSettings As LogonSettingsDataTable
-        
         Private tableConnectionSetup As ConnectionSetupDataTable
+        
+        Private tableLogonSettings As LogonSettingsDataTable
         
         Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
         
@@ -59,11 +59,11 @@ Namespace Model.Settings
             If (Me.DetermineSchemaSerializationMode(info, context) = Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
                 Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
                 ds.ReadXmlSchema(New Global.System.Xml.XmlTextReader(New Global.System.IO.StringReader(strSchema)))
-                If (Not (ds.Tables("LogonSettings")) Is Nothing) Then
-                    MyBase.Tables.Add(New LogonSettingsDataTable(ds.Tables("LogonSettings")))
-                End If
                 If (Not (ds.Tables("ConnectionSetup")) Is Nothing) Then
                     MyBase.Tables.Add(New ConnectionSetupDataTable(ds.Tables("ConnectionSetup")))
+                End If
+                If (Not (ds.Tables("LogonSettings")) Is Nothing) Then
+                    MyBase.Tables.Add(New LogonSettingsDataTable(ds.Tables("LogonSettings")))
                 End If
                 Me.DataSetName = ds.DataSetName
                 Me.Prefix = ds.Prefix
@@ -86,9 +86,9 @@ Namespace Model.Settings
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false),  _
          Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-        Public ReadOnly Property LogonSettings() As LogonSettingsDataTable
+        Public ReadOnly Property ConnectionSetup() As ConnectionSetupDataTable
             Get
-                Return Me.tableLogonSettings
+                Return Me.tableConnectionSetup
             End Get
         End Property
         
@@ -96,9 +96,9 @@ Namespace Model.Settings
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false),  _
          Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-        Public ReadOnly Property ConnectionSetup() As ConnectionSetupDataTable
+        Public ReadOnly Property LogonSettings() As LogonSettingsDataTable
             Get
-                Return Me.tableConnectionSetup
+                Return Me.tableLogonSettings
             End Get
         End Property
         
@@ -169,11 +169,11 @@ Namespace Model.Settings
                 Me.Reset
                 Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
                 ds.ReadXml(reader)
-                If (Not (ds.Tables("LogonSettings")) Is Nothing) Then
-                    MyBase.Tables.Add(New LogonSettingsDataTable(ds.Tables("LogonSettings")))
-                End If
                 If (Not (ds.Tables("ConnectionSetup")) Is Nothing) Then
                     MyBase.Tables.Add(New ConnectionSetupDataTable(ds.Tables("ConnectionSetup")))
+                End If
+                If (Not (ds.Tables("LogonSettings")) Is Nothing) Then
+                    MyBase.Tables.Add(New LogonSettingsDataTable(ds.Tables("LogonSettings")))
                 End If
                 Me.DataSetName = ds.DataSetName
                 Me.Prefix = ds.Prefix
@@ -207,16 +207,16 @@ Namespace Model.Settings
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Friend Overloads Sub InitVars(ByVal initTable As Boolean)
-            Me.tableLogonSettings = CType(MyBase.Tables("LogonSettings"),LogonSettingsDataTable)
-            If (initTable = true) Then
-                If (Not (Me.tableLogonSettings) Is Nothing) Then
-                    Me.tableLogonSettings.InitVars
-                End If
-            End If
             Me.tableConnectionSetup = CType(MyBase.Tables("ConnectionSetup"),ConnectionSetupDataTable)
             If (initTable = true) Then
                 If (Not (Me.tableConnectionSetup) Is Nothing) Then
                     Me.tableConnectionSetup.InitVars
+                End If
+            End If
+            Me.tableLogonSettings = CType(MyBase.Tables("LogonSettings"),LogonSettingsDataTable)
+            If (initTable = true) Then
+                If (Not (Me.tableLogonSettings) Is Nothing) Then
+                    Me.tableLogonSettings.InitVars
                 End If
             End If
         End Sub
@@ -229,21 +229,21 @@ Namespace Model.Settings
             Me.Namespace = "http://tempuri.org/BxSAPConfig_Settings.xsd"
             Me.EnforceConstraints = true
             Me.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
-            Me.tableLogonSettings = New LogonSettingsDataTable()
-            MyBase.Tables.Add(Me.tableLogonSettings)
             Me.tableConnectionSetup = New ConnectionSetupDataTable()
             MyBase.Tables.Add(Me.tableConnectionSetup)
+            Me.tableLogonSettings = New LogonSettingsDataTable()
+            MyBase.Tables.Add(Me.tableLogonSettings)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Function ShouldSerializeLogonSettings() As Boolean
+        Private Function ShouldSerializeConnectionSetup() As Boolean
             Return false
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Function ShouldSerializeConnectionSetup() As Boolean
+        Private Function ShouldSerializeLogonSettings() As Boolean
             Return false
         End Function
         
@@ -306,368 +306,10 @@ Namespace Model.Settings
         End Function
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Delegate Sub LogonSettingsRowChangeEventHandler(ByVal sender As Object, ByVal e As LogonSettingsRowChangeEvent)
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Delegate Sub ConnectionSetupRowChangeEventHandler(ByVal sender As Object, ByVal e As ConnectionSetupRowChangeEvent)
         
-        '''<summary>
-        '''Represents the strongly named DataTable class.
-        '''</summary>
-        <Global.System.Serializable(),  _
-         Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-        Partial Public Class LogonSettingsDataTable
-            Inherits Global.System.Data.TypedTableBase(Of LogonSettingsRow)
-            
-            Private columnVersion As Global.System.Data.DataColumn
-            
-            Private columnTimeStamp As Global.System.Data.DataColumn
-            
-            Private columnDefLang As Global.System.Data.DataColumn
-            
-            Private columnShowPwrd As Global.System.Data.DataColumn
-            
-            Private columnSavePwrd As Global.System.Data.DataColumn
-            
-            Private columnAutoSave As Global.System.Data.DataColumn
-            
-            Private columnAutoConnect As Global.System.Data.DataColumn
-            
-            Private Shared columnTimeStamp_defaultValue As Date = Date.Parse("2013-12-06T00:00:00")
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Sub New()
-                MyBase.New
-                Me.TableName = "LogonSettings"
-                Me.BeginInit
-                Me.InitClass
-                Me.EndInit
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Friend Sub New(ByVal table As Global.System.Data.DataTable)
-                MyBase.New
-                Me.TableName = table.TableName
-                If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
-                    Me.CaseSensitive = table.CaseSensitive
-                End If
-                If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
-                    Me.Locale = table.Locale
-                End If
-                If (table.Namespace <> table.DataSet.Namespace) Then
-                    Me.Namespace = table.Namespace
-                End If
-                Me.Prefix = table.Prefix
-                Me.MinimumCapacity = table.MinimumCapacity
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
-                MyBase.New(info, context)
-                Me.InitVars
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property VersionColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnVersion
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property TimeStampColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnTimeStamp
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property DefLangColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnDefLang
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property ShowPwrdColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnShowPwrd
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property SavePwrdColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnSavePwrd
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property AutoSaveColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnAutoSave
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property AutoConnectColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnAutoConnect
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-             Global.System.ComponentModel.Browsable(false)>  _
-            Public ReadOnly Property Count() As Integer
-                Get
-                    Return Me.Rows.Count
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Default ReadOnly Property Item(ByVal index As Integer) As LogonSettingsRow
-                Get
-                    Return CType(Me.Rows(index),LogonSettingsRow)
-                End Get
-            End Property
-            
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Event LogonSettingsRowChanging As LogonSettingsRowChangeEventHandler
-            
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Event LogonSettingsRowChanged As LogonSettingsRowChangeEventHandler
-            
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Event LogonSettingsRowDeleting As LogonSettingsRowChangeEventHandler
-            
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Event LogonSettingsRowDeleted As LogonSettingsRowChangeEventHandler
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Overloads Sub AddLogonSettingsRow(ByVal row As LogonSettingsRow)
-                Me.Rows.Add(row)
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Overloads Function AddLogonSettingsRow(ByVal TimeStamp As Date, ByVal DefLang As String, ByVal ShowPwrd As Boolean, ByVal SavePwrd As Boolean, ByVal AutoSave As Boolean, ByVal AutoConnect As Boolean) As LogonSettingsRow
-                Dim rowLogonSettingsRow As LogonSettingsRow = CType(Me.NewRow,LogonSettingsRow)
-                Dim columnValuesArray() As Object = New Object() {Nothing, TimeStamp, DefLang, ShowPwrd, SavePwrd, AutoSave, AutoConnect}
-                rowLogonSettingsRow.ItemArray = columnValuesArray
-                Me.Rows.Add(rowLogonSettingsRow)
-                Return rowLogonSettingsRow
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Function FindByVersion(ByVal Version As Short) As LogonSettingsRow
-                Return CType(Me.Rows.Find(New Object() {Version}),LogonSettingsRow)
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Overrides Function Clone() As Global.System.Data.DataTable
-                Dim cln As LogonSettingsDataTable = CType(MyBase.Clone,LogonSettingsDataTable)
-                cln.InitVars
-                Return cln
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-                Return New LogonSettingsDataTable()
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Friend Sub InitVars()
-                Me.columnVersion = MyBase.Columns("Version")
-                Me.columnTimeStamp = MyBase.Columns("TimeStamp")
-                Me.columnDefLang = MyBase.Columns("DefLang")
-                Me.columnShowPwrd = MyBase.Columns("ShowPwrd")
-                Me.columnSavePwrd = MyBase.Columns("SavePwrd")
-                Me.columnAutoSave = MyBase.Columns("AutoSave")
-                Me.columnAutoConnect = MyBase.Columns("AutoConnect")
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Private Sub InitClass()
-                Me.columnVersion = New Global.System.Data.DataColumn("Version", GetType(Short), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnVersion)
-                Me.columnTimeStamp = New Global.System.Data.DataColumn("TimeStamp", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnTimeStamp)
-                Me.columnDefLang = New Global.System.Data.DataColumn("DefLang", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnDefLang)
-                Me.columnShowPwrd = New Global.System.Data.DataColumn("ShowPwrd", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnShowPwrd)
-                Me.columnSavePwrd = New Global.System.Data.DataColumn("SavePwrd", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnSavePwrd)
-                Me.columnAutoSave = New Global.System.Data.DataColumn("AutoSave", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnAutoSave)
-                Me.columnAutoConnect = New Global.System.Data.DataColumn("AutoConnect", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnAutoConnect)
-                Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnVersion}, true))
-                Me.columnVersion.AutoIncrement = true
-                Me.columnVersion.AllowDBNull = false
-                Me.columnVersion.ReadOnly = true
-                Me.columnVersion.Unique = true
-                Me.columnTimeStamp.AllowDBNull = false
-                Me.columnTimeStamp.ReadOnly = true
-                Me.columnTimeStamp.DefaultValue = CType(LogonSettingsDataTable.columnTimeStamp_defaultValue,Date)
-                Me.columnDefLang.AllowDBNull = false
-                Me.columnDefLang.DefaultValue = CType("EN",String)
-                Me.columnDefLang.MaxLength = 2
-                Me.columnShowPwrd.AllowDBNull = false
-                Me.columnShowPwrd.Caption = "Show Password"
-                Me.columnShowPwrd.DefaultValue = CType(false,Boolean)
-                Me.columnSavePwrd.AllowDBNull = false
-                Me.columnSavePwrd.DefaultValue = CType(true,Boolean)
-                Me.columnAutoSave.AllowDBNull = false
-                Me.columnAutoSave.DefaultValue = CType(true,Boolean)
-                Me.columnAutoConnect.AllowDBNull = false
-                Me.columnAutoConnect.DefaultValue = CType(true,Boolean)
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Function NewLogonSettingsRow() As LogonSettingsRow
-                Return CType(Me.NewRow,LogonSettingsRow)
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-                Return New LogonSettingsRow(builder)
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Protected Overrides Function GetRowType() As Global.System.Type
-                Return GetType(LogonSettingsRow)
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-                MyBase.OnRowChanged(e)
-                If (Not (Me.LogonSettingsRowChangedEvent) Is Nothing) Then
-                    RaiseEvent LogonSettingsRowChanged(Me, New LogonSettingsRowChangeEvent(CType(e.Row,LogonSettingsRow), e.Action))
-                End If
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-                MyBase.OnRowChanging(e)
-                If (Not (Me.LogonSettingsRowChangingEvent) Is Nothing) Then
-                    RaiseEvent LogonSettingsRowChanging(Me, New LogonSettingsRowChangeEvent(CType(e.Row,LogonSettingsRow), e.Action))
-                End If
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-                MyBase.OnRowDeleted(e)
-                If (Not (Me.LogonSettingsRowDeletedEvent) Is Nothing) Then
-                    RaiseEvent LogonSettingsRowDeleted(Me, New LogonSettingsRowChangeEvent(CType(e.Row,LogonSettingsRow), e.Action))
-                End If
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-                MyBase.OnRowDeleting(e)
-                If (Not (Me.LogonSettingsRowDeletingEvent) Is Nothing) Then
-                    RaiseEvent LogonSettingsRowDeleting(Me, New LogonSettingsRowChangeEvent(CType(e.Row,LogonSettingsRow), e.Action))
-                End If
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Sub RemoveLogonSettingsRow(ByVal row As LogonSettingsRow)
-                Me.Rows.Remove(row)
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-                Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
-                Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-                Dim ds As BxSAPConfig_Settings = New BxSAPConfig_Settings()
-                Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema"
-                any1.MinOccurs = New Decimal(0)
-                any1.MaxOccurs = Decimal.MaxValue
-                any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-                sequence.Items.Add(any1)
-                Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
-                any2.MinOccurs = New Decimal(1)
-                any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-                sequence.Items.Add(any2)
-                Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-                attribute1.Name = "namespace"
-                attribute1.FixedValue = ds.Namespace
-                type.Attributes.Add(attribute1)
-                Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-                attribute2.Name = "tableTypeName"
-                attribute2.FixedValue = "LogonSettingsDataTable"
-                type.Attributes.Add(attribute2)
-                type.Particle = sequence
-                Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
-                If xs.Contains(dsSchema.TargetNamespace) Then
-                    Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                    Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                    Try 
-                        Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
-                        dsSchema.Write(s1)
-                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
-                        Do While schemas.MoveNext
-                            schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
-                            s2.SetLength(0)
-                            schema.Write(s2)
-                            If (s1.Length = s2.Length) Then
-                                s1.Position = 0
-                                s2.Position = 0
-                                
-                                Do While ((s1.Position <> s1.Length)  _
-                                            AndAlso (s1.ReadByte = s2.ReadByte))
-                                    
-                                    
-                                Loop
-                                If (s1.Position = s1.Length) Then
-                                    Return type
-                                End If
-                            End If
-                            
-                        Loop
-                    Finally
-                        If (Not (s1) Is Nothing) Then
-                            s1.Close
-                        End If
-                        If (Not (s2) Is Nothing) Then
-                            s2.Close
-                        End If
-                    End Try
-                End If
-                xs.Add(dsSchema)
-                Return type
-            End Function
-        End Class
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Delegate Sub LogonSettingsRowChangeEventHandler(ByVal sender As Object, ByVal e As LogonSettingsRowChangeEvent)
         
         '''<summary>
         '''Represents the strongly named DataTable class.
@@ -676,10 +318,6 @@ Namespace Model.Settings
          Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
         Partial Public Class ConnectionSetupDataTable
             Inherits Global.System.Data.TypedTableBase(Of ConnectionSetupRow)
-            
-            Private columnVersion As Global.System.Data.DataColumn
-            
-            Private columnTimeStamp As Global.System.Data.DataColumn
             
             Private columnPeakConnectionLimit As Global.System.Data.DataColumn
             
@@ -706,6 +344,8 @@ Namespace Model.Settings
             Private columnXML_Path As Global.System.Data.DataColumn
             
             Private columnXML_FileName As Global.System.Data.DataColumn
+            
+            Private columnTimeStamp As Global.System.Data.DataColumn
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -741,22 +381,6 @@ Namespace Model.Settings
                 MyBase.New(info, context)
                 Me.InitVars
             End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property VersionColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnVersion
-                End Get
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property TimeStampColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnTimeStamp
-                End Get
-            End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -863,6 +487,14 @@ Namespace Model.Settings
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property TimeStampColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnTimeStamp
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
              Global.System.ComponentModel.Browsable(false)>  _
             Public ReadOnly Property Count() As Integer
@@ -899,18 +531,12 @@ Namespace Model.Settings
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Overloads Function AddConnectionSetupRow(ByVal TimeStamp As Date, ByVal PeakConnectionLimit As UShort, ByVal PoolSize As UShort, ByVal IdleCheckTime As UShort, ByVal IdleTimeout As UShort, ByVal SNC_LibPath As String, ByVal SNC_LibName32 As String, ByVal SNC_LibName64 As String, ByVal XML_UseSAPGUI As Boolean, ByVal XML_OnlyLoadGUI As Boolean, ByVal XML_FromWorkspace As String, ByVal XML_FromNode As String, ByVal XML_Path As String, ByVal XML_FileName As String) As ConnectionSetupRow
+            Public Overloads Function AddConnectionSetupRow(ByVal PeakConnectionLimit As UShort, ByVal PoolSize As UShort, ByVal IdleCheckTime As UShort, ByVal IdleTimeout As UShort, ByVal SNC_LibPath As String, ByVal SNC_LibName32 As String, ByVal SNC_LibName64 As String, ByVal XML_UseSAPGUI As Boolean, ByVal XML_OnlyLoadGUI As Boolean, ByVal XML_FromWorkspace As String, ByVal XML_FromNode As String, ByVal XML_Path As String, ByVal XML_FileName As String, ByVal TimeStamp As Date) As ConnectionSetupRow
                 Dim rowConnectionSetupRow As ConnectionSetupRow = CType(Me.NewRow,ConnectionSetupRow)
-                Dim columnValuesArray() As Object = New Object() {Nothing, TimeStamp, PeakConnectionLimit, PoolSize, IdleCheckTime, IdleTimeout, SNC_LibPath, SNC_LibName32, SNC_LibName64, XML_UseSAPGUI, XML_OnlyLoadGUI, XML_FromWorkspace, XML_FromNode, XML_Path, XML_FileName}
+                Dim columnValuesArray() As Object = New Object() {PeakConnectionLimit, PoolSize, IdleCheckTime, IdleTimeout, SNC_LibPath, SNC_LibName32, SNC_LibName64, XML_UseSAPGUI, XML_OnlyLoadGUI, XML_FromWorkspace, XML_FromNode, XML_Path, XML_FileName, TimeStamp}
                 rowConnectionSetupRow.ItemArray = columnValuesArray
                 Me.Rows.Add(rowConnectionSetupRow)
                 Return rowConnectionSetupRow
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Function FindByVersion(ByVal Version As Short) As ConnectionSetupRow
-                Return CType(Me.Rows.Find(New Object() {Version}),ConnectionSetupRow)
             End Function
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -930,8 +556,6 @@ Namespace Model.Settings
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
             Friend Sub InitVars()
-                Me.columnVersion = MyBase.Columns("Version")
-                Me.columnTimeStamp = MyBase.Columns("TimeStamp")
                 Me.columnPeakConnectionLimit = MyBase.Columns("PeakConnectionLimit")
                 Me.columnPoolSize = MyBase.Columns("PoolSize")
                 Me.columnIdleCheckTime = MyBase.Columns("IdleCheckTime")
@@ -945,15 +569,12 @@ Namespace Model.Settings
                 Me.columnXML_FromNode = MyBase.Columns("XML_FromNode")
                 Me.columnXML_Path = MyBase.Columns("XML_Path")
                 Me.columnXML_FileName = MyBase.Columns("XML_FileName")
+                Me.columnTimeStamp = MyBase.Columns("TimeStamp")
             End Sub
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
             Private Sub InitClass()
-                Me.columnVersion = New Global.System.Data.DataColumn("Version", GetType(Short), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnVersion)
-                Me.columnTimeStamp = New Global.System.Data.DataColumn("TimeStamp", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnTimeStamp)
                 Me.columnPeakConnectionLimit = New Global.System.Data.DataColumn("PeakConnectionLimit", GetType(UShort), Nothing, Global.System.Data.MappingType.Element)
                 MyBase.Columns.Add(Me.columnPeakConnectionLimit)
                 Me.columnPoolSize = New Global.System.Data.DataColumn("PoolSize", GetType(UShort), Nothing, Global.System.Data.MappingType.Element)
@@ -980,13 +601,8 @@ Namespace Model.Settings
                 MyBase.Columns.Add(Me.columnXML_Path)
                 Me.columnXML_FileName = New Global.System.Data.DataColumn("XML_FileName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
                 MyBase.Columns.Add(Me.columnXML_FileName)
-                Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnVersion}, true))
-                Me.columnVersion.AutoIncrement = true
-                Me.columnVersion.AllowDBNull = false
-                Me.columnVersion.ReadOnly = true
-                Me.columnVersion.Unique = true
-                Me.columnTimeStamp.AllowDBNull = false
-                Me.columnTimeStamp.DateTimeMode = Global.System.Data.DataSetDateTime.Utc
+                Me.columnTimeStamp = New Global.System.Data.DataColumn("TimeStamp", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnTimeStamp)
                 Me.columnPeakConnectionLimit.AllowDBNull = false
                 Me.columnPoolSize.AllowDBNull = false
                 Me.columnIdleCheckTime.AllowDBNull = false
@@ -1002,6 +618,7 @@ Namespace Model.Settings
                 Me.columnXML_FromNode.AllowDBNull = false
                 Me.columnXML_Path.AllowDBNull = false
                 Me.columnXML_FileName.AllowDBNull = false
+                Me.columnTimeStamp.AllowDBNull = false
             End Sub
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1132,96 +749,336 @@ Namespace Model.Settings
         End Class
         
         '''<summary>
-        '''Represents strongly named DataRow class.
+        '''Represents the strongly named DataTable class.
         '''</summary>
-        Partial Public Class LogonSettingsRow
-            Inherits Global.System.Data.DataRow
+        <Global.System.Serializable(),  _
+         Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
+        Partial Public Class LogonSettingsDataTable
+            Inherits Global.System.Data.TypedTableBase(Of LogonSettingsRow)
             
-            Private tableLogonSettings As LogonSettingsDataTable
+            Private columnDefLang As Global.System.Data.DataColumn
+            
+            Private columnShowPwrd As Global.System.Data.DataColumn
+            
+            Private columnSavePwrd As Global.System.Data.DataColumn
+            
+            Private columnAutoSave As Global.System.Data.DataColumn
+            
+            Private columnAutoConnect As Global.System.Data.DataColumn
+            
+            Private columnTimeStamp As Global.System.Data.DataColumn
+            
+            Private Shared columnTimeStamp_defaultValue As Date = Date.Parse("2013-12-06T00:00:00")
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
-                MyBase.New(rb)
-                Me.tableLogonSettings = CType(Me.Table,LogonSettingsDataTable)
+            Public Sub New()
+                MyBase.New
+                Me.TableName = "LogonSettings"
+                Me.BeginInit
+                Me.InitClass
+                Me.EndInit
             End Sub
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property Version() As Short
+            Friend Sub New(ByVal table As Global.System.Data.DataTable)
+                MyBase.New
+                Me.TableName = table.TableName
+                If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                    Me.CaseSensitive = table.CaseSensitive
+                End If
+                If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                    Me.Locale = table.Locale
+                End If
+                If (table.Namespace <> table.DataSet.Namespace) Then
+                    Me.Namespace = table.Namespace
+                End If
+                Me.Prefix = table.Prefix
+                Me.MinimumCapacity = table.MinimumCapacity
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+                MyBase.New(info, context)
+                Me.InitVars
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property DefLangColumn() As Global.System.Data.DataColumn
                 Get
-                    Return CType(Me(Me.tableLogonSettings.VersionColumn),Short)
+                    Return Me.columnDefLang
                 End Get
-                Set
-                    Me(Me.tableLogonSettings.VersionColumn) = value
-                End Set
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property TimeStamp() As Date
+            Public ReadOnly Property ShowPwrdColumn() As Global.System.Data.DataColumn
                 Get
-                    Return CType(Me(Me.tableLogonSettings.TimeStampColumn),Date)
+                    Return Me.columnShowPwrd
                 End Get
-                Set
-                    Me(Me.tableLogonSettings.TimeStampColumn) = value
-                End Set
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property DefLang() As String
+            Public ReadOnly Property SavePwrdColumn() As Global.System.Data.DataColumn
                 Get
-                    Return CType(Me(Me.tableLogonSettings.DefLangColumn),String)
+                    Return Me.columnSavePwrd
                 End Get
-                Set
-                    Me(Me.tableLogonSettings.DefLangColumn) = value
-                End Set
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property ShowPwrd() As Boolean
+            Public ReadOnly Property AutoSaveColumn() As Global.System.Data.DataColumn
                 Get
-                    Return CType(Me(Me.tableLogonSettings.ShowPwrdColumn),Boolean)
+                    Return Me.columnAutoSave
                 End Get
-                Set
-                    Me(Me.tableLogonSettings.ShowPwrdColumn) = value
-                End Set
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property SavePwrd() As Boolean
+            Public ReadOnly Property AutoConnectColumn() As Global.System.Data.DataColumn
                 Get
-                    Return CType(Me(Me.tableLogonSettings.SavePwrdColumn),Boolean)
+                    Return Me.columnAutoConnect
                 End Get
-                Set
-                    Me(Me.tableLogonSettings.SavePwrdColumn) = value
-                End Set
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property AutoSave() As Boolean
+            Public ReadOnly Property TimeStampColumn() As Global.System.Data.DataColumn
                 Get
-                    Return CType(Me(Me.tableLogonSettings.AutoSaveColumn),Boolean)
+                    Return Me.columnTimeStamp
                 End Get
-                Set
-                    Me(Me.tableLogonSettings.AutoSaveColumn) = value
-                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+             Global.System.ComponentModel.Browsable(false)>  _
+            Public ReadOnly Property Count() As Integer
+                Get
+                    Return Me.Rows.Count
+                End Get
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property AutoConnect() As Boolean
+            Public Default ReadOnly Property Item(ByVal index As Integer) As LogonSettingsRow
                 Get
-                    Return CType(Me(Me.tableLogonSettings.AutoConnectColumn),Boolean)
+                    Return CType(Me.Rows(index),LogonSettingsRow)
                 End Get
-                Set
-                    Me(Me.tableLogonSettings.AutoConnectColumn) = value
-                End Set
             End Property
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Event LogonSettingsRowChanging As LogonSettingsRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Event LogonSettingsRowChanged As LogonSettingsRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Event LogonSettingsRowDeleting As LogonSettingsRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Event LogonSettingsRowDeleted As LogonSettingsRowChangeEventHandler
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Overloads Sub AddLogonSettingsRow(ByVal row As LogonSettingsRow)
+                Me.Rows.Add(row)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Overloads Function AddLogonSettingsRow(ByVal DefLang As String, ByVal ShowPwrd As Boolean, ByVal SavePwrd As Boolean, ByVal AutoSave As Boolean, ByVal AutoConnect As Boolean, ByVal TimeStamp As Date) As LogonSettingsRow
+                Dim rowLogonSettingsRow As LogonSettingsRow = CType(Me.NewRow,LogonSettingsRow)
+                Dim columnValuesArray() As Object = New Object() {DefLang, ShowPwrd, SavePwrd, AutoSave, AutoConnect, TimeStamp}
+                rowLogonSettingsRow.ItemArray = columnValuesArray
+                Me.Rows.Add(rowLogonSettingsRow)
+                Return rowLogonSettingsRow
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Overrides Function Clone() As Global.System.Data.DataTable
+                Dim cln As LogonSettingsDataTable = CType(MyBase.Clone,LogonSettingsDataTable)
+                cln.InitVars
+                Return cln
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+                Return New LogonSettingsDataTable()
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Friend Sub InitVars()
+                Me.columnDefLang = MyBase.Columns("DefLang")
+                Me.columnShowPwrd = MyBase.Columns("ShowPwrd")
+                Me.columnSavePwrd = MyBase.Columns("SavePwrd")
+                Me.columnAutoSave = MyBase.Columns("AutoSave")
+                Me.columnAutoConnect = MyBase.Columns("AutoConnect")
+                Me.columnTimeStamp = MyBase.Columns("TimeStamp")
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Private Sub InitClass()
+                Me.columnDefLang = New Global.System.Data.DataColumn("DefLang", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnDefLang)
+                Me.columnShowPwrd = New Global.System.Data.DataColumn("ShowPwrd", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnShowPwrd)
+                Me.columnSavePwrd = New Global.System.Data.DataColumn("SavePwrd", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnSavePwrd)
+                Me.columnAutoSave = New Global.System.Data.DataColumn("AutoSave", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnAutoSave)
+                Me.columnAutoConnect = New Global.System.Data.DataColumn("AutoConnect", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnAutoConnect)
+                Me.columnTimeStamp = New Global.System.Data.DataColumn("TimeStamp", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnTimeStamp)
+                Me.columnDefLang.AllowDBNull = false
+                Me.columnDefLang.DefaultValue = CType("EN",String)
+                Me.columnDefLang.MaxLength = 2
+                Me.columnShowPwrd.AllowDBNull = false
+                Me.columnShowPwrd.Caption = "Show Password"
+                Me.columnShowPwrd.DefaultValue = CType(false,Boolean)
+                Me.columnSavePwrd.AllowDBNull = false
+                Me.columnSavePwrd.DefaultValue = CType(true,Boolean)
+                Me.columnAutoSave.AllowDBNull = false
+                Me.columnAutoSave.DefaultValue = CType(true,Boolean)
+                Me.columnAutoConnect.AllowDBNull = false
+                Me.columnAutoConnect.DefaultValue = CType(true,Boolean)
+                Me.columnTimeStamp.AllowDBNull = false
+                Me.columnTimeStamp.DefaultValue = CType(LogonSettingsDataTable.columnTimeStamp_defaultValue,Date)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Function NewLogonSettingsRow() As LogonSettingsRow
+                Return CType(Me.NewRow,LogonSettingsRow)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+                Return New LogonSettingsRow(builder)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Function GetRowType() As Global.System.Type
+                Return GetType(LogonSettingsRow)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanged(e)
+                If (Not (Me.LogonSettingsRowChangedEvent) Is Nothing) Then
+                    RaiseEvent LogonSettingsRowChanged(Me, New LogonSettingsRowChangeEvent(CType(e.Row,LogonSettingsRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanging(e)
+                If (Not (Me.LogonSettingsRowChangingEvent) Is Nothing) Then
+                    RaiseEvent LogonSettingsRowChanging(Me, New LogonSettingsRowChangeEvent(CType(e.Row,LogonSettingsRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleted(e)
+                If (Not (Me.LogonSettingsRowDeletedEvent) Is Nothing) Then
+                    RaiseEvent LogonSettingsRowDeleted(Me, New LogonSettingsRowChangeEvent(CType(e.Row,LogonSettingsRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleting(e)
+                If (Not (Me.LogonSettingsRowDeletingEvent) Is Nothing) Then
+                    RaiseEvent LogonSettingsRowDeleting(Me, New LogonSettingsRowChangeEvent(CType(e.Row,LogonSettingsRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Sub RemoveLogonSettingsRow(ByVal row As LogonSettingsRow)
+                Me.Rows.Remove(row)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+                Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+                Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+                Dim ds As BxSAPConfig_Settings = New BxSAPConfig_Settings()
+                Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+                any1.MinOccurs = New Decimal(0)
+                any1.MaxOccurs = Decimal.MaxValue
+                any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any1)
+                Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+                any2.MinOccurs = New Decimal(1)
+                any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any2)
+                Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute1.Name = "namespace"
+                attribute1.FixedValue = ds.Namespace
+                type.Attributes.Add(attribute1)
+                Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute2.Name = "tableTypeName"
+                attribute2.FixedValue = "LogonSettingsDataTable"
+                type.Attributes.Add(attribute2)
+                type.Particle = sequence
+                Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+                If xs.Contains(dsSchema.TargetNamespace) Then
+                    Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Try 
+                        Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                        dsSchema.Write(s1)
+                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                        Do While schemas.MoveNext
+                            schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
+                            s2.SetLength(0)
+                            schema.Write(s2)
+                            If (s1.Length = s2.Length) Then
+                                s1.Position = 0
+                                s2.Position = 0
+                                
+                                Do While ((s1.Position <> s1.Length)  _
+                                            AndAlso (s1.ReadByte = s2.ReadByte))
+                                    
+                                    
+                                Loop
+                                If (s1.Position = s1.Length) Then
+                                    Return type
+                                End If
+                            End If
+                            
+                        Loop
+                    Finally
+                        If (Not (s1) Is Nothing) Then
+                            s1.Close
+                        End If
+                        If (Not (s2) Is Nothing) Then
+                            s2.Close
+                        End If
+                    End Try
+                End If
+                xs.Add(dsSchema)
+                Return type
+            End Function
         End Class
         
         '''<summary>
@@ -1238,28 +1095,6 @@ Namespace Model.Settings
                 MyBase.New(rb)
                 Me.tableConnectionSetup = CType(Me.Table,ConnectionSetupDataTable)
             End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property Version() As Short
-                Get
-                    Return CType(Me(Me.tableConnectionSetup.VersionColumn),Short)
-                End Get
-                Set
-                    Me(Me.tableConnectionSetup.VersionColumn) = value
-                End Set
-            End Property
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Property TimeStamp() As Date
-                Get
-                    Return CType(Me(Me.tableConnectionSetup.TimeStampColumn),Date)
-                End Get
-                Set
-                    Me(Me.tableConnectionSetup.TimeStampColumn) = value
-                End Set
-            End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -1403,41 +1238,98 @@ Namespace Model.Settings
                     Me(Me.tableConnectionSetup.XML_FileNameColumn) = value
                 End Set
             End Property
-        End Class
-        
-        '''<summary>
-        '''Row event argument class
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Class LogonSettingsRowChangeEvent
-            Inherits Global.System.EventArgs
-            
-            Private eventRow As LogonSettingsRow
-            
-            Private eventAction As Global.System.Data.DataRowAction
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public Sub New(ByVal row As LogonSettingsRow, ByVal action As Global.System.Data.DataRowAction)
-                MyBase.New
-                Me.eventRow = row
-                Me.eventAction = action
+            Public Property TimeStamp() As Date
+                Get
+                    Return CType(Me(Me.tableConnectionSetup.TimeStampColumn),Date)
+                End Get
+                Set
+                    Me(Me.tableConnectionSetup.TimeStampColumn) = value
+                End Set
+            End Property
+        End Class
+        
+        '''<summary>
+        '''Represents strongly named DataRow class.
+        '''</summary>
+        Partial Public Class LogonSettingsRow
+            Inherits Global.System.Data.DataRow
+            
+            Private tableLogonSettings As LogonSettingsDataTable
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+                MyBase.New(rb)
+                Me.tableLogonSettings = CType(Me.Table,LogonSettingsDataTable)
             End Sub
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property Row() As LogonSettingsRow
+            Public Property DefLang() As String
                 Get
-                    Return Me.eventRow
+                    Return CType(Me(Me.tableLogonSettings.DefLangColumn),String)
                 End Get
+                Set
+                    Me(Me.tableLogonSettings.DefLangColumn) = value
+                End Set
             End Property
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-            Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+            Public Property ShowPwrd() As Boolean
                 Get
-                    Return Me.eventAction
+                    Return CType(Me(Me.tableLogonSettings.ShowPwrdColumn),Boolean)
                 End Get
+                Set
+                    Me(Me.tableLogonSettings.ShowPwrdColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Property SavePwrd() As Boolean
+                Get
+                    Return CType(Me(Me.tableLogonSettings.SavePwrdColumn),Boolean)
+                End Get
+                Set
+                    Me(Me.tableLogonSettings.SavePwrdColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Property AutoSave() As Boolean
+                Get
+                    Return CType(Me(Me.tableLogonSettings.AutoSaveColumn),Boolean)
+                End Get
+                Set
+                    Me(Me.tableLogonSettings.AutoSaveColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Property AutoConnect() As Boolean
+                Get
+                    Return CType(Me(Me.tableLogonSettings.AutoConnectColumn),Boolean)
+                End Get
+                Set
+                    Me(Me.tableLogonSettings.AutoConnectColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Property TimeStamp() As Date
+                Get
+                    Return CType(Me(Me.tableLogonSettings.TimeStampColumn),Date)
+                End Get
+                Set
+                    Me(Me.tableLogonSettings.TimeStampColumn) = value
+                End Set
             End Property
         End Class
         
@@ -1463,6 +1355,42 @@ Namespace Model.Settings
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
             Public ReadOnly Property Row() As ConnectionSetupRow
+                Get
+                    Return Me.eventRow
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+                Get
+                    Return Me.eventAction
+                End Get
+            End Property
+        End Class
+        
+        '''<summary>
+        '''Row event argument class
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Class LogonSettingsRowChangeEvent
+            Inherits Global.System.EventArgs
+            
+            Private eventRow As LogonSettingsRow
+            
+            Private eventAction As Global.System.Data.DataRowAction
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Sub New(ByVal row As LogonSettingsRow, ByVal action As Global.System.Data.DataRowAction)
+                MyBase.New
+                Me.eventRow = row
+                Me.eventAction = action
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property Row() As LogonSettingsRow
                 Get
                     Return Me.eventRow
                 End Get

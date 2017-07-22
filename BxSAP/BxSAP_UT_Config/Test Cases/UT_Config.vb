@@ -65,57 +65,58 @@ Namespace UT_Config
 			<TestMethod()>
 			Public Sub UT_Config_Settings_DataModel()
 
-				Dim lo_SysSet	As xSAPSet.BxSAPConfig_Settings	= New xSAPSet.BxSAPConfig_Settings
-
-
-				Dim lo_SetMdl	As xSAPSet.SettingDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)
+				Dim lo_SysSet		As xSAPSet.BxSAPConfig_Settings	= New xSAPSet.BxSAPConfig_Settings
+				Dim lo_SetMdl		As xSAPSet.SettingDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)
+				Dim lo_Row0			As xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
+				Dim lo_Row1			As xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
 			
 				lo_SetMdl	= New xSAPSet.SettingDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)(lo_SysSet.LogonSettings)
-				
-			
-
-
-			End Sub
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			<TestMethod()>
-			Public Sub UT_Config_Settings_Model()
-
-				Dim lo_SysSet	As xSAPSet.BxSAPConfig_Settings	= New xSAPSet.BxSAPConfig_Settings
-				Dim lo_SetMdl	As xSAPSet.SettingsModel				= New xSAPSet.SettingsModel(lo_SysSet.LogonSettings)
-
-				Dim lo_Row0		As	xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
-				Dim lo_Row1		As	xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
-
-				lo_Row0	= lo_SetMdl.GetOptions()
-				lo_Row1	= lo_SetMdl.GetOptions(1)
-
+				'..................................................
+				lo_Row0					= lo_SetMdl.GetSettings()
 				lo_Row0.DefLang	= "XX"
-				lo_SetMdl.UpdateOptions(lo_Row0)
-				lo_Row1	= lo_SetMdl.GetOptions()
+				lo_SetMdl.CommitSettings(lo_Row0)
+				lo_Row1					= lo_SetMdl.GetSettings
 
-				Assert.AreEqual( lo_Row1.DefLang,	"XX", "Settings: Fail: Save/Load: Systems")
-
+				Assert.AreEqual( lo_Row0.DefLang,	lo_Row1.DefLang, "Settings: Fail: Save/Load: Systems" )
+				'..................................................
 				lo_Row1.DefLang	= "YY"
-				lo_SetMdl.UpdateOptions(lo_Row1)
-				lo_Row0	= lo_SetMdl.GetOptions()
+				lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row0					= lo_SetMdl.GetSettings
 
-				Assert.AreEqual( lo_Row0.DefLang,	"YY", "Settings: Fail: Save/Load: Systems")
+				Assert.AreEqual( lo_Row0.DefLang,	lo_Row1.DefLang, "Settings: Fail: Save/Load: Systems" )
+				'..................................................
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "01"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "02"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "03"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "04"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "05"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "06"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "07"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "08"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "09"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "10"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "11"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				lo_Row1	= lo_SetMdl.GetDefaulRow()	:	lo_Row1.DefLang = "12"	:	lo_SetMdl.CommitSettings(lo_Row1)
+				'..................................................
+				Dim l0	= lo_SetMdl.GetHistoryList(True)
 
-				Dim x = lo_SetMdl.GetOptionsVersions()
+				Assert.AreEqual( l0.Count,	10, "Settings: Fail: Save/Load: Systems")
+				'..................................................
+				lo_SetMdl.SetHistoryLimit(5)
+				Dim l1	= lo_SetMdl.GetHistoryList(True)
 
-				Assert.AreEqual( x.Count,	3, "Settings: Fail: Save/Load: Systems")
+				Assert.AreEqual( l1.Count,	5, "Settings: Fail: Save/Load: Systems")
+				'..................................................
+				Dim l2	= lo_SetMdl.GetHistoryList(True)
 
-				lo_SetMdl.DeleteVersion(1)
+				lo_Row1	= lo_SetMdl.GetSettings(l2.Count-1)
 
-				Dim y = lo_SetMdl.GetOptionsVersions()
+				Assert.AreEqual( lo_Row1.DefLang,	"08", "Settings: Fail: Save/Load: Systems")
+				'..................................................
+				lo_SetMdl.ResetHistory()
+				Dim l3	= lo_SetMdl.GetHistoryList(True)
 
-				Assert.AreEqual( y.Count,	2, "Settings: Fail: Save/Load: Systems")
-
-				lo_Row1	= lo_SetMdl.GetOptions()
-				lo_Row1.DefLang	= "ZZ"
-				lo_SetMdl.UpdateOptions(lo_Row1)
-
-				Dim z = lo_SetMdl.GetOptionsVersions()
+				Assert.AreEqual( l3.Count,	1, "Settings: Fail: Save/Load: Systems")
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
