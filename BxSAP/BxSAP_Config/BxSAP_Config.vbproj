@@ -80,6 +80,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Code Repository\Data\BxSAPConfig_Settings.vb">
+      <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlParser.vb" />
     <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
@@ -118,6 +121,7 @@
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlLoader.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlModel.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXmlModel.vb" />
+    <Compile Include="Code Repository\Model\DataTableModel.vb" />
     <Compile Include="Code Repository\Model\SettingsModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -159,6 +163,7 @@
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>BxSAPConfig_Settings.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Model.Settings</CustomToolNamespace>
     </None>
     <None Include="Code Repository\Data\BxSAPConfig_Settings.xss">
       <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>

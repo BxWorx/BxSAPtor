@@ -63,24 +63,59 @@ Namespace UT_Config
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			<TestMethod()>
+			Public Sub UT_Config_Settings_DataModel()
+
+				Dim lo_SysSet	As xSAPSet.BxSAPConfig_Settings	= New xSAPSet.BxSAPConfig_Settings
+
+
+				Dim lo_SetMdl	As xSAPSet.SettingDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)
+			
+				lo_SetMdl	= New xSAPSet.SettingDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)(lo_SysSet.LogonSettings)
+				
+			
+
+
+			End Sub
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			<TestMethod()>
 			Public Sub UT_Config_Settings_Model()
 
-				Dim lo_SysSet	As BxSAP_Config.BxSAPConfig_Settings	= New BxSAP_Config.BxSAPConfig_Settings
-				Dim lo_SetMdl	As xSAPSet.SettingsModel	= New xSAPSet.SettingsModel(lo_SysSet.LogonSettings)
+				Dim lo_SysSet	As xSAPSet.BxSAPConfig_Settings	= New xSAPSet.BxSAPConfig_Settings
+				Dim lo_SetMdl	As xSAPSet.SettingsModel				= New xSAPSet.SettingsModel(lo_SysSet.LogonSettings)
 
-				Dim lo_Row0		As	BxSAP_Config.BxSAPConfig_Settings.LogonSettingsRow
-				Dim lo_Row1		As	BxSAP_Config.BxSAPConfig_Settings.LogonSettingsRow
+				Dim lo_Row0		As	xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
+				Dim lo_Row1		As	xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
 
 				lo_Row0	= lo_SetMdl.GetOptions()
 				lo_Row1	= lo_SetMdl.GetOptions(1)
 
 				lo_Row0.DefLang	= "XX"
 				lo_SetMdl.UpdateOptions(lo_Row0)
-
 				lo_Row1	= lo_SetMdl.GetOptions()
 
 				Assert.AreEqual( lo_Row1.DefLang,	"XX", "Settings: Fail: Save/Load: Systems")
 
+				lo_Row1.DefLang	= "YY"
+				lo_SetMdl.UpdateOptions(lo_Row1)
+				lo_Row0	= lo_SetMdl.GetOptions()
+
+				Assert.AreEqual( lo_Row0.DefLang,	"YY", "Settings: Fail: Save/Load: Systems")
+
+				Dim x = lo_SetMdl.GetOptionsVersions()
+
+				Assert.AreEqual( x.Count,	3, "Settings: Fail: Save/Load: Systems")
+
+				lo_SetMdl.DeleteVersion(1)
+
+				Dim y = lo_SetMdl.GetOptionsVersions()
+
+				Assert.AreEqual( y.Count,	2, "Settings: Fail: Save/Load: Systems")
+
+				lo_Row1	= lo_SetMdl.GetOptions()
+				lo_Row1.DefLang	= "ZZ"
+				lo_SetMdl.UpdateOptions(lo_Row1)
+
+				Dim z = lo_SetMdl.GetOptionsVersions()
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨

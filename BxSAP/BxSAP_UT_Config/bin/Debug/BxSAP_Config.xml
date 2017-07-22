@@ -22,37 +22,37 @@ BxSAP_Config
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.BxSAPConfig_Settings">
+<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings">
 <summary>
 Represents a strongly typed in-memory cache of data.
 </summary>
 </member>
-<member name="T:BxSAP_Config.BxSAPConfig_Settings.LogonSettingsDataTable">
+<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.LogonSettingsDataTable">
 <summary>
 Represents the strongly named DataTable class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.BxSAPConfig_Settings.ConnectionSetupDataTable">
+<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.ConnectionSetupDataTable">
 <summary>
 Represents the strongly named DataTable class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.BxSAPConfig_Settings.LogonSettingsRow">
+<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.LogonSettingsRow">
 <summary>
 Represents strongly named DataRow class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.BxSAPConfig_Settings.ConnectionSetupRow">
+<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.ConnectionSetupRow">
 <summary>
 Represents strongly named DataRow class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.BxSAPConfig_Settings.LogonSettingsRowChangeEvent">
+<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.LogonSettingsRowChangeEvent">
 <summary>
 Row event argument class
 </summary>
 </member>
-<member name="T:BxSAP_Config.BxSAPConfig_Settings.ConnectionSetupRowChangeEvent">
+<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.ConnectionSetupRowChangeEvent">
 <summary>
 Row event argument class
 </summary>
