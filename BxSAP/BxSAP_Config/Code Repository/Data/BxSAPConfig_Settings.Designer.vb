@@ -30,6 +30,8 @@ Namespace Model.Settings
         
         Private tableLogonSettings As LogonSettingsDataTable
         
+        Private tableBaseSetup As BaseSetupDataTable
+        
         Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -65,6 +67,9 @@ Namespace Model.Settings
                 If (Not (ds.Tables("LogonSettings")) Is Nothing) Then
                     MyBase.Tables.Add(New LogonSettingsDataTable(ds.Tables("LogonSettings")))
                 End If
+                If (Not (ds.Tables("BaseSetup")) Is Nothing) Then
+                    MyBase.Tables.Add(New BaseSetupDataTable(ds.Tables("BaseSetup")))
+                End If
                 Me.DataSetName = ds.DataSetName
                 Me.Prefix = ds.Prefix
                 Me.Namespace = ds.Namespace
@@ -99,6 +104,16 @@ Namespace Model.Settings
         Public ReadOnly Property LogonSettings() As LogonSettingsDataTable
             Get
                 Return Me.tableLogonSettings
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Browsable(false),  _
+         Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
+        Public ReadOnly Property BaseSetup() As BaseSetupDataTable
+            Get
+                Return Me.tableBaseSetup
             End Get
         End Property
         
@@ -175,6 +190,9 @@ Namespace Model.Settings
                 If (Not (ds.Tables("LogonSettings")) Is Nothing) Then
                     MyBase.Tables.Add(New LogonSettingsDataTable(ds.Tables("LogonSettings")))
                 End If
+                If (Not (ds.Tables("BaseSetup")) Is Nothing) Then
+                    MyBase.Tables.Add(New BaseSetupDataTable(ds.Tables("BaseSetup")))
+                End If
                 Me.DataSetName = ds.DataSetName
                 Me.Prefix = ds.Prefix
                 Me.Namespace = ds.Namespace
@@ -219,6 +237,12 @@ Namespace Model.Settings
                     Me.tableLogonSettings.InitVars
                 End If
             End If
+            Me.tableBaseSetup = CType(MyBase.Tables("BaseSetup"),BaseSetupDataTable)
+            If (initTable = true) Then
+                If (Not (Me.tableBaseSetup) Is Nothing) Then
+                    Me.tableBaseSetup.InitVars
+                End If
+            End If
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -233,6 +257,8 @@ Namespace Model.Settings
             MyBase.Tables.Add(Me.tableConnectionSetup)
             Me.tableLogonSettings = New LogonSettingsDataTable()
             MyBase.Tables.Add(Me.tableLogonSettings)
+            Me.tableBaseSetup = New BaseSetupDataTable()
+            MyBase.Tables.Add(Me.tableBaseSetup)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -244,6 +270,12 @@ Namespace Model.Settings
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function ShouldSerializeLogonSettings() As Boolean
+            Return false
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Private Function ShouldSerializeBaseSetup() As Boolean
             Return false
         End Function
         
@@ -310,6 +342,9 @@ Namespace Model.Settings
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Delegate Sub LogonSettingsRowChangeEventHandler(ByVal sender As Object, ByVal e As LogonSettingsRowChangeEvent)
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Delegate Sub BaseSetupRowChangeEventHandler(ByVal sender As Object, ByVal e As BaseSetupRowChangeEvent)
         
         '''<summary>
         '''Represents the strongly named DataTable class.
@@ -619,6 +654,7 @@ Namespace Model.Settings
                 Me.columnXML_Path.AllowDBNull = false
                 Me.columnXML_FileName.AllowDBNull = false
                 Me.columnTimeStamp.AllowDBNull = false
+                Me.columnTimeStamp.DateTimeMode = Global.System.Data.DataSetDateTime.Utc
             End Sub
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -767,8 +803,6 @@ Namespace Model.Settings
             Private columnAutoConnect As Global.System.Data.DataColumn
             
             Private columnTimeStamp As Global.System.Data.DataColumn
-            
-            Private Shared columnTimeStamp_defaultValue As Date = Date.Parse("2013-12-06T00:00:00")
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -951,7 +985,7 @@ Namespace Model.Settings
                 Me.columnAutoConnect.AllowDBNull = false
                 Me.columnAutoConnect.DefaultValue = CType(true,Boolean)
                 Me.columnTimeStamp.AllowDBNull = false
-                Me.columnTimeStamp.DefaultValue = CType(LogonSettingsDataTable.columnTimeStamp_defaultValue,Date)
+                Me.columnTimeStamp.DateTimeMode = Global.System.Data.DataSetDateTime.Utc
             End Sub
             
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1038,6 +1072,305 @@ Namespace Model.Settings
                 Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
                 attribute2.Name = "tableTypeName"
                 attribute2.FixedValue = "LogonSettingsDataTable"
+                type.Attributes.Add(attribute2)
+                type.Particle = sequence
+                Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+                If xs.Contains(dsSchema.TargetNamespace) Then
+                    Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Try 
+                        Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                        dsSchema.Write(s1)
+                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                        Do While schemas.MoveNext
+                            schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
+                            s2.SetLength(0)
+                            schema.Write(s2)
+                            If (s1.Length = s2.Length) Then
+                                s1.Position = 0
+                                s2.Position = 0
+                                
+                                Do While ((s1.Position <> s1.Length)  _
+                                            AndAlso (s1.ReadByte = s2.ReadByte))
+                                    
+                                    
+                                Loop
+                                If (s1.Position = s1.Length) Then
+                                    Return type
+                                End If
+                            End If
+                            
+                        Loop
+                    Finally
+                        If (Not (s1) Is Nothing) Then
+                            s1.Close
+                        End If
+                        If (Not (s2) Is Nothing) Then
+                            s2.Close
+                        End If
+                    End Try
+                End If
+                xs.Add(dsSchema)
+                Return type
+            End Function
+        End Class
+        
+        '''<summary>
+        '''Represents the strongly named DataTable class.
+        '''</summary>
+        <Global.System.Serializable(),  _
+         Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
+        Partial Public Class BaseSetupDataTable
+            Inherits Global.System.Data.TypedTableBase(Of BaseSetupRow)
+            
+            Private columnLogonLimit As Global.System.Data.DataColumn
+            
+            Private columnConnLimit As Global.System.Data.DataColumn
+            
+            Private columnAutoSaveOnClose As Global.System.Data.DataColumn
+            
+            Private columnTimeStamp As Global.System.Data.DataColumn
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Sub New()
+                MyBase.New
+                Me.TableName = "BaseSetup"
+                Me.BeginInit
+                Me.InitClass
+                Me.EndInit
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Friend Sub New(ByVal table As Global.System.Data.DataTable)
+                MyBase.New
+                Me.TableName = table.TableName
+                If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                    Me.CaseSensitive = table.CaseSensitive
+                End If
+                If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                    Me.Locale = table.Locale
+                End If
+                If (table.Namespace <> table.DataSet.Namespace) Then
+                    Me.Namespace = table.Namespace
+                End If
+                Me.Prefix = table.Prefix
+                Me.MinimumCapacity = table.MinimumCapacity
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+                MyBase.New(info, context)
+                Me.InitVars
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property LogonLimitColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnLogonLimit
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property ConnLimitColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnConnLimit
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property AutoSaveOnCloseColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnAutoSaveOnClose
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property TimeStampColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnTimeStamp
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+             Global.System.ComponentModel.Browsable(false)>  _
+            Public ReadOnly Property Count() As Integer
+                Get
+                    Return Me.Rows.Count
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Default ReadOnly Property Item(ByVal index As Integer) As BaseSetupRow
+                Get
+                    Return CType(Me.Rows(index),BaseSetupRow)
+                End Get
+            End Property
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Event BaseSetupRowChanging As BaseSetupRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Event BaseSetupRowChanged As BaseSetupRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Event BaseSetupRowDeleting As BaseSetupRowChangeEventHandler
+            
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Event BaseSetupRowDeleted As BaseSetupRowChangeEventHandler
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Overloads Sub AddBaseSetupRow(ByVal row As BaseSetupRow)
+                Me.Rows.Add(row)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Overloads Function AddBaseSetupRow(ByVal LogonLimit As UShort, ByVal ConnLimit As UShort, ByVal AutoSaveOnClose As Boolean, ByVal TimeStamp As Date) As BaseSetupRow
+                Dim rowBaseSetupRow As BaseSetupRow = CType(Me.NewRow,BaseSetupRow)
+                Dim columnValuesArray() As Object = New Object() {LogonLimit, ConnLimit, AutoSaveOnClose, TimeStamp}
+                rowBaseSetupRow.ItemArray = columnValuesArray
+                Me.Rows.Add(rowBaseSetupRow)
+                Return rowBaseSetupRow
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Overrides Function Clone() As Global.System.Data.DataTable
+                Dim cln As BaseSetupDataTable = CType(MyBase.Clone,BaseSetupDataTable)
+                cln.InitVars
+                Return cln
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+                Return New BaseSetupDataTable()
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Friend Sub InitVars()
+                Me.columnLogonLimit = MyBase.Columns("LogonLimit")
+                Me.columnConnLimit = MyBase.Columns("ConnLimit")
+                Me.columnAutoSaveOnClose = MyBase.Columns("AutoSaveOnClose")
+                Me.columnTimeStamp = MyBase.Columns("TimeStamp")
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Private Sub InitClass()
+                Me.columnLogonLimit = New Global.System.Data.DataColumn("LogonLimit", GetType(UShort), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnLogonLimit)
+                Me.columnConnLimit = New Global.System.Data.DataColumn("ConnLimit", GetType(UShort), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnConnLimit)
+                Me.columnAutoSaveOnClose = New Global.System.Data.DataColumn("AutoSaveOnClose", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnAutoSaveOnClose)
+                Me.columnTimeStamp = New Global.System.Data.DataColumn("TimeStamp", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnTimeStamp)
+                Me.columnLogonLimit.AllowDBNull = false
+                Me.columnLogonLimit.DefaultValue = CType(10US,UShort)
+                Me.columnConnLimit.AllowDBNull = false
+                Me.columnConnLimit.DefaultValue = CType(10US,UShort)
+                Me.columnAutoSaveOnClose.AllowDBNull = false
+                Me.columnAutoSaveOnClose.DefaultValue = CType(true,Boolean)
+                Me.columnTimeStamp.AllowDBNull = false
+                Me.columnTimeStamp.DateTimeMode = Global.System.Data.DataSetDateTime.Utc
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Function NewBaseSetupRow() As BaseSetupRow
+                Return CType(Me.NewRow,BaseSetupRow)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+                Return New BaseSetupRow(builder)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Function GetRowType() As Global.System.Type
+                Return GetType(BaseSetupRow)
+            End Function
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanged(e)
+                If (Not (Me.BaseSetupRowChangedEvent) Is Nothing) Then
+                    RaiseEvent BaseSetupRowChanged(Me, New BaseSetupRowChangeEvent(CType(e.Row,BaseSetupRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanging(e)
+                If (Not (Me.BaseSetupRowChangingEvent) Is Nothing) Then
+                    RaiseEvent BaseSetupRowChanging(Me, New BaseSetupRowChangeEvent(CType(e.Row,BaseSetupRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleted(e)
+                If (Not (Me.BaseSetupRowDeletedEvent) Is Nothing) Then
+                    RaiseEvent BaseSetupRowDeleted(Me, New BaseSetupRowChangeEvent(CType(e.Row,BaseSetupRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleting(e)
+                If (Not (Me.BaseSetupRowDeletingEvent) Is Nothing) Then
+                    RaiseEvent BaseSetupRowDeleting(Me, New BaseSetupRowChangeEvent(CType(e.Row,BaseSetupRow), e.Action))
+                End If
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Sub RemoveBaseSetupRow(ByVal row As BaseSetupRow)
+                Me.Rows.Remove(row)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+                Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+                Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+                Dim ds As BxSAPConfig_Settings = New BxSAPConfig_Settings()
+                Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+                any1.MinOccurs = New Decimal(0)
+                any1.MaxOccurs = Decimal.MaxValue
+                any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any1)
+                Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+                any2.MinOccurs = New Decimal(1)
+                any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any2)
+                Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute1.Name = "namespace"
+                attribute1.FixedValue = ds.Namespace
+                type.Attributes.Add(attribute1)
+                Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute2.Name = "tableTypeName"
+                attribute2.FixedValue = "BaseSetupDataTable"
                 type.Attributes.Add(attribute2)
                 type.Particle = sequence
                 Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
@@ -1334,6 +1667,66 @@ Namespace Model.Settings
         End Class
         
         '''<summary>
+        '''Represents strongly named DataRow class.
+        '''</summary>
+        Partial Public Class BaseSetupRow
+            Inherits Global.System.Data.DataRow
+            
+            Private tableBaseSetup As BaseSetupDataTable
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+                MyBase.New(rb)
+                Me.tableBaseSetup = CType(Me.Table,BaseSetupDataTable)
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Property LogonLimit() As UShort
+                Get
+                    Return CType(Me(Me.tableBaseSetup.LogonLimitColumn),UShort)
+                End Get
+                Set
+                    Me(Me.tableBaseSetup.LogonLimitColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Property ConnLimit() As UShort
+                Get
+                    Return CType(Me(Me.tableBaseSetup.ConnLimitColumn),UShort)
+                End Get
+                Set
+                    Me(Me.tableBaseSetup.ConnLimitColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Property AutoSaveOnClose() As Boolean
+                Get
+                    Return CType(Me(Me.tableBaseSetup.AutoSaveOnCloseColumn),Boolean)
+                End Get
+                Set
+                    Me(Me.tableBaseSetup.AutoSaveOnCloseColumn) = value
+                End Set
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Property TimeStamp() As Date
+                Get
+                    Return CType(Me(Me.tableBaseSetup.TimeStampColumn),Date)
+                End Get
+                Set
+                    Me(Me.tableBaseSetup.TimeStampColumn) = value
+                End Set
+            End Property
+        End Class
+        
+        '''<summary>
         '''Row event argument class
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -1391,6 +1784,42 @@ Namespace Model.Settings
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
              Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
             Public ReadOnly Property Row() As LogonSettingsRow
+                Get
+                    Return Me.eventRow
+                End Get
+            End Property
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+                Get
+                    Return Me.eventAction
+                End Get
+            End Property
+        End Class
+        
+        '''<summary>
+        '''Row event argument class
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Class BaseSetupRowChangeEvent
+            Inherits Global.System.EventArgs
+            
+            Private eventRow As BaseSetupRow
+            
+            Private eventAction As Global.System.Data.DataRowAction
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public Sub New(ByVal row As BaseSetupRow, ByVal action As Global.System.Data.DataRowAction)
+                MyBase.New
+                Me.eventRow = row
+                Me.eventAction = action
+            End Sub
+            
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+            Public ReadOnly Property Row() As BaseSetupRow
                 Get
                     Return Me.eventRow
                 End Get

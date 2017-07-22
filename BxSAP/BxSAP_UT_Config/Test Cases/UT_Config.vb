@@ -63,14 +63,30 @@ Namespace UT_Config
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			<TestMethod()>
+			Public Sub UT_Config_Settings_Repos()
+
+				Dim lo_SetRepDM		As xSAPSet.SettingReposDataModel	= New xSAPSet.SettingReposDataModel(cc_FullName)
+
+				Dim x =	lo_SetRepDM.GetLogonSettings()
+				lo_SetRepDM.SaveLogonSettings(x)
+				x.DefLang	= "XX"
+				lo_SetRepDM.SaveLogonSettings(x)
+				x.DefLang	= "YY"
+				lo_SetRepDM.SaveLogonSettings(x)
+
+				lo_SetRepDM.Save()
+
+			End Sub
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			<TestMethod()>
 			Public Sub UT_Config_Settings_DataModel()
 
 				Dim lo_SysSet		As xSAPSet.BxSAPConfig_Settings	= New xSAPSet.BxSAPConfig_Settings
-				Dim lo_SetMdl		As xSAPSet.SettingDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)
+				Dim lo_SetMdl		As xSAPSet.SettingTableDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)
 				Dim lo_Row0			As xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
 				Dim lo_Row1			As xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
 			
-				lo_SetMdl	= New xSAPSet.SettingDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)(lo_SysSet.LogonSettings)
+				lo_SetMdl	= New xSAPSet.SettingTableDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)(lo_SysSet.LogonSettings)
 				'..................................................
 				lo_Row0					= lo_SetMdl.GetSettings()
 				lo_Row0.DefLang	= "XX"

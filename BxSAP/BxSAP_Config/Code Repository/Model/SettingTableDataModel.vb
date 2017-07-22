@@ -1,7 +1,7 @@
 ﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Namespace Model.Settings
 
-	Friend Class SettingDataModel(Of T	As DataTable)
+	Friend Class SettingTableDataModel(Of T	As DataTable)
 
 		#Region "Definitions"
 
@@ -14,10 +14,17 @@ Namespace Model.Settings
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Methods: Exposed"
 
+			Friend Event ev_DataChanged()
+
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Friend Sub ResetHistory()
 
-				Me.EnsureLimit(1)
+				If Me.EnsureLimit(1)
+
+					Me.co_DataTable.AcceptChanges()
+					RaiseEvent	ev_DataChanged()
+					
+				End If
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -41,19 +48,26 @@ Namespace Model.Settings
 			Friend Sub SetHistoryLimit(ByVal Maximum As UShort)
 				
 				Me.cn_MaxRows	= Maximum
-				Me.EnsureLimit(Me.cn_MaxRows)
+				'..................................................
+				If Me.EnsureLimit(Me.cn_MaxRows)
+
+					Me.co_DataTable.AcceptChanges()
+					RaiseEvent	ev_DataChanged()
+					
+				End If
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Friend Function CommitSettings(ByVal Settings As DataRow)	As Boolean
 
 				Dim lb_Ret	As Boolean	= True
+				Dim lo_Row	As DataRow	= Me.CreateCopy(Settings)
 				'..................................................
-				Dim x = Me.co_DataTable.Rows
-
-				Me.co_DataTable.Rows.InsertAt(Settings, 0)
+				lo_Row.Item(cz_NmeTime)	= Now()
+				Me.co_DataTable.Rows.InsertAt(lo_Row, 0)
 				Me.EnsureLimit(Me.cn_MaxRows)
 				Me.co_DataTable.AcceptChanges()
+				RaiseEvent	ev_DataChanged()
 				'..................................................
 				Return	lb_Ret
 
@@ -99,17 +113,24 @@ Namespace Model.Settings
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Sub EnsureLimit(ByVal _limit As UShort)
+			Private Function EnsureLimit(ByVal _limit As UShort)	As Boolean
 
+				Dim lb_Chg	As Boolean	= False
+				'..................................................
 				If Me.co_DataTable.Rows.Count > _limit
 
 					For	ln_I As Integer		= (Me.co_DataTable.Rows.Count - 1)	To	_limit	Step -1
+
 						Me.co_DataTable.Rows.RemoveAt(ln_I)
+						lb_Chg	= True
+
 					Next
 
 				End If
+				'..................................................
+				Return	lb_Chg
 
-			End Sub
+			End Function
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -122,7 +143,12 @@ Namespace Model.Settings
 				Me.co_DataTable	= _table
 				Me.cn_MaxRows		= _maxrows
 				'..................................................
-				Me.EnsureLimit(Me.cn_MaxRows)
+				If Me.EnsureLimit(Me.cn_MaxRows)
+
+					Me.co_DataTable.AcceptChanges()
+					RaiseEvent	ev_DataChanged()
+					
+				End If
 
 			End Sub
 

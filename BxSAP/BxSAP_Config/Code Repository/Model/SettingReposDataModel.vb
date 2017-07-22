@@ -1,111 +1,183 @@
 ﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Namespace Model.Settings
 
-	Friend Class SettingReposDataModel()
+	Friend Class SettingReposDataModel
 
 		#Region "Definitions"
 
+			Private cc_Name							As	String
+			Private cb_Open							As	Boolean
+			Private	cb_Dirty						As  Boolean
+			Private	cb_DirtyBase				As  Boolean
 			'....................................................
-			Private co_Repos	As T
+			Private co_Repos						As	BxSAPConfig_Settings
+			'....................................................
+			Private	co_LogonSettings		As	SettingTableDataModel(Of BxSAPConfig_Settings.LogonSettingsDataTable)
+			Private	co_ConnSettings			As	SettingTableDataModel(Of BxSAPConfig_Settings.ConnectionSetupDataTable)
+			Private	co_BaseSettings			As	SettingTableDataModel(Of BxSAPConfig_Settings.BaseSetupDataTable)
+			'....................................................
+			Private	cs_BaseSettings			As	BxSAPConfig_Settings.BaseSetupRow
+
+		#End Region
+		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+		#Region "Properties"
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend ReadOnly Property	IsDirty()	As Boolean
+				Get
+					Return	Me.cb_Dirty
+				End Get
+			End Property
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Methods: Exposed"
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Sub ResetHistory()
+			Friend Sub SetHistoryLimit(						ByVal Maximum As UShort												,
+																	Optional	ByVal	LogonSettings				As Boolean	= True	,
+																	Optional	ByVal	ConnectionSettings	As Boolean	= True		)
 
-				Me.EnsureLimit(1)
+				If Not Me.cb_Open		Then	Exit Sub
+				'..................................................
+				If LogonSettings
+
+					Me.co_LogonSettings.SetHistoryLimit(Maximum)
+					Me.cs_BaseSettings.LogonLimit	= Maximum
+					Me.cb_DirtyBase								= True
+
+				End If
+				'................................................
+				If ConnectionSettings
+
+					Me.co_ConnSettings.SetHistoryLimit(Maximum)
+					Me.cs_BaseSettings.ConnLimit	= Maximum
+					Me.cb_DirtyBase								= True
+
+				End If
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function GetHistoryList(Optional ByVal IncludeCurrent As Boolean = False)	As Dictionary(Of UShort, DateTime)
+			Friend Sub ResetHistory(Optional	ByVal	LogonSettings				As Boolean	= True	,
+															Optional	ByVal	ConnectionSettings	As Boolean	= True		)
+			
+				If Not Me.cb_Open			Then	Exit Sub
+				'..................................................
+				If LogonSettings			Then	Me.co_LogonSettings.ResetHistory()
+				If ConnectionSettings	Then	Me.co_ConnSettings.ResetHistory()
+
+			End Sub
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Function GetConnectionHistory(Optional ByVal IncludeCurrent As Boolean = False)	As Dictionary(Of UShort, DateTime)
 
 				Dim lt_Ret	= New Dictionary(Of UShort, Date)
-				'..................................................
-				For Each	lo_Row As DataRow		In Me.co_DataTable.Rows()
 
-					Dim ln_Index	As UShort		=	CUShort( Me.co_DataTable.Rows().IndexOf(lo_Row) )
-					Dim ld_Date		As DateTime	= CDate( lo_Row.Item(cz_NmeTime) )
-
-					lt_Ret.Add(ln_Index, ld_Date)
-
-				Next
+				If Me.cb_Open
+					lt_Ret	=	Me.co_ConnSettings.GetHistoryList(IncludeCurrent)
+				End If
 				'..................................................
 				Return	lt_Ret
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Sub SetHistoryLimit(ByVal Maximum As UShort)
-				
-				Me.cn_MaxRows	= Maximum
-				Me.EnsureLimit(Me.cn_MaxRows)
+			Friend Function SaveConnectionSettings(ByVal Settings	As BxSAPConfig_Settings.ConnectionSetupRow)	As Boolean
+
+				If Me.cb_Open
+					Return	Me.co_ConnSettings.CommitSettings(Settings)
+				Else
+					Return	Nothing
+				End If
+
+			End Function
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Function GetConnectionSettings()	As BxSAPConfig_Settings.ConnectionSetupRow
+
+				If Me.cb_Open
+					Return	CType(Me.co_ConnSettings.GetSettings(), BxSAPConfig_Settings.ConnectionSetupRow)
+				Else
+					Return	Nothing
+				End If
+
+			End Function
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Function GetLogonHistory(Optional ByVal IncludeCurrent As Boolean = False)	As Dictionary(Of UShort, DateTime)
+
+				Dim lt_Ret	= New Dictionary(Of UShort, Date)
+				'..................................................
+				If Me.cb_Open
+					lt_Ret	=	Me.co_LogonSettings.GetHistoryList(IncludeCurrent)
+				End If
+				'..................................................
+				Return	lt_Ret
+
+			End Function
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Function SaveLogonSettings(ByVal Settings	As BxSAPConfig_Settings.LogonSettingsRow)	As Boolean
+
+				If Me.cb_Open
+					Return	Me.co_LogonSettings.CommitSettings(Settings)
+				Else
+					Return	Nothing
+				End If
+
+			End Function
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Function GetLogonSettings()	As BxSAPConfig_Settings.LogonSettingsRow
+
+				If Me.cb_Open
+					Return	CType(Me.co_LogonSettings.GetSettings(), BxSAPConfig_Settings.LogonSettingsRow)
+				Else
+					Return	Nothing
+				End If
+
+			End Function
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Sub Save()
+
+				If Me.cb_Open
+
+					If Me.cb_DirtyBase
+						Me.co_BaseSettings.CommitSettings(Me.cs_BaseSettings)
+					End If
+					'................................................
+					If Me.cb_Dirty
+
+						Me.co_Repos.WriteXml(Me.cc_Name)
+						Me.cb_Dirty	= False
+
+					End If
+				End If
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function CommitSettings(ByVal Settings As DataRow)	As Boolean
-
-				Dim lb_Ret	As Boolean	= True
+			Friend Sub Close()
+			
+				RemoveHandler		Me.co_LogonSettings.ev_DataChanged	,	AddressOf SetDirtyFlag
+				RemoveHandler		Me.co_ConnSettings.ev_DataChanged		, AddressOf SetDirtyFlag
+				RemoveHandler		Me.co_BaseSettings.ev_DataChanged		, AddressOf SetDirtyFlag
 				'..................................................
-				Dim x = Me.co_DataTable.Rows
-
-				Me.co_DataTable.Rows.InsertAt(Settings, 0)
-				Me.EnsureLimit(Me.cn_MaxRows)
-				Me.co_DataTable.AcceptChanges()
-				'..................................................
-				Return	lb_Ret
-
-			End Function
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function GetSettings(Optional ByVal VersionNo	As UShort	= 0)	As DataRow
-
-				Dim lo_Row	As DataRow
-				'..................................................
-				If Me.co_DataTable.Rows.Count > VersionNo
-					lo_Row	= Me.CreateCopy(Me.co_DataTable.Rows(VersionNo))
-				Else
-					lo_Row	= Me.GetDefaulRow()
-					lo_Row.Item(cz_NmeTime)	= Now()
+				If Me.cs_BaseSettings.AutoSaveOnClose
+					Me.Save()
 				End If
 				'..................................................
-				Return	lo_Row
+				Me.cb_Open	= False
 
-			End Function
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function GetDefaulRow()	As DataRow
-
-				Return	Me.co_DataTable.NewRow()
-
-			End Function
+			End Sub
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 		#Region "Methods: Private"
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Function CreateCopy(ByVal _src As DataRow)	As DataRow
+			Private Sub SetDirtyFlag
 
-				Dim lo_Row	= Me.GetDefaulRow()
-				'..................................................
-				For Each	lo_Col As DataColumn	In Me.co_DataTable.Columns
-					If Not lo_Col.ReadOnly
-						lo_Row.SetField(lo_Col, _src.Item(lo_Col)	)
-					End If
-				Next
-				'..................................................
-				Return	lo_Row
-
-			End Function
-			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Private Sub EnsureLimit(ByVal _limit As UShort)
-
-				If Me.co_DataTable.Rows.Count > _limit
-
-					For	ln_I As Integer		= (Me.co_DataTable.Rows.Count - 1)	To	_limit	Step -1
-						Me.co_DataTable.Rows.RemoveAt(ln_I)
-					Next
-
-				End If
+				Me.cb_Dirty	= True
 
 			End Sub
 
@@ -114,13 +186,32 @@ Namespace Model.Settings
 		#Region "Constructor"
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Sub New(						ByVal _table		As T						,
-											Optional	ByVal _maxrows	As UShort = 10		)
+			Friend Sub New(ByVal _name	As String)
 
-				Me.co_DataTable	= _table
-				Me.cn_MaxRows		= _maxrows
+				Me.cc_Name						= _name
 				'..................................................
-				Me.EnsureLimit(Me.cn_MaxRows)
+				Me.co_Repos						=	New	BxSAPConfig_Settings
+				'..................................................
+				Me.co_LogonSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.LogonSettingsDataTable)		(Me.co_Repos.LogonSettings)
+				Me.co_ConnSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.ConnectionSetupDataTable)	(Me.co_Repos.ConnectionSetup)
+				Me.co_BaseSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.BaseSetupDataTable)				(Me.co_Repos.BaseSetup)
+
+				Me.cb_Dirty						= False
+				Me.cb_DirtyBase				= False
+				Me.cb_Open						= False
+				'..................................................
+				If IO.File.Exists(Me.cc_Name)
+
+					Me.co_Repos.ReadXml(Me.cc_Name)
+					Me.cb_Open	= True
+
+					Me.cs_BaseSettings	= CType(Me.co_BaseSettings.GetSettings(), BxSAPConfig_Settings.BaseSetupRow)
+
+				End If
+				'..................................................
+				AddHandler	Me.co_LogonSettings.ev_DataChanged	,	AddressOf SetDirtyFlag
+				AddHandler	Me.co_ConnSettings.ev_DataChanged		, AddressOf SetDirtyFlag
+				AddHandler	Me.co_BaseSettings.ev_DataChanged		, AddressOf SetDirtyFlag
 
 			End Sub
 
