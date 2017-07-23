@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="BxSAPConfig_Settings" targetNamespace="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns:mstns="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="BxS_SettingReposDL" targetNamespace="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns:mstns="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns="http://tempuri.org/BxSAPConfig_Settings.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="NotPublic" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections />
         <Tables />
         <Sources />
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="BxSAPConfig_Settings" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BxSAPConfig_Settings" msprop:Generator_UserDSName="BxSAPConfig_Settings">
+  <xs:element name="BxS_SettingReposDL" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BxS_SettingReposDL" msprop:Generator_UserDSName="BxS_SettingReposDL">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="ConnectionSetup" msprop:Generator_TableClassName="ConnectionSetupDataTable" msprop:Generator_TableVarName="tableConnectionSetup" msprop:Generator_TablePropName="ConnectionSetup" msprop:Generator_RowDeletingName="ConnectionSetupRowDeleting" msprop:Generator_RowChangingName="ConnectionSetupRowChanging" msprop:Generator_RowEvHandlerName="ConnectionSetupRowChangeEventHandler" msprop:Generator_RowDeletedName="ConnectionSetupRowDeleted" msprop:Generator_UserTableName="ConnectionSetup" msprop:Generator_RowChangedName="ConnectionSetupRowChanged" msprop:Generator_RowEvArgName="ConnectionSetupRowChangeEvent" msprop:Generator_RowClassName="ConnectionSetupRow">

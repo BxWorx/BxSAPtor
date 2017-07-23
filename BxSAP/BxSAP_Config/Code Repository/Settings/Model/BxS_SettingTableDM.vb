@@ -1,7 +1,7 @@
 ﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-Namespace Model.Settings
+Namespace Settings.Model
 
-	Friend Class SettingTableDataModel(Of T	As DataTable)
+	Friend Class SettingTableDM(Of T	As DataTable)
 
 		#Region "Definitions"
 

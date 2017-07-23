@@ -65,7 +65,7 @@ Namespace UT_Config
 			<TestMethod()>
 			Public Sub UT_Config_Settings_Repos()
 
-				Dim lo_SetRepDM		As xSAPSet.SettingReposDataModel	= New xSAPSet.SettingReposDataModel(cc_FullName)
+				Dim lo_SetRepDM		As xSAPSet.SettingReposDM	= New xSAPSet.SettingReposDM(cc_FullName)
 
 				Dim x =	lo_SetRepDM.GetLogonSettings()
 				lo_SetRepDM.SaveLogonSettings(x)
@@ -83,11 +83,11 @@ Namespace UT_Config
 			Public Sub UT_Config_Settings_DataModel()
 
 				Dim lo_SysSet		As xSAPSet.BxSAPConfig_Settings	= New xSAPSet.BxSAPConfig_Settings
-				Dim lo_SetMdl		As xSAPSet.SettingTableDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)
+				Dim lo_SetMdl		As xSAPSet.SettingTableDM(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)
 				Dim lo_Row0			As xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
 				Dim lo_Row1			As xSAPSet.BxSAPConfig_Settings.LogonSettingsRow
 			
-				lo_SetMdl	= New xSAPSet.SettingTableDataModel(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)(lo_SysSet.LogonSettings)
+				lo_SetMdl	= New xSAPSet.SettingTableDM(Of xSAPSet.BxSAPConfig_Settings.LogonSettingsDataTable)(lo_SysSet.LogonSettings)
 				'..................................................
 				lo_Row0					= lo_SetMdl.GetSettings()
 				lo_Row0.DefLang	= "XX"

@@ -22,52 +22,52 @@ BxSAP_Config
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL">
 <summary>
 Represents a strongly typed in-memory cache of data.
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.ConnectionSetupDataTable">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.ConnectionSetupDataTable">
 <summary>
 Represents the strongly named DataTable class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.LogonSettingsDataTable">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.LogonSettingsDataTable">
 <summary>
 Represents the strongly named DataTable class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.BaseSetupDataTable">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.BaseSetupDataTable">
 <summary>
 Represents the strongly named DataTable class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.ConnectionSetupRow">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.ConnectionSetupRow">
 <summary>
 Represents strongly named DataRow class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.LogonSettingsRow">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.LogonSettingsRow">
 <summary>
 Represents strongly named DataRow class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.BaseSetupRow">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.BaseSetupRow">
 <summary>
 Represents strongly named DataRow class.
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.ConnectionSetupRowChangeEvent">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.ConnectionSetupRowChangeEvent">
 <summary>
 Row event argument class
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.LogonSettingsRowChangeEvent">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.LogonSettingsRowChangeEvent">
 <summary>
 Row event argument class
 </summary>
 </member>
-<member name="T:BxSAP_Config.Model.Settings.BxSAPConfig_Settings.BaseSetupRowChangeEvent">
+<member name="T:BxSAP_Config.Settings.Model.BxS_SettingReposDL.BaseSetupRowChangeEvent">
 <summary>
 Row event argument class
 </summary>

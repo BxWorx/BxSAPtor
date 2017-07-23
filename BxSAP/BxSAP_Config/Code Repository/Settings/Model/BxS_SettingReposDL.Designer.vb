@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-Namespace Model.Settings
+Namespace Settings.Model
     
     '''<summary>
     '''Represents a strongly typed in-memory cache of data.
@@ -21,9 +21,9 @@ Namespace Model.Settings
      Global.System.ComponentModel.DesignerCategoryAttribute("code"),  _
      Global.System.ComponentModel.ToolboxItem(true),  _
      Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema"),  _
-     Global.System.Xml.Serialization.XmlRootAttribute("BxSAPConfig_Settings"),  _
+     Global.System.Xml.Serialization.XmlRootAttribute("BxS_SettingReposDL"),  _
      Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")>  _
-    Partial Public Class BxSAPConfig_Settings
+    Partial Friend Class BxS_SettingReposDL
         Inherits Global.System.Data.DataSet
         
         Private tableConnectionSetup As ConnectionSetupDataTable
@@ -159,7 +159,7 @@ Namespace Model.Settings
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataSet
-            Dim cln As BxSAPConfig_Settings = CType(MyBase.Clone,BxSAPConfig_Settings)
+            Dim cln As BxS_SettingReposDL = CType(MyBase.Clone,BxS_SettingReposDL)
             cln.InitVars
             cln.SchemaSerializationMode = Me.SchemaSerializationMode
             Return cln
@@ -248,7 +248,7 @@ Namespace Model.Settings
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitClass()
-            Me.DataSetName = "BxSAPConfig_Settings"
+            Me.DataSetName = "BxS_SettingReposDL"
             Me.Prefix = ""
             Me.Namespace = "http://tempuri.org/BxSAPConfig_Settings.xsd"
             Me.EnforceConstraints = true
@@ -290,7 +290,7 @@ Namespace Model.Settings
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Shared Function GetTypedDataSetSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-            Dim ds As BxSAPConfig_Settings = New BxSAPConfig_Settings()
+            Dim ds As BxS_SettingReposDL = New BxS_SettingReposDL()
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
             Dim any As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
@@ -722,7 +722,7 @@ Namespace Model.Settings
             Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
                 Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
                 Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-                Dim ds As BxSAPConfig_Settings = New BxSAPConfig_Settings()
+                Dim ds As BxS_SettingReposDL = New BxS_SettingReposDL()
                 Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema"
                 any1.MinOccurs = New Decimal(0)
@@ -1053,7 +1053,7 @@ Namespace Model.Settings
             Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
                 Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
                 Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-                Dim ds As BxSAPConfig_Settings = New BxSAPConfig_Settings()
+                Dim ds As BxS_SettingReposDL = New BxS_SettingReposDL()
                 Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema"
                 any1.MinOccurs = New Decimal(0)
@@ -1352,7 +1352,7 @@ Namespace Model.Settings
             Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
                 Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
                 Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-                Dim ds As BxSAPConfig_Settings = New BxSAPConfig_Settings()
+                Dim ds As BxS_SettingReposDL = New BxS_SettingReposDL()
                 Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema"
                 any1.MinOccurs = New Decimal(0)

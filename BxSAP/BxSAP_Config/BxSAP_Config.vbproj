@@ -75,26 +75,30 @@
   <ItemGroup>
     <Compile Include="Code Repository\Controller\Controllers\Controller.vb" />
     <Compile Include="Code Repository\Controller\Controllers\iController.vb" />
-    <Compile Include="Code Repository\Data\BxSAPConfig_Settings.Designer.vb">
+    <Compile Include="Code Repository\Settings\Model\BxS_SettingReposDL.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>
+      <DependentUpon>BxS_SettingReposDL.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Code Repository\Model\SettingReposDataModel.vb" />
-    <Compile Include="Code Repository\Model\SettingTableDataModel.vb" />
+    <Compile Include="Code Repository\Settings\Model\BxS_SettingReposDM.vb" />
+    <Compile Include="Code Repository\Settings\Model\BxS_SettingTableDM.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlParser.vb" />
     <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Connection Setup\iLogonConnSetupDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Connection Setup\LogonConnSetupDTO.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\BxS_SettingXlator.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\BxS_SettingsVM.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\iLogonConnSetupDTO.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\ConnectionDTO.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\LogonConnSetupDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\0LogonConnReposDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\1LogonConnectionDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\i0LogonConnReposDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\i1LogonConnectionDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\LogonConn2ViewDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\iLogonConn2ViewDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Options\iLogonOptionsDTO.vb" />
-    <Compile Include="Code Repository\Model\Logon\Options\LogonOptionsDTO.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\iLogonOptionsDTO.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\LogonDTO.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\LogonOptionsDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Languages\iSysLanguagesDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Languages\SysLanguagesDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Logons\iSysLogon0ReposDTO.vb" />
@@ -120,6 +124,7 @@
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlLoader.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlModel.vb" />
     <Compile Include="Code Repository\Model\SAPGUI XML\xxx\SAPGuiXmlModel.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\iBxS_SettingsVM.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -153,17 +158,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Code Repository\Data\BxSAPConfig_Settings.xsc">
-      <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>
+    <None Include="Code Repository\Settings\Model\BxS_SettingReposDL.xsc">
+      <DependentUpon>BxS_SettingReposDL.xsd</DependentUpon>
     </None>
-    <None Include="Code Repository\Data\BxSAPConfig_Settings.xsd">
+    <None Include="Code Repository\Settings\Model\BxS_SettingReposDL.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>BxSAPConfig_Settings.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>Model.Settings</CustomToolNamespace>
+      <LastGenOutput>BxS_SettingReposDL.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Settings.Model</CustomToolNamespace>
     </None>
-    <None Include="Code Repository\Data\BxSAPConfig_Settings.xss">
-      <DependentUpon>BxSAPConfig_Settings.xsd</DependentUpon>
+    <None Include="Code Repository\Settings\Model\BxS_SettingReposDL.xss">
+      <DependentUpon>BxS_SettingReposDL.xsd</DependentUpon>
     </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -191,6 +196,10 @@
       <Project>{8c307410-c538-40fa-9cca-9f1801e294df}</Project>
       <Name>BxSAP_Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Code Repository\Model\Logon\Connection Setup\" />
+    <Folder Include="Code Repository\Model\Logon\Options\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

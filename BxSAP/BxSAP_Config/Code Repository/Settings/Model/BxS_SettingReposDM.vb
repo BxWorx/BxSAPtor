@@ -1,7 +1,9 @@
-﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-Namespace Model.Settings
+﻿Imports	BxSDL	= BxSAP_Config.Settings.Model.BxS_SettingReposDL		' Data Layer
 
-	Friend Class SettingReposDataModel
+'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+Namespace Settings.Model
+
+	Friend Class SettingReposDM
 
 		#Region "Definitions"
 
@@ -10,13 +12,13 @@ Namespace Model.Settings
 			Private	cb_Dirty						As  Boolean
 			Private	cb_DirtyBase				As  Boolean
 			'....................................................
-			Private co_Repos						As	BxSAPConfig_Settings
+			Private co_Repos						As	BxS_SettingReposDL
 			'....................................................
-			Private	co_LogonSettings		As	SettingTableDataModel(Of BxSAPConfig_Settings.LogonSettingsDataTable)
-			Private	co_ConnSettings			As	SettingTableDataModel(Of BxSAPConfig_Settings.ConnectionSetupDataTable)
-			Private	co_BaseSettings			As	SettingTableDataModel(Of BxSAPConfig_Settings.BaseSetupDataTable)
+			Private	co_LogonSettings		As	SettingTableDM(Of BxSDL.LogonSettingsDataTable)
+			Private	co_ConnSettings			As	SettingTableDM(Of BxSDL.ConnectionSetupDataTable)
+			Private	co_BaseSettings			As	SettingTableDM(Of BxSDL.BaseSetupDataTable)
 			'....................................................
-			Private	cs_BaseSettings			As	BxSAPConfig_Settings.BaseSetupRow
+			Private	cs_BaseSettings			As	BxSDL.BaseSetupRow
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -100,7 +102,7 @@ Namespace Model.Settings
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function SaveConnectionSettings(ByVal Settings	As BxSAPConfig_Settings.ConnectionSetupRow)	As Boolean
+			Friend Function SaveConnectionSettings(ByVal Settings	As BxSDL.ConnectionSetupRow)	As Boolean
 
 				If Me.cb_Open
 					Return	Me.co_ConnSettings.CommitSettings(Settings)
@@ -110,10 +112,10 @@ Namespace Model.Settings
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function GetConnectionSettings()	As BxSAPConfig_Settings.ConnectionSetupRow
+			Friend Function GetConnectionSettings()	As BxSDL.ConnectionSetupRow
 
 				If Me.cb_Open
-					Return	CType(Me.co_ConnSettings.GetSettings(), BxSAPConfig_Settings.ConnectionSetupRow)
+					Return	CType(Me.co_ConnSettings.GetSettings(), BxSDL.ConnectionSetupRow)
 				Else
 					Return	Nothing
 				End If
@@ -134,7 +136,7 @@ Namespace Model.Settings
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function SaveLogonSettings(ByVal Settings	As BxSAPConfig_Settings.LogonSettingsRow)	As Boolean
+			Friend Function SaveLogonSettings(ByVal Settings	As BxSDL.LogonSettingsRow)	As Boolean
 
 				If Me.cb_Open
 					Return	Me.co_LogonSettings.CommitSettings(Settings)
@@ -144,10 +146,10 @@ Namespace Model.Settings
 
 			End Function
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			Friend Function GetLogonSettings()	As BxSAPConfig_Settings.LogonSettingsRow
+			Friend Function GetLogonSettings()	As BxSDL.LogonSettingsRow
 
 				If Me.cb_Open
-					Return	CType(Me.co_LogonSettings.GetSettings(), BxSAPConfig_Settings.LogonSettingsRow)
+					Return	CType(Me.co_LogonSettings.GetSettings(), BxSDL.LogonSettingsRow)
 				Else
 					Return	Nothing
 				End If
@@ -210,11 +212,11 @@ Namespace Model.Settings
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Friend Sub New(ByVal _name	As String)
 
-				Me.co_Repos		=	New	BxSAPConfig_Settings
+				Me.co_Repos		=	New	BxS_SettingReposDL
 				'..................................................
-				Me.co_LogonSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.LogonSettingsDataTable)		(Me.co_Repos.LogonSettings)
-				Me.co_ConnSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.ConnectionSetupDataTable)	(Me.co_Repos.ConnectionSetup)
-				Me.co_BaseSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.BaseSetupDataTable)				(Me.co_Repos.BaseSetup)
+				Me.co_LogonSettings		= New SettingTableDM(Of BxSDL.LogonSettingsDataTable)		(Me.co_Repos.LogonSettings)
+				Me.co_ConnSettings		= New SettingTableDM(Of BxSDL.ConnectionSetupDataTable)	(Me.co_Repos.ConnectionSetup)
+				Me.co_BaseSettings		= New SettingTableDM(Of BxSDL.BaseSetupDataTable)				(Me.co_Repos.BaseSetup)
 				'..................................................
 				Me.cc_Name				= _name
 
@@ -227,7 +229,7 @@ Namespace Model.Settings
 				End If
 				'..................................................
 				Me.cb_Open						= True
-				Me.cs_BaseSettings		= CType(Me.co_BaseSettings.GetSettings(), BxSAPConfig_Settings.BaseSetupRow)
+				Me.cs_BaseSettings		= CType(Me.co_BaseSettings.GetSettings(), BxSDL.BaseSetupRow)
 				'..................................................
 				AddHandler	Me.co_LogonSettings.ev_DataChanged	,	AddressOf SetDirtyFlag
 				AddHandler	Me.co_ConnSettings.ev_DataChanged		, AddressOf SetDirtyFlag
