@@ -5,7 +5,6 @@ Namespace	Settings.VM
 
 		#Region "Properties"
 
-			Friend	Property  DestinationID						As	String
 			Friend	Property	PeakConnectionLimit			As	Integer
 			Friend	Property	PoolSize								As	Integer
 			Friend	Property	IdleCheckTime						As	Integer

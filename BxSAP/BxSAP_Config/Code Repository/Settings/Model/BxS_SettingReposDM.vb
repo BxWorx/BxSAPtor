@@ -25,6 +25,18 @@ Namespace Settings.Model
 		#Region "Properties"
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend ReadOnly Property LogonHistoryLimit()	As UShort
+				Get
+					Return	Me.cs_BaseSettings.LogonLimit
+				End Get
+			End Property
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend ReadOnly Property ConnectionHistoryLimit()	As UShort
+				Get
+					Return	Me.cs_BaseSettings.ConnLimit
+				End Get
+			End Property
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Friend Property	AutoSave()	As Boolean
 				Get
 					Return	Me.cs_BaseSettings.AutoSaveOnClose
@@ -41,7 +53,11 @@ Namespace Settings.Model
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Friend ReadOnly Property	IsDirty()	As Boolean
 				Get
-					Return	Me.cb_Dirty
+					If Me.cb_Dirty OrElse Me.cb_DirtyBase
+						Return	True
+					Else
+						Return	False
+					End If
 				End Get
 			End Property
 
@@ -193,6 +209,28 @@ Namespace Settings.Model
 				Me.cb_Open	= False
 
 			End Sub
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Sub Open()
+			
+				Me.co_Repos		=	New	BxS_SettingReposDL
+				'..................................................
+				Me.co_LogonSettings		= New SettingTableDM(Of BxSDL.LogonSettingsDataTable)		(Me.co_Repos.LogonSettings)
+				Me.co_ConnSettings		= New SettingTableDM(Of BxSDL.ConnectionSetupDataTable)	(Me.co_Repos.ConnectionSetup)
+				Me.co_BaseSettings		= New SettingTableDM(Of BxSDL.BaseSetupDataTable)				(Me.co_Repos.BaseSetup)
+				'..................................................
+				'..................................................
+				If IO.File.Exists(Me.cc_Name)
+					Me.co_Repos.ReadXml(Me.cc_Name)
+				End If
+				'..................................................
+				Me.cb_Open						= True
+				Me.cs_BaseSettings		= CType(Me.co_BaseSettings.GetSettings(), BxSDL.BaseSetupRow)
+				'..................................................
+				AddHandler	Me.co_LogonSettings.ev_DataChanged	,	AddressOf SetDirtyFlag
+				AddHandler	Me.co_ConnSettings.ev_DataChanged		, AddressOf SetDirtyFlag
+				AddHandler	Me.co_BaseSettings.ev_DataChanged		, AddressOf SetDirtyFlag
+
+			End Sub
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -212,28 +250,11 @@ Namespace Settings.Model
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Friend Sub New(ByVal _name	As String)
 
-				Me.co_Repos		=	New	BxS_SettingReposDL
+				Me.cc_Name	= _name
 				'..................................................
-				Me.co_LogonSettings		= New SettingTableDM(Of BxSDL.LogonSettingsDataTable)		(Me.co_Repos.LogonSettings)
-				Me.co_ConnSettings		= New SettingTableDM(Of BxSDL.ConnectionSetupDataTable)	(Me.co_Repos.ConnectionSetup)
-				Me.co_BaseSettings		= New SettingTableDM(Of BxSDL.BaseSetupDataTable)				(Me.co_Repos.BaseSetup)
-				'..................................................
-				Me.cc_Name				= _name
-
+				Me.cb_Open				= False
 				Me.cb_Dirty				= False
 				Me.cb_DirtyBase		= False
-				Me.cb_Open				= False
-				'..................................................
-				If IO.File.Exists(Me.cc_Name)
-					Me.co_Repos.ReadXml(Me.cc_Name)
-				End If
-				'..................................................
-				Me.cb_Open						= True
-				Me.cs_BaseSettings		= CType(Me.co_BaseSettings.GetSettings(), BxSDL.BaseSetupRow)
-				'..................................................
-				AddHandler	Me.co_LogonSettings.ev_DataChanged	,	AddressOf SetDirtyFlag
-				AddHandler	Me.co_ConnSettings.ev_DataChanged		, AddressOf SetDirtyFlag
-				AddHandler	Me.co_BaseSettings.ev_DataChanged		, AddressOf SetDirtyFlag
 
 			End Sub
 

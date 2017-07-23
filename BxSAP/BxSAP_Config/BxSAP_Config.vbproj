@@ -49,6 +49,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -60,6 +62,8 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -85,20 +89,23 @@
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlParser.vb" />
     <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
-    <Compile Include="Code Repository\Settings\ViewModel\BxS_SettingXlator.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\Helpers\BxS_SettingXlator.vb" />
     <Compile Include="Code Repository\Settings\ViewModel\BxS_SettingsVM.vb" />
-    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\iLogonConnSetupDTO.vb" />
     <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\ConnectionDTO.vb" />
-    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\LogonConnSetupDTO.vb" />
+    <Compile Include="Code Repository\Settings\View\BaseSettings.xaml.vb">
+      <DependentUpon>BaseSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Unused\iLogonConnSetupDTO.vb" />
+    <Compile Include="Unused\LogonConnSetupDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\0LogonConnReposDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\1LogonConnectionDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\i0LogonConnReposDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\i1LogonConnectionDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\LogonConn2ViewDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Connections\iLogonConn2ViewDTO.vb" />
-    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\iLogonOptionsDTO.vb" />
+    <Compile Include="Unused\iLogonOptionsDTO.vb" />
     <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\LogonDTO.vb" />
-    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\LogonOptionsDTO.vb" />
+    <Compile Include="Unused\LogonOptionsDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Languages\iSysLanguagesDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Languages\SysLanguagesDTO.vb" />
     <Compile Include="Code Repository\Model\Logon\Systems\Logons\iSysLogon0ReposDTO.vb" />
@@ -200,6 +207,15 @@
   <ItemGroup>
     <Folder Include="Code Repository\Model\Logon\Connection Setup\" />
     <Folder Include="Code Repository\Model\Logon\Options\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Code Repository\Settings\View\BaseSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

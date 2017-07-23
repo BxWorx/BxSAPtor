@@ -639,20 +639,31 @@ Namespace Settings.Model
                 Me.columnTimeStamp = New Global.System.Data.DataColumn("TimeStamp", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
                 MyBase.Columns.Add(Me.columnTimeStamp)
                 Me.columnPeakConnectionLimit.AllowDBNull = false
+                Me.columnPeakConnectionLimit.DefaultValue = CType(10US,UShort)
                 Me.columnPoolSize.AllowDBNull = false
+                Me.columnPoolSize.DefaultValue = CType(10US,UShort)
                 Me.columnIdleCheckTime.AllowDBNull = false
+                Me.columnIdleCheckTime.DefaultValue = CType(60US,UShort)
                 Me.columnIdleTimeout.AllowDBNull = false
+                Me.columnIdleTimeout.DefaultValue = CType(60US,UShort)
                 Me.columnSNC_LibPath.AllowDBNull = false
+                Me.columnSNC_LibPath.DefaultValue = CType("%AppData%",String)
                 Me.columnSNC_LibName32.AllowDBNull = false
+                Me.columnSNC_LibName32.DefaultValue = CType("gsskrb5.dll",String)
                 Me.columnSNC_LibName64.AllowDBNull = false
+                Me.columnSNC_LibName64.DefaultValue = CType("gx64krb5.dll",String)
                 Me.columnXML_UseSAPGUI.AllowDBNull = false
                 Me.columnXML_UseSAPGUI.DefaultValue = CType(true,Boolean)
                 Me.columnXML_OnlyLoadGUI.AllowDBNull = false
                 Me.columnXML_OnlyLoadGUI.DefaultValue = CType(true,Boolean)
                 Me.columnXML_FromWorkspace.AllowDBNull = false
+                Me.columnXML_FromWorkspace.DefaultValue = CType("LEGACY SYSTEMS",String)
                 Me.columnXML_FromNode.AllowDBNull = false
+                Me.columnXML_FromNode.DefaultValue = CType("",String)
                 Me.columnXML_Path.AllowDBNull = false
+                Me.columnXML_Path.DefaultValue = CType("%App_Data%",String)
                 Me.columnXML_FileName.AllowDBNull = false
+                Me.columnXML_FileName.DefaultValue = CType("SAPUILandscapeS2A.xml",String)
                 Me.columnTimeStamp.AllowDBNull = false
                 Me.columnTimeStamp.DateTimeMode = Global.System.Data.DataSetDateTime.Utc
             End Sub
