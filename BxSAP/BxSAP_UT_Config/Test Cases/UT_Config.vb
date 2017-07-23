@@ -73,8 +73,9 @@ Namespace UT_Config
 				lo_SetRepDM.SaveLogonSettings(x)
 				x.DefLang	= "YY"
 				lo_SetRepDM.SaveLogonSettings(x)
-
-				lo_SetRepDM.Save()
+				lo_SetRepDM.SetHistoryLimit(7)
+				lo_SetRepDM.AutoSave	= True
+				lo_SetRepDM.Close()
 
 			End Sub
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨

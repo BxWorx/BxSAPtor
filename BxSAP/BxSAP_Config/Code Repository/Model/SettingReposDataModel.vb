@@ -23,6 +23,20 @@ Namespace Model.Settings
 		#Region "Properties"
 
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Property	AutoSave()	As Boolean
+				Get
+					Return	Me.cs_BaseSettings.AutoSaveOnClose
+				End Get
+			  Set(value As Boolean)
+					If Me.cs_BaseSettings.AutoSaveOnClose <> value
+
+						Me.cs_BaseSettings.AutoSaveOnClose	= value
+						Me.cb_DirtyBase											= True
+
+					End If
+			  End Set
+			End Property
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Friend ReadOnly Property	IsDirty()	As Boolean
 				Get
 					Return	Me.cb_Dirty
@@ -41,19 +55,23 @@ Namespace Model.Settings
 				If Not Me.cb_Open		Then	Exit Sub
 				'..................................................
 				If LogonSettings
+					If Me.cs_BaseSettings.LogonLimit <> Maximum
 
-					Me.co_LogonSettings.SetHistoryLimit(Maximum)
-					Me.cs_BaseSettings.LogonLimit	= Maximum
-					Me.cb_DirtyBase								= True
+						Me.co_LogonSettings.SetHistoryLimit(Maximum)
+						Me.cs_BaseSettings.LogonLimit	= Maximum
+						Me.cb_DirtyBase								= True
 
+					End If
 				End If
 				'................................................
 				If ConnectionSettings
+					If Me.cs_BaseSettings.ConnLimit	<> Maximum
 
-					Me.co_ConnSettings.SetHistoryLimit(Maximum)
-					Me.cs_BaseSettings.ConnLimit	= Maximum
-					Me.cb_DirtyBase								= True
+						Me.co_ConnSettings.SetHistoryLimit(Maximum)
+						Me.cs_BaseSettings.ConnLimit	= Maximum
+						Me.cb_DirtyBase								= True
 
+					End If
 				End If
 
 			End Sub
@@ -143,7 +161,11 @@ Namespace Model.Settings
 				If Me.cb_Open
 
 					If Me.cb_DirtyBase
+
 						Me.co_BaseSettings.CommitSettings(Me.cs_BaseSettings)
+						Me.cb_DirtyBase	= False
+						Me.cb_Dirty			= True
+
 					End If
 					'................................................
 					If Me.cb_Dirty
@@ -188,26 +210,24 @@ Namespace Model.Settings
 			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			Friend Sub New(ByVal _name	As String)
 
-				Me.cc_Name						= _name
-				'..................................................
-				Me.co_Repos						=	New	BxSAPConfig_Settings
+				Me.co_Repos		=	New	BxSAPConfig_Settings
 				'..................................................
 				Me.co_LogonSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.LogonSettingsDataTable)		(Me.co_Repos.LogonSettings)
 				Me.co_ConnSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.ConnectionSetupDataTable)	(Me.co_Repos.ConnectionSetup)
 				Me.co_BaseSettings		= New SettingTableDataModel(Of BxSAPConfig_Settings.BaseSetupDataTable)				(Me.co_Repos.BaseSetup)
+				'..................................................
+				Me.cc_Name				= _name
 
-				Me.cb_Dirty						= False
-				Me.cb_DirtyBase				= False
-				Me.cb_Open						= False
+				Me.cb_Dirty				= False
+				Me.cb_DirtyBase		= False
+				Me.cb_Open				= False
 				'..................................................
 				If IO.File.Exists(Me.cc_Name)
-
 					Me.co_Repos.ReadXml(Me.cc_Name)
-					Me.cb_Open	= True
-
-					Me.cs_BaseSettings	= CType(Me.co_BaseSettings.GetSettings(), BxSAPConfig_Settings.BaseSetupRow)
-
 				End If
+				'..................................................
+				Me.cb_Open						= True
+				Me.cs_BaseSettings		= CType(Me.co_BaseSettings.GetSettings(), BxSAPConfig_Settings.BaseSetupRow)
 				'..................................................
 				AddHandler	Me.co_LogonSettings.ev_DataChanged	,	AddressOf SetDirtyFlag
 				AddHandler	Me.co_ConnSettings.ev_DataChanged		, AddressOf SetDirtyFlag
