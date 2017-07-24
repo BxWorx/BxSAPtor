@@ -14,7 +14,6 @@ C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_NCO\bin\Debug\BxSAP_NCO.pdb
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_NCO\bin\Debug\BxSAP_NCO.xml
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_NCO\bin\Debug\sapnco.dll
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_NCO\bin\Debug\sapnco_utils.dll
-C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_NCO\obj\Debug\BxSAP_NCO.vbprojResolveAssemblyReference.cache
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_NCO\obj\Debug\BxSAP_NCO.Resources.resources
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_NCO\obj\Debug\BxSAP_NCO.vbproj.GenerateResource.Cache
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_NCO\obj\Debug\BxSAP_NCO.dll

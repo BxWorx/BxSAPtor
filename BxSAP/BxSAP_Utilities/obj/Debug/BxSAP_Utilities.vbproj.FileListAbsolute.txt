@@ -15,3 +15,4 @@ C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utiliti
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.dll
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.xml
 C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.pdb
+C:\Users\DPB\GitHub\Repos\BxSAPtor\BxSAP\BxSAP_Utilities\obj\Debug\BxSAP_Utilities.vbprojResolveAssemblyReference.cache
