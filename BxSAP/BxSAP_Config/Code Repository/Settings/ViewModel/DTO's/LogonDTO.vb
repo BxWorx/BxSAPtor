@@ -1,5 +1,5 @@
 ﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-Namespace Settings.VM
+Namespace Settings.DTO
 
 	Friend Class LogonDTO
 

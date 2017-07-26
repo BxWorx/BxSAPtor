@@ -1,4 +1,5 @@
 ﻿Imports	BxSDL	= BxSAP_Config.Settings.Model.BxS_SettingReposDL		' Data Layer
+Imports BxSAP_Config.Settings.DTO
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Namespace Settings.VM
 
