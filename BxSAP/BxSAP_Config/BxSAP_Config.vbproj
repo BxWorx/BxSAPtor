@@ -111,6 +111,7 @@
     <Compile Include="Code Repository\Model\SAPGUI XML\SAPGuiXmlParser.vb" />
     <Compile Include="Code Repository\Model\Controller\ConfigDTO.vb" />
     <Compile Include="Code Repository\Model\Controller\iConfigDTO.vb" />
+    <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\BaseDTO.vb" />
     <Compile Include="Code Repository\Settings\ViewModel\Helpers\BxS_SettingXlator.vb" />
     <Compile Include="Code Repository\Settings\ViewModel\BxS_SettingsVM.vb" />
     <Compile Include="Code Repository\Settings\ViewModel\DTO%27s\ConnectionDTO.vb" />

@@ -1,5 +1,6 @@
 ﻿Imports	BxSMdl	= BxSAP_Config.Settings.Model		' Data Layer
 Imports	BxSVM		= BxSAP_Config.Settings.VM
+Imports	BxSDTO	= BxSAP_Config.Settings.DTO
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 <TestClass()>
 Public Class UT_Config_VM
@@ -64,8 +65,8 @@ Public Class UT_Config_VM
 			Public Sub UT_Config_VM_Settings()
 
 				Dim lo_VM				As BxSVM.iBxS_SettingsVM
-				Dim lo_DTOLog		As BxSVM.LogonDTO
-				Dim lo_DTOCon		As BxSVM.ConnectionDTO
+				Dim lo_DTOLog		As BxSDTO.LogonDTO
+				Dim lo_DTOCon		As BxSDTO.ConnectionDTO
 				'..................................................
 				lo_VM			= New BxSVM.BxS_SettingsVM(Me.co_Repos, Me.co_Xlator)
 				lo_VM.Open_Repository()

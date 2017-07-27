@@ -1,0 +1,18 @@
+﻿Class MainWindow
+
+
+	Public Sub New()
+
+	    ' This call is required by the designer.
+	    InitializeComponent()
+
+	    ' Add any initialization after the InitializeComponent() call.
+
+		Dim lo = New Window1
+
+
+		lo.Show()
+
+	End Sub
+
+End Class

@@ -369,9 +369,8 @@ Friend Class xSAPtorRB
 
 	Private Sub xbtn_SAPConnectStatus_Click(sender As Object, e As RibbonControlEventArgs) Handles xbtn_SAPConnectStatus.Click
 
-		Dim lo As Form1	= New Form1
 
-		lo.Show()
+		
 
 
 		Return

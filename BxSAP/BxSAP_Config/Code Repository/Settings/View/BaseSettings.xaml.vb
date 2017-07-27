@@ -2,7 +2,7 @@
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Public Class BaseSettings
 
-	Private Property co_DTO	As LogonDTO
+	Private Property co_DTO	As BaseDTO
 
 
 	Public Sub New()
@@ -12,9 +12,10 @@ Public Class BaseSettings
 
 		' Add any initialization after the InitializeComponent() call.
 
-		Me.co_DTO	= New LogonDTO
+		Me.co_DTO	= New BaseDTO
 
-		Me.DataContext	= Me.co_DTO
+		Me.DataContext			= Me.co_DTO
+		Me.co_DTO.AutoSave	= True
 
 
 	End Sub
