@@ -11,10 +11,10 @@ Imports System.Windows
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("WpfControlLibrary1")> 
+<Assembly: AssemblyTitle("BxSAP_UC_Settings")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("WpfControlLibrary1")> 
+<Assembly: AssemblyProduct("BxSAP_UC_Settings")> 
 <Assembly: AssemblyCopyright("Copyright @  2017")> 
 <Assembly: AssemblyTrademark("")> 
 <Assembly: ComVisible(false)>
@@ -42,7 +42,7 @@ Imports System.Windows
 
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("89503258-cb95-491f-a983-4ae6d2ab96f2")> 
+<Assembly: Guid("ad6d80e3-bdc1-4858-a1b3-06ce820b0069")> 
 
 ' Version information for an assembly consists of the following four values:
 '
