@@ -1,5 +1,4 @@
 ﻿Imports BxSAP_UC_Settings.Helpers
-Imports BxSAP_UC_Settings.BaseSettings
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Friend Class ucvm
 							Inherits ViewModelBase

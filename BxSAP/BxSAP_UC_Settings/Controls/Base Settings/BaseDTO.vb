@@ -5,9 +5,20 @@ Namespace BaseSettings
 
 		#Region "Properties"
 
-			Public Property LogonHistoryLimit					As Integer
+			Friend Property LogonHistoryLimit					As Integer
 			Friend Property ConnectionHistoryLimit		As Integer
 			Friend Property AutoSave									As Boolean
+
+		#End Region
+		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+		#Region "Methods: Exposed"
+
+			'¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+			Friend Function Clone()	As BaseDTO
+
+				Return DirectCast(Me.MemberwiseClone(), BaseDTO)
+
+			End Function
 
 		#End Region
 

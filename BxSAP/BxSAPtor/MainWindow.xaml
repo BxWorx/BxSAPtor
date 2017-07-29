@@ -9,6 +9,6 @@
 				Title="MainWindow" Height="350" Width="525">
 	<DockPanel LastChildFill="False" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 		<StackPanel Width="100" Margin="3,3,1,3" />
-		<BxSAP_UC_Settings:UserControl1 Width="146" Height="123" VerticalAlignment="Top"/>
+		<BxSAP_UC_Settings:BaseSettingsView Width="127" Height="147" VerticalAlignment="Top"/>
 	</DockPanel>
 </Window>
