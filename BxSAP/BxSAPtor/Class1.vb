@@ -65,15 +65,15 @@ Public Class RelayCommand
 	Public Custom Event CanExecuteChanged As EventHandler Implements ICommand.CanExecuteChanged
 
 		AddHandler(ByVal value As EventHandler)
-			'CommandManager.RequerySuggested += value
+			AddHandler CommandManager.RequerySuggested, value
 		End AddHandler
 
 		RemoveHandler(ByVal value As EventHandler)
-			'CommandManager.RequerySuggested -= value
+			RemoveHandler	CommandManager.RequerySuggested, value
 		End RemoveHandler
 
 		 RaiseEvent(ByVal sender As Object, ByVal e As EventArgs)
-				CType(Events("ClickEvent"), EventHandler).Invoke(sender, e)
+				CommandManager.InvalidateRequerySuggested()
 		End RaiseEvent
 
 	End Event

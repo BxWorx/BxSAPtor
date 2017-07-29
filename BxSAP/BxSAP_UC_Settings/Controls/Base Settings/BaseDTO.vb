@@ -1,7 +1,7 @@
 ﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-Namespace DTO
+Namespace BaseSettings
 
-	Public Class BaseDTO
+	Friend Class BaseDTO
 
 		#Region "Properties"
 

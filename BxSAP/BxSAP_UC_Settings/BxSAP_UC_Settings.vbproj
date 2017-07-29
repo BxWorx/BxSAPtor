@@ -61,14 +61,24 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\Base Settings\BaseSettings.xaml">
+    <Compile Include="Controls\Base Settings\BaseSettingsVM.vb" />
+    <Compile Include="Helpers\ViewModelBase.vb" />
+    <Compile Include="Test\ucvm.vb" />
+    <Compile Include="Test\UserControl1.xaml.vb">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\Base Settings\BaseSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Controls\Base Settings\BaseDTO.vb" />
-    <Compile Include="Controls\Base Settings\BaseSettings.xaml.vb">
-      <DependentUpon>BaseSettings.xaml</DependentUpon>
+    <Compile Include="Controls\Base Settings\BaseSettingsView.xaml.vb">
+      <DependentUpon>BaseSettingsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Test\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Import Include="System.Threading.Tasks" />
@@ -114,5 +124,6 @@
     </None>
     <AppDesigner Include="My Project\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

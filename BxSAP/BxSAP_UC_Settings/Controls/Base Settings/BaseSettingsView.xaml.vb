@@ -1,8 +1,8 @@
-﻿Imports BxSAP_UC_Settings.DTO
+﻿Imports BxSAP_UC_Settings.BaseSettings
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-Public Class BaseSettings
+Public Class BaseSettingsView
 
-	Public Shared ReadOnly SaveCommandProperty As DependencyProperty	= DependencyProperty.Register("SaveClickCommand", GetType(ICommand), GetType(BaseSettings))
+	Public Shared ReadOnly SaveCommandProperty As DependencyProperty	= DependencyProperty.Register("SaveClickCommand", GetType(ICommand), GetType(BaseSettingsView))
 
 	Public Property SaveClickCommand() As ICommand
 		Get
