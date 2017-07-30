@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="myUC.myUC"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+						 xmlns:local="clr-namespace:BxSAP_UC_Settings.myUC"
+						 mc:Ignorable="d" 
+						 d:DesignHeight="89.684" d:DesignWidth="111.789">
+
+	<UserControl.Resources>
+		<local:myUCVM x:Key="VM" />
+	</UserControl.Resources>
+
+	<Grid>
+		<CheckBox x:Name="checkBox" Content="Auto Save" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top"
+							IsChecked="{Binding Autosave, Source={StaticResource VM}}"/>
+		<Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="15,60,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SaveCommand, Mode=OneWay, Source={StaticResource VM}}"/>
+
+	</Grid>
+</UserControl>
