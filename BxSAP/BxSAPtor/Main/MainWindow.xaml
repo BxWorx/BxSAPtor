@@ -1,0 +1,26 @@
+﻿<Window
+				xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:local="clr-namespace:BxSAPtor"
+				xmlns:main="clr-namespace:BxSAPtor.Main"
+				xmlns:BxSAP_UC_Settings="clr-namespace:BxSAP_UC_Settings;assembly=BxSAP_UC_Settings"
+				xmlns:myUC="clr-namespace:BxSAP_UC_Settings.myUC;assembly=BxSAP_UC_Settings"
+				x:Class="Main.MainWindow"
+				mc:Ignorable="d"
+				Title="MainWindow" Height="283.146" Width="373.989">
+
+	<Window.Resources>
+		<main:MainVM x:Key="VM" />
+	</Window.Resources>
+
+	<DockPanel LastChildFill="False" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+		<ToolBar x:Name="toolBar" VerticalAlignment="Top" DockPanel.Dock="Top" Height="30">
+			<Button x:Name="Save" IsDefault="True" Content="Save"
+							Command="{Binding SaveCommand, Mode=OneWay, Source={StaticResource VM}}"/>
+		</ToolBar>
+		<StackPanel Width="100" Margin="3,3,1,3" />
+		<myUC:myUC Height="319" VerticalAlignment="Top"/>
+	</DockPanel>
+</Window>

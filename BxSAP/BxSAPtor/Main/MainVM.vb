@@ -1,12 +1,8 @@
 ﻿Imports BxSAP_UC_Settings.Helpers
 '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-Namespace myUC
+Namespace Main
 
-	Public Class myUCVM
-								Inherits ViewModelBase
-
-		'Private co_SaveCmd	As RelayCommand
-		Private cb_auto	As Boolean
+	Public Class MainVM
 
 		Public ReadOnly Property SaveCommand()	As RelayCommand
 			Get
@@ -14,28 +10,16 @@ Namespace myUC
 			End Get
 		End Property
 
-
-		Public Property Autosave()	As Boolean
-			Get
-				Return	Me.cb_auto
-			End Get
-		    Set(value As Boolean)
-					Me.SetProperty(Me.cb_auto,value)
-		    End Set
-		End Property
-
-
-
-
 		Public Sub New()
 		End Sub
 
-
-
-		Private Sub Save()
-			Me.Autosave	= Not Me.Autosave
+		Public Sub Initialise(ByVal xx As String)
+			Dim x = xx
 		End Sub
 
+		Private Sub Save()
+			Dim x = 1
+		End Sub
 
 	End Class
 

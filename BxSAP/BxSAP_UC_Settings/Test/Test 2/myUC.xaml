@@ -14,7 +14,8 @@
 	<Grid>
 		<CheckBox x:Name="checkBox" Content="Auto Save" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top"
 							IsChecked="{Binding Autosave, Source={StaticResource VM}}"/>
-		<Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="15,60,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SaveCommand, Mode=OneWay, Source={StaticResource VM}}"/>
+		<Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="15,60,0,0" VerticalAlignment="Top" Width="75"
+				Command="{Binding SaveCommand, Mode=OneWay, Source={StaticResource VM}}"/>
 
 	</Grid>
 </UserControl>
