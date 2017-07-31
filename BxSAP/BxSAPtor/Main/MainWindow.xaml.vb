@@ -23,6 +23,9 @@
 
 			Me.co_VM.Initialise("SS")
 
+		Dim x = Resources
+
+
 		End Sub
 
 
