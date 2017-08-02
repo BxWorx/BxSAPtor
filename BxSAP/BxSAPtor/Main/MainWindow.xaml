@@ -13,7 +13,6 @@
 
 	<Window.Resources>
 		<main:MainVM x:Key="VM" />
-		<myUC:myUC	x:Key="UC" />
 	</Window.Resources>
 
 	<DockPanel LastChildFill="False" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -23,6 +22,6 @@
 			</Button>
 		</ToolBar>
 		<StackPanel Width="100" Margin="3,3,1,3" />
-		<myUC:myUC Height="319" VerticalAlignment="Top"/>
+		<myUC:myUC Height="97" VerticalAlignment="Top"/>
 	</DockPanel>
 </Window>
