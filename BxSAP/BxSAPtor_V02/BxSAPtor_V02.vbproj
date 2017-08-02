@@ -135,5 +135,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BxSAP_Config\BxSAP_Config.vbproj">
+      <Project>{a48d98d6-2dd7-49e6-8487-6d4486248c74}</Project>
+      <Name>BxSAP_Config</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
