@@ -1,0 +1,75 @@
+﻿<Window x:Class="BxSAPtor_V03.Source_Repository.Application.BxSAPtorView"
+				xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:local="clr-namespace:BxSAPtor_V03.Source_Repository.Application"
+				mc:Ignorable="d"
+				Title="BxSAPtor Configurator" Height="300" Width="300">
+
+	<Window.Resources>
+
+		<!--  Style: Border-->
+		<Style TargetType="Border">
+			<Setter Property="BorderBrush"
+							Value="Black" />
+			<Setter	Property="BorderThickness"
+							Value="0.5" />
+			<Setter Property="CornerRadius"
+							Value="5" />
+		</Style>
+		
+		<!--  Style: Button-->
+		<Style TargetType="Button">
+			<Setter Property="Margin"
+							Value="1" />
+			<Setter Property="Background"
+							Value="Beige" />
+		</Style>
+
+	</Window.Resources>
+
+
+	<DockPanel LastChildFill="True">
+		
+		<Border DockPanel.Dock="Top"
+						Height="30"
+						VerticalAlignment="Top">
+			
+			<ToolBar x:Name="toolBar">
+				<Button Name="Save"
+								Content="Save"
+								Focusable="False"
+								IsTabStop="False"
+								IsDefault="True" />
+			</ToolBar>
+
+		</Border>
+
+		<Border DockPanel.Dock="Left"
+						Width="100"
+						HorizontalAlignment="Left">
+			
+			<StackPanel x:Name="Menu">
+
+				<Button x:Name="Global"
+								Content="Global"
+								/>
+
+				<Button x:Name="button1"
+								Content="Button" />
+				
+				<Button x:Name="button2"
+								Content="Button" />
+				
+			</StackPanel>
+
+		</Border>
+
+		<Border DockPanel.Dock="Right">
+
+		</Border>
+
+	</DockPanel>
+
+</Window>
