@@ -18,9 +18,9 @@
 
 	Private Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
 
-		Dim lo_AppVM As New AppVM
+		'Dim lo_AppVM As New AppVM
 
-		Dim x = 1
+		'Dim x = 1
 	End Sub
 
 

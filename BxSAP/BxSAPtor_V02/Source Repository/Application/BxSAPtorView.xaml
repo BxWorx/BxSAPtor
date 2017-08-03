@@ -5,19 +5,41 @@
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:local="clr-namespace:BxSAPtor_V02"
 				mc:Ignorable="d"
-				Title="BxSAPtorView" Height="300" Width="300">
+				Title="BxSAPtor Configurator" Height="300" Width="300">
 
 	<Window.Resources>
-		<local:AppVM x:Key="AppVM"	/>
+		
+		<local:AppVM x:Key="AppVM" />
+
+		<Style TargetType="Button">
+			<Setter Property="Margin" Value="1" />
+			<Setter Property="Background" Value="Beige" />
+		</Style>	
+		
 	</Window.Resources>
 
 	<DockPanel LastChildFill="True">
 		<Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,0,.5" Height="30" VerticalAlignment="Top" UseLayoutRounding="True" CornerRadius="4">
+			<ToolBar x:Name="toolBar">
+				<Button Name="Save" Content="Save" Focusable="False" IsTabStop="False" IsDefault="True"/>
+			</ToolBar>
 
 		</Border>
 
 		<Border DockPanel.Dock="Left" Width="100" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="0,0,0.5,0" CornerRadius="5" >
-			
+			<StackPanel x:Name="Menu">
+				
+				<Button x:Name="Global"
+								Content="Global"
+								Command="{Binding ChangePageCommand, Mode=OneWay, Source={StaticResource AppVM}}"
+								CommandParameter="{Binding  }"
+								/>
+
+
+				<Button x:Name="button1"	Content="Button"	/>
+				<Button x:Name="button2"	Content="Button"	/>
+			</StackPanel>
+
 		</Border>
 
 		<Border DockPanel.Dock="Right" BorderBrush="Black" BorderThickness=".5,.5,.5,.5" CornerRadius="5">

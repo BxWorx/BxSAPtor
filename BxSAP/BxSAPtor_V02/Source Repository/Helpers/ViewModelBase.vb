@@ -4,7 +4,9 @@ Imports System.Runtime.CompilerServices
 Namespace Helpers
 
 	Public MustInherit Class ViewModelBase
-														Implements	INotifyPropertyChanged
+														Implements	INotifyPropertyChanged, iUCViewModel
+
+			Protected	cc_Name	As String
 
 		#Region "Methods: Protected"
 
@@ -21,6 +23,16 @@ Namespace Helpers
 				Return True
 
 			End Function
+
+		#End Region
+		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+		#Region "Properties"
+
+			Public ReadOnly Property Name()	As String	Implements	iUCViewModel.Name
+				Get
+					Return	Me.cc_Name
+				End Get
+			End Property
 
 		#End Region
 		'¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯

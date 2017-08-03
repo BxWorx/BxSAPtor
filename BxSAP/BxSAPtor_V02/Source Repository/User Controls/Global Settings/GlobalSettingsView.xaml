@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="GlobalSettingsView"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+						 xmlns:local="clr-namespace:BxSAPtor_V02"
+						 mc:Ignorable="d" Height="86" Width="297">
+	
+	<Grid Height="300" VerticalAlignment="Top">
+			
+		<CheckBox x:Name="checkBox" Content="CheckBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+		<Slider x:Name="slider" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4,-5.722" Width="280"/>
+		<Slider x:Name="slider1" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.333,-7.167" Width="280"/>
+
+	</Grid>
+	
+</UserControl>

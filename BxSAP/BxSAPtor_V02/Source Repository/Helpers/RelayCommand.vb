@@ -1,7 +1,7 @@
 ﻿'••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 Namespace Helpers
 
-	Public Class RelayCommand
+	Public Class RelayCommandxx
 								Implements ICommand
 
 		#Region "Fields"
