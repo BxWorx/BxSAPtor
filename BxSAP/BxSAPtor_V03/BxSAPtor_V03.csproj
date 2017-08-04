@@ -59,11 +59,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Source Repository\Application\BxSAPtorView.xaml.cs">
+    <Compile Include="Source\Application\BxSAPtorView.xaml.cs">
       <DependentUpon>BxSAPtorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source Repository\Application\BxSAPtorViewModel.cs" />
-    <Compile Include="Source Repository\Helpers\RelayCommand.cs" />
+    <Compile Include="Source\Application\BxSAPtor_VM.cs" />
+    <Compile Include="Source\Controls\UCSettingsVM.cs" />
+    <Compile Include="Source\Helpers\iPageVM.cs" />
+    <Compile Include="Source\Helpers\RelayCommand.cs" />
+    <Compile Include="Source\Helpers\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -76,7 +79,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Source Repository\Application\BxSAPtorView.xaml">
+    <Page Include="Source\Application\BxSAPtorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

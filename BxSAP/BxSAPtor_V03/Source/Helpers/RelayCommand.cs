@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Windows.Input;
 //••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-namespace BxSAPtor_V03.Source_Repository.Helpers
+namespace BxSAPtor.Configurator.Helpers
 {
-	public class RelayCommand<T> : ICommand
+	internal class RelayCommand<T> : ICommand
 	{
 		#region Declarations
 

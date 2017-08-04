@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BxSAPtor_V03.Source_Repository.Application
+namespace BxSAPtor.Configurator.Application
 {
 	/// <summary>
 	/// Interaction logic for BxSAPtorView.xaml
