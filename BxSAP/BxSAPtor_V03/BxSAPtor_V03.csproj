@@ -62,11 +62,12 @@
     <Compile Include="Source\Application\BxSAPtorView.xaml.cs">
       <DependentUpon>BxSAPtorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Application\BxSAPtor_VM.cs" />
+    <Compile Include="Source\Application\BxSAPtorViewModel.cs" />
+    <Compile Include="Source\Controls\UCSettingsView.xaml.cs">
+      <DependentUpon>UCSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Controls\UCSettingsVM.cs" />
     <Compile Include="Source\Helpers\iPageVM.cs" />
-    <Compile Include="Source\Helpers\RelayCommand.cs" />
-    <Compile Include="Source\Helpers\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,6 +81,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Source\Application\BxSAPtorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Controls\UCSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,6 +115,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BxSAPtor_MVVMToolkit\BxSAPtor_MVVMToolkit.csproj">
+      <Project>{0f2141c3-81ef-4d76-b092-28340d693abe}</Project>
+      <Name>BxSAPtor_MVVMToolkit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

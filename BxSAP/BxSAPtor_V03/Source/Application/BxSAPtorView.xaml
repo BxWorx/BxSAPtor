@@ -1,14 +1,26 @@
 ﻿<Window x:Class="BxSAPtor.Configurator.Application.BxSAPtorView"
+				
 				xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:local="clr-namespace:BxSAPtor.Configurator.Application"
+				xmlns:vml="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"
+				xmlns:uc="clr-namespace:BxSAPtor.Configurator.Controls"
+				
+				vml:ViewModelLocator.AutoHookedUpViewModel="True"
+				
 				mc:Ignorable="d"
 				Title="BxSAPtor Configurator" Height="329.476" Width="216.812">
 
 	<Window.Resources>
 
+		<!--<local:BxSAPtorViewModel x:Key="VM" />-->
+
+		<!--<DataTemplate DataType="{x:Type uc:UCSettingsVM }">
+			<uc:UCSettingsView />
+		</DataTemplate>-->
+		
 		<!--  Style: Border-->
 		<Style TargetType="Border">
 			<Setter Property="BorderBrush"
@@ -41,7 +53,12 @@
 								Content="Save"
 								Focusable="False"
 								IsTabStop="False"
-								IsDefault="True" />
+								IsDefault="True"
+								
+								Command="{Binding OnSave}"
+								
+								/>
+				<!--Command="{Binding ChangePageCommand}"-->
 			</ToolBar>
 
 		</Border>
@@ -55,6 +72,8 @@
 				<Button x:Name="Global"
 								Content="Global"
 								/>
+				<!--Command="{Binding ChangePageCommand, Mode=OneWay, Source={StaticResource VM}}"
+								CommandParameter="{Binding CurrentPageViewModel, Source={StaticResource VM}}"-->
 
 				<Button x:Name="button1"
 								Content="Button" />

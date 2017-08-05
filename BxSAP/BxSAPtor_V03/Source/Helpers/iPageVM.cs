@@ -1,7 +1,7 @@
 ﻿//••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAPtor.Configurator.Helpers
 	{
-		interface iPageVM
+	 public	interface iPageVM
 			{
 				string Name { get; }
 
