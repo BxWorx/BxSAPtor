@@ -5,16 +5,18 @@
 				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:local="clr-namespace:BxSAPtor.Configurator.Application"
-				xmlns:vml="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"
-				xmlns:uc="clr-namespace:BxSAPtor.Configurator.Controls"
-				
-				vml:ViewModelLocator.AutoHookedUpViewModel="True"
-				
+				xmlns:tkit="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"
+				xmlns:uc="clr-namespace:BxSAPtor.Configurator.Controls"				
 				mc:Ignorable="d"
 				Title="BxSAPtor Configurator" Height="329.476" Width="216.812">
 
+	<!--tkit:ViewModelLocator.AutoHookedUpViewModel="True"-->
+
+
 	<Window.Resources>
 
+		
+		
 		<!--<local:BxSAPtorViewModel x:Key="VM" />-->
 
 		<!--<DataTemplate DataType="{x:Type uc:UCSettingsVM }">
@@ -40,6 +42,9 @@
 		</Style>
 
 	</Window.Resources>
+	<Window.DataContext>
+		<local:BxSAPtorViewModel/>
+	</Window.DataContext>
 
 
 	<DockPanel LastChildFill="True">
@@ -49,13 +54,13 @@
 						VerticalAlignment="Top">
 
 			<ToolBar x:Name="toolBar">
+				
 				<Button Name="Save"
 								Content="Save"
 								Focusable="False"
 								IsTabStop="False"
-								IsDefault="True"
+								IsDefault="True" Command="{Binding SaveCommand, Mode=OneWay}"
 								
-								Command="{Binding OnSave}"
 								
 								/>
 				<!--Command="{Binding ChangePageCommand}"-->

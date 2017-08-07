@@ -22,16 +22,23 @@ namespace BxSAPtor.Configurator.Application
 							// Set starting page
 							CurrentPageViewModel = PageViewModels[0];
 
-							this.SaveCommand = new RelayCommand(OnSave, CanSave);
-
+							this.SaveCommand = new RelayCommand<bool>(p => this.OnSave()	,
+																												p => this.CanSave			);
 
 						}
 
-					private void OnSave() {
-						int x = 1;
-						}
+						private bool OnSave() {
+							int x = 1;
+							x += 1;
+							return	true;
+							}
 
-					private bool CanSave() { return  true; }
+						private bool _isDirty	= false;
+
+						public bool CanSave {
+							get {	return  this._isDirty; }
+							set { SetProperty(ref this._isDirty, value); }
+						}
 
 
 				#endregion
@@ -40,15 +47,18 @@ namespace BxSAPtor.Configurator.Application
 
 					private ICommand				_changePageCommand;
 					private iPageVM					_currentPageViewModel;
-					private List<iPageVM>		_pageViewModels;
+					private List<iPageVM>		_pageViewModels		= new List<iPageVM> { } ;
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 				#region ** Properties **
 
-					public RelayCommand SaveCommand { get; set; }
+					private ICommand	_savecommand;
 
-
+					public ICommand SaveCommand {
+						get { return this._savecommand; }
+						private	set { this._savecommand = value; }
+						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public ICommand ChangePageCommand
@@ -107,6 +117,7 @@ namespace BxSAPtor.Configurator.Application
 								this.PageViewModels.Add(viewModel);
 
 							this.CurrentPageViewModel = this.PageViewModels.FirstOrDefault(vm => vm == viewModel);
+							
 						}
 
 				#endregion

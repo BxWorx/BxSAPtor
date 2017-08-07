@@ -40,12 +40,12 @@ namespace MVVMToolkit
 					}
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				[DebuggerStepThrough]
-				public Boolean CanExecute(Object parameter)
+				public Boolean CanExecute(object parameter)
 					{
 						return _canExecute == null ? true : _canExecute((T)parameter);
 					}
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				public void Execute(Object parameter)
+				public void Execute(object parameter)
 					{
 						_execute((T)parameter);
 					}
@@ -61,8 +61,8 @@ namespace MVVMToolkit
 
 			#region Declarations
 
-				private	readonly Func<Boolean>	_canExecuteTargetMethod;
-				private	readonly Action					_targetExecuteMethod;
+				private	readonly Func<bool>		_canExecuteTargetMethod;
+				private	readonly Action				_targetExecuteMethod;
 
 			#endregion
 			//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -73,7 +73,7 @@ namespace MVVMToolkit
 								: this(executeMethod, null)
 					{ }
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				public RelayCommand(Action executeMethod, Func<Boolean> canExecute)
+				public RelayCommand(Action executeMethod, Func<bool> canExecute)
 					{
 						if (executeMethod == null) throw new ArgumentNullException("execute");
 
@@ -93,12 +93,12 @@ namespace MVVMToolkit
 				}
 			//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 			[DebuggerStepThrough]
-			public Boolean CanExecute(Object parameter)
+			public Boolean CanExecute(object parameter)
 				{
 					return _canExecuteTargetMethod == null ? true : _canExecuteTargetMethod();
 				}
 			//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-			public void Execute(Object parameter)
+			public void Execute(object parameter)
 				{
 					_targetExecuteMethod();
 				}
