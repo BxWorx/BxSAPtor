@@ -13,6 +13,11 @@
 	<!--tkit:ViewModelLocator.AutoHookedUpViewModel="True"-->
 
 
+	<Window.DataContext>
+		<local:BxSAPtorViewModel/>
+	</Window.DataContext>
+
+
 	<Window.Resources>
 
 		
@@ -42,9 +47,7 @@
 		</Style>
 
 	</Window.Resources>
-	<Window.DataContext>
-		<local:BxSAPtorViewModel/>
-	</Window.DataContext>
+	
 
 
 	<DockPanel LastChildFill="True">
@@ -59,10 +62,12 @@
 								Content="Save"
 								Focusable="False"
 								IsTabStop="False"
-								IsDefault="True" Command="{Binding SaveCommand, Mode=OneWay}"
+								IsDefault="True"
 								
-								
-								/>
+				
+
+					/>
+				<!--Command="{Binding SaveCommand, Mode=OneWay}"-->
 				<!--Command="{Binding ChangePageCommand}"-->
 			</ToolBar>
 

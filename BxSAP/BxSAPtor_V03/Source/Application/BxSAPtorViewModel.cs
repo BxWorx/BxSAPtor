@@ -16,14 +16,18 @@ namespace BxSAPtor.Configurator.Application
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public BxSAPtorViewModel()
 						{
+
+							this.SaveCommand = new RelayCommand<bool>(p => this.OnSave()	,
+																												p => this.CanSave			);
+							
 							// Add available pages
+
+							this._pageViewModels	=	new List<iPageVM> { };
 							PageViewModels.Add(new UCSettingsVM());
 
 							// Set starting page
 							CurrentPageViewModel = PageViewModels[0];
 
-							this.SaveCommand = new RelayCommand<bool>(p => this.OnSave()	,
-																												p => this.CanSave			);
 
 						}
 
@@ -47,7 +51,7 @@ namespace BxSAPtor.Configurator.Application
 
 					private ICommand				_changePageCommand;
 					private iPageVM					_currentPageViewModel;
-					private List<iPageVM>		_pageViewModels		= new List<iPageVM> { } ;
+					private List<iPageVM>		_pageViewModels;
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
