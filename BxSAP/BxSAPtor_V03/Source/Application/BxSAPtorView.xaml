@@ -5,17 +5,19 @@
 				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:local="clr-namespace:BxSAPtor.Configurator.Application"
-				xmlns:tkit="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"
-				xmlns:uc="clr-namespace:BxSAPtor.Configurator.Controls"				
+				xmlns:mvvmcore="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"
+				xmlns:uc="clr-namespace:BxSAPtor.Configurator.Controls"
+				
+				mvvmcore:ViewModelLocator.AutoHookedUpViewModel="True"
+				
 				mc:Ignorable="d"
 				Title="BxSAPtor Configurator" Height="329.476" Width="216.812">
 
-	<!--tkit:ViewModelLocator.AutoHookedUpViewModel="True"-->
 
 
-	<Window.DataContext>
+	<!--<Window.DataContext>
 		<local:BxSAPtorViewModel/>
-	</Window.DataContext>
+	</Window.DataContext>-->
 
 
 	<Window.Resources>
@@ -64,7 +66,7 @@
 								IsTabStop="False"
 								IsDefault="True"
 								
-				
+								Command="{Binding Source={StaticResource ResourceKey=}}"
 
 					/>
 				<!--Command="{Binding SaveCommand, Mode=OneWay}"-->
