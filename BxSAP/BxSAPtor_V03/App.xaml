@@ -1,15 +1,25 @@
-﻿<Application x:Class="BxSAPtor_V03.App"
-						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-						 xmlns:local="clr-namespace:BxSAPtor_V03"
-						 StartupUri="Source\Application\BxSAPtorView.xaml"
-						 xmlns:mvvmcore="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"
+﻿<Application
+							x:Class					="BxSAPtor_V03.App"
 						 
-						 >
+							xmlns						="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+							xmlns:x					="http://schemas.microsoft.com/winfx/2006/xaml"
+							xmlns:d					="http://schemas.microsoft.com/expression/blend/2008" 
+							xmlns:mc				="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+							xmlns:local			="clr-namespace:BxSAPtor_V03"
+							xmlns:mvvmcore	="clr-namespace:BxSAPtor.Configurator.MVVM"
+
+							mc:Ignorable		="d"              
+						 
+							StartupUri			="Source\Application\BxSAPtorView.xaml"
+						 
+						>
 	
-	<!--	MainWindow	-->	
-	
-		<Application.Resources>
-		</Application.Resources>
+	<Application.Resources>
+		<mvvmcore:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+	</Application.Resources>
 	
 </Application>
+
+
+<!--xmlns:mvvmcore	="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"-->
+	

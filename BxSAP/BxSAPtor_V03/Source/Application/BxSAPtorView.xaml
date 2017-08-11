@@ -5,14 +5,13 @@
 				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:local="clr-namespace:BxSAPtor.Configurator.Application"
-				xmlns:mvvmcore="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"
 				xmlns:uc="clr-namespace:BxSAPtor.Configurator.Controls"
-				
-				mvvmcore:ViewModelLocator.AutoHookedUpViewModel="True"
 				
 				mc:Ignorable="d"
 				Title="BxSAPtor Configurator" Height="329.476" Width="216.812">
 
+	<!--mvvmcore:ViewModelLocator.AutoHookedUpViewModel="True"-->
+	<!--xmlns:mvvmcore="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"-->
 
 
 	<!--<Window.DataContext>
@@ -22,14 +21,14 @@
 
 	<Window.Resources>
 
-		
-		
+
+
 		<!--<local:BxSAPtorViewModel x:Key="VM" />-->
 
 		<!--<DataTemplate DataType="{x:Type uc:UCSettingsVM }">
 			<uc:UCSettingsView />
 		</DataTemplate>-->
-		
+
 		<!--  Style: Border-->
 		<Style TargetType="Border">
 			<Setter Property="BorderBrush"
@@ -49,7 +48,10 @@
 		</Style>
 
 	</Window.Resources>
-	
+	<Window.DataContext>
+		<Binding Mode="OneWay" Source="{StaticResource VMLocator}"/>
+	</Window.DataContext>
+
 
 
 	<DockPanel LastChildFill="True">
@@ -59,14 +61,14 @@
 						VerticalAlignment="Top">
 
 			<ToolBar x:Name="toolBar">
-				
+
 				<Button Name="Save"
 								Content="Save"
 								Focusable="False"
 								IsTabStop="False"
 								IsDefault="True"
 								
-								Command="{Binding Source={StaticResource ResourceKey=}}"
+								Command="{Binding Path=OnSave}"
 
 					/>
 				<!--Command="{Binding SaveCommand, Mode=OneWay}"-->

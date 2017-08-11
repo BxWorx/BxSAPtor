@@ -7,7 +7,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-namespace MVVMToolkit
+namespace BxSAPtor.Configurator.MVVM
 	{
 		[TypeDescriptionProvider(typeof(ModelViewMapDescriptionProvider))]
 		public class ViewModelLocator : DynamicObject, ITypedList
@@ -20,7 +20,7 @@ namespace MVVMToolkit
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 				#region Properties
 
-					[ImportMany("ViewModel", AllowRecomposition = true)]
+					[ImportMany("ViewMod    el", AllowRecomposition = true)]
 					private IEnumerable<Lazy<object, IViewModelMetadata>>	ViewModels	{ get; set; }
 					public	int																						Count				{ get { return _dictionary.Count; } }
 
@@ -37,11 +37,12 @@ namespace MVVMToolkit
 									{
 											if (ViewModels == null)
 											{
+													//catalog.Catalogs.Add(new AssemblyCatalog(typeof(ViewModelLocator).Assembly));
 
 													AggregateCatalog	agcatalog	= new AggregateCatalog();
-													AssemblyCatalog		asCatalog	= new AssemblyCatalog(Assembly.GetExecutingAssembly());
+													//AssemblyCatalog		asCatalog	= new AssemblyCatalog(Assembly.GetExecutingAssembly());
+													AssemblyCatalog		asCatalog	= new AssemblyCatalog(typeof(ViewModelLocator).Assembly);
 
-													//catalog.Catalogs.Add(new AssemblyCatalog(typeof(ViewModelLocator).Assembly));
 													agcatalog.Catalogs.Add(asCatalog);
 													CompositionContainer _container = new CompositionContainer(agcatalog);
 													var compositionContainer = new CompositionContainer(agcatalog);

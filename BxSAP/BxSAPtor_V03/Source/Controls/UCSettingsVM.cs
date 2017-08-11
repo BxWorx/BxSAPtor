@@ -1,5 +1,5 @@
 ﻿using BxSAPtor.Configurator.Helpers;
-using MVVMToolkit;
+using BxSAPtor.Configurator.MVVM;
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAPtor.Configurator.Controls
 	{

@@ -1,0 +1,15 @@
+﻿<Page x:Class="Demo.Pages.Demo2"
+			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			mc:Ignorable="d" 
+			DataContext="{Binding Path=Demo2, Source={StaticResource Locator}}"
+			d:DesignHeight="270" d:DesignWidth="572"
+	Title="Demo2">
+
+		<Grid>
+				<Button Content="Action: Test" Height="36" HorizontalAlignment="Left" Margin="42,32,0,0" Name="button1" VerticalAlignment="Top" Width="458" Command="{Binding Path=Action}" />
+				<Button Content="Enable/Disable" Height="35" HorizontalAlignment="Left" Margin="39,88,0,0" Name="button2" VerticalAlignment="Top" Width="458" Command="{Binding Path=EnDisable}" />
+		</Grid>
+</Page>

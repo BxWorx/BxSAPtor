@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Input;
 using BxSAPtor.Configurator.Helpers;
 using BxSAPtor.Configurator.Controls;
-using MVVMToolkit;
+using BxSAPtor.Configurator.MVVM;
 //••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAPtor.Configurator.Application
 	{
