@@ -22,7 +22,7 @@ namespace MVVMToolkit
 						{
 							if (EqualityComparer<T>.Default.Equals(Storage, Value)) return false;
 							Storage = Value;
-							this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+							PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
 							return true;
 						}
 

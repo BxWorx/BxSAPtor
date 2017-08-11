@@ -2,12 +2,14 @@
 						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 						 xmlns:local="clr-namespace:BxSAPtor_V03"
-						 StartupUri="Source\Application\BxSAPtorView.xaml">
+						 StartupUri="Source\Application\BxSAPtorView.xaml"
+						 xmlns:mvvmcore="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"
+						 
+						 >
 	
 	<!--	MainWindow	-->	
 	
 		<Application.Resources>
-				 
 		</Application.Resources>
 	
 </Application>
