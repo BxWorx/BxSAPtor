@@ -47,10 +47,9 @@
 		</Style>
 
 	</Window.Resources>
+
 	<Window.DataContext>
-		<Binding Mode="OneWay"
-						 Path="BxSAPtor"
-						 Source="{StaticResource VMLocator}" />
+		<Binding Source="{StaticResource Locator}" Path="BxSAPtorViewModel"/>
 	</Window.DataContext>
 
 
@@ -69,7 +68,7 @@
 								IsTabStop="False"
 								IsDefault="True"
 								
-								Command="{Binding Path=EnDisable}"
+								Command="{Binding Path=Action}"
 
 					/>
 				<!--Command="{Binding SaveCommand, Mode=OneWay}"-->
@@ -85,7 +84,7 @@
 			<StackPanel x:Name="Menu">
 
 				<Button x:Name="Global"
-								Content="Global"
+								Content="Global" Command="{Binding EnDisable}"
 								/>
 				<!--Command="{Binding ChangePageCommand, Mode=OneWay, Source={StaticResource VM}}"
 								CommandParameter="{Binding CurrentPageViewModel, Source={StaticResource VM}}"-->

@@ -67,12 +67,13 @@ namespace MVVMToolkit
 
 					#region ITypedList implementation
 					public PropertyDescriptorCollection GetItemProperties(PropertyDescriptor[] listAccessors)
-					{
-							var result = new PropertyDescriptorCollection(null);
+						{
+							PropertyDescriptorCollection result = new PropertyDescriptorCollection(null);
+
 							foreach (var m in _dictionary)
 									result.Add(new ModelViewPropertyDescriptor(m.Key, m.Value));
 							return result;
-					}
+						}
 
 					public string GetListName(PropertyDescriptor[] listAccessors)
 					{

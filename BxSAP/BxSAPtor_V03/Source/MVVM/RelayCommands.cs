@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 //••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-namespace BxSAPtor.Configurator.MVVM
+namespace BxSAPtor.MVVM
 	{
 		public class RelayCommand<T> : ICommand
 			{

@@ -1,13 +1,19 @@
-﻿using BxSAPtor.Configurator.MVVM;
+﻿using System.ComponentModel;
+using System.Windows;
+using BxSAPtor.MVVM;
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAPtor_V03.Source.ViewModels
-{
-	[ExportViewModel("BxSAPtor", false)]
+	{
+		[ExportViewModel("BxSAPtorViewModel", false)]
 		class BxSAPtorViewModel : ViewModelBase
 			{
+				bool IsDesignMode => DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
 				public BxSAPtorViewModel()
 					{
+
+						if (IsDesignMode)	return;
+
 						EnDisable = new RelayCommand(	() =>	{	isEnabled = !isEnabled;
 																									Action.RaiseCanExecuteChanged();
 																								}

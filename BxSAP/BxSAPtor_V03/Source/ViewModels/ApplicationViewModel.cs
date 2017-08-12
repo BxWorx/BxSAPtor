@@ -1,8 +1,8 @@
-﻿using BxSAPtor.Configurator.MVVM;
+﻿using BxSAPtor.MVVM;
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAPtor_V03.Source.ViewModels
-{
-	[ExportViewModel("ApplicationViewModel", false)]
+	{
+		[ExportViewModel("ApplicationVM", false)]
 		class ApplicationViewModel : ViewModelBase
 			{
 

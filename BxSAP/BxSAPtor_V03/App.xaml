@@ -6,20 +6,24 @@
 							xmlns:d					="http://schemas.microsoft.com/expression/blend/2008" 
 							xmlns:mc				="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 							xmlns:local			="clr-namespace:BxSAPtor_V03"
-							xmlns:mvvmcore	="clr-namespace:BxSAPtor.Configurator.MVVM"
+							xmlns:mvvm			="clr-namespace:BxSAPtor.MVVM"
 
 							mc:Ignorable		="d"              
 						 
-							StartupUri			="Source\Application\BxSAPtorView.xaml"
+							StartupUri			="Source\Application\BxSAPtorView.xaml" ShutdownMode="OnMainWindowClose"
 						 
 						>
 	
 	<Application.Resources>
-		<mvvmcore:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+		
+		<mvvm:VMLocator		x:Key						="Locator"
+											d:IsDataSource	="True"
+														
+		/>
+		
 	</Application.Resources>
 	
 </Application>
-
 
 <!--xmlns:mvvmcore	="clr-namespace:MVVMToolkit;assembly=BxSAPtor_MVVMToolkit"-->
 	

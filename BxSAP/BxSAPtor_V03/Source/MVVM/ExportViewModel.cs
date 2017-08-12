@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel.Composition;
 
-namespace BxSAPtor.Configurator.MVVM
+namespace BxSAPtor.MVVM
 	{
 		[MetadataAttribute]
 		[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
@@ -12,15 +9,14 @@ namespace BxSAPtor.Configurator.MVVM
 		{
 				public string Name { get; private set; }
 
-				public ExportViewModel(string name, bool isStatic)
-						: base("ViewModel")
+				public ExportViewModel(string name, bool isStatic) : base("ViewModel")
 				{
 						Name = name;
 				}
 		}
 
-		public interface IViewModelMetadata
-		{
-				string Name { get; }
-		}
+		//public interface IViewModelMetadata
+		//{
+		//		string Name { get; }
+		//}
 }

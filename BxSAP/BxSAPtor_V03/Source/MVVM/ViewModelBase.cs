@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 //••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-namespace BxSAPtor.Configurator.MVVM
+namespace BxSAPtor.MVVM
 	{
 		public abstract class ViewModelBase : INotifyPropertyChanged
 			{

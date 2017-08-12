@@ -70,6 +70,7 @@
     <Compile Include="Source\Controls\UCSettingsVM.cs" />
     <Compile Include="Source\Helpers\iPageVM.cs" />
     <Compile Include="Source\MVVM\ExportViewModel.cs" />
+    <Compile Include="Source\MVVM\IViewModelMetadata.cs" />
     <Compile Include="Source\MVVM\RelayCommands.cs" />
     <Compile Include="Source\MVVM\ViewModelBase.cs" />
     <Compile Include="Source\MVVM\ViewModelLocator.cs" />

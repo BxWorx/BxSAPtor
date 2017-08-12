@@ -5,16 +5,16 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Dynamic;
 using System.Linq;
-using System.Reflection;
+using BxSAPtor_V03.Source.MVVM;
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-namespace BxSAPtor.Configurator.MVVM
+namespace BxSAPtor.MVVM
 	{
 		[TypeDescriptionProvider(typeof(ModelViewMapDescriptionProvider))]
-		public class ViewModelLocator : DynamicObject, ITypedList
+		public class VMLocator : DynamicObject, ITypedList
 			{
 				#region Declarations
 
-					private static Dictionary<string, object>	_dictionary	= new Dictionary<string, object>();
+					private static Dictionary<string, object> _dictionary	= new Dictionary<string, object>();
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -37,15 +37,9 @@ namespace BxSAPtor.Configurator.MVVM
 									{
 											if (ViewModels == null)
 											{
-													//catalog.Catalogs.Add(new AssemblyCatalog(typeof(ViewModelLocator).Assembly));
-
 													AggregateCatalog	agcatalog	= new AggregateCatalog();
-													//AssemblyCatalog		asCatalog	= new AssemblyCatalog(Assembly.GetExecutingAssembly());
-													AssemblyCatalog		asCatalog	= new AssemblyCatalog(typeof(ViewModelLocator).Assembly);
-
-													agcatalog.Catalogs.Add(asCatalog);
-													CompositionContainer _container = new CompositionContainer(agcatalog);
-													var compositionContainer = new CompositionContainer(agcatalog);
+													agcatalog.Catalogs.Add(new AssemblyCatalog(typeof(VMLocator).Assembly));
+													CompositionContainer	compositionContainer = new CompositionContainer(agcatalog);
 													compositionContainer.ComposeParts(this);
 											}
 
@@ -68,12 +62,12 @@ namespace BxSAPtor.Configurator.MVVM
 
 					#region ITypedList implementation
 					public PropertyDescriptorCollection GetItemProperties(PropertyDescriptor[] listAccessors)
-					{
-							var result = new PropertyDescriptorCollection(null);
-							foreach (var m in _dictionary)
+						{
+							PropertyDescriptorCollection	result = new PropertyDescriptorCollection(null);
+							foreach (KeyValuePair<string, object> m in _dictionary)
 									result.Add(new ModelViewPropertyDescriptor(m.Key, m.Value));
 							return result;
-					}
+						}
 
 					public string GetListName(PropertyDescriptor[] listAccessors)
 					{
@@ -93,8 +87,7 @@ namespace BxSAPtor.Configurator.MVVM
 							/// Construct the descriptor
 							/// </summary>
 							/// <param name="command"></param>
-							public ModelViewPropertyDescriptor(string name, object modelView)
-									: base(name, null)
+							public ModelViewPropertyDescriptor(string name, object modelView) : base(name, null)
 							{
 									ModelView = modelView;
 							}
@@ -188,8 +181,7 @@ namespace BxSAPtor.Configurator.MVVM
 							/// <summary>
 							/// Standard constructor
 							/// </summary>
-							public ModelViewMapDescriptionProvider()
-									: this(TypeDescriptor.GetProvider(typeof(ViewModelLocator)))
+							public ModelViewMapDescriptionProvider() : this(TypeDescriptor.GetProvider(typeof(VMLocator)))
 							{
 							}
 
@@ -197,8 +189,7 @@ namespace BxSAPtor.Configurator.MVVM
 							/// Construct the provider based on a parent provider
 							/// </summary>
 							/// <param name="parent"></param>
-							public ModelViewMapDescriptionProvider(TypeDescriptionProvider parent)
-									: base(parent)
+							public ModelViewMapDescriptionProvider(TypeDescriptionProvider parent) : base(parent)
 							{
 							}
 
@@ -227,8 +218,7 @@ namespace BxSAPtor.Configurator.MVVM
 							/// </summary>
 							/// <param name="descriptor"></param>
 							/// <param name="map"></param>
-							public ModelViewDescriptor(ICustomTypeDescriptor descriptor)
-									: base(descriptor)
+							public ModelViewDescriptor(ICustomTypeDescriptor descriptor) : base(descriptor)
 							{
 							}
 
@@ -238,8 +228,8 @@ namespace BxSAPtor.Configurator.MVVM
 							/// <returns>A collection of synthesized property descriptors</returns>
 							public override PropertyDescriptorCollection GetProperties()
 							{
-									var result = new PropertyDescriptorCollection(null);
-									foreach (var m in _dictionary)
+									PropertyDescriptorCollection result = new PropertyDescriptorCollection(null);
+									foreach (KeyValuePair<string, object> m in _dictionary)
 											result.Add(new ModelViewPropertyDescriptor(m.Key, m.Value));
 									return result;
 							}
