@@ -8,13 +8,13 @@ using BxSAPtor.Configurator.MVVM;
 namespace BxSAPtor.Configurator.Application
 	{
 
-		public class BxSAPtorViewModel : ViewModelBase
+		public class BxSAPtorViewModelxx : ViewModelBase
 			{
 
 				#region ** Constructors **
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public BxSAPtorViewModel()
+					public BxSAPtorViewModelxx()
 						{
 
 							this.SaveCommand = new RelayCommand<bool>(p => this.OnSave()	,

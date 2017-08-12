@@ -6,7 +6,6 @@
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:local="clr-namespace:BxSAPtor.Configurator.Application"
 				xmlns:uc="clr-namespace:BxSAPtor.Configurator.Controls"
-				
 				mc:Ignorable="d"
 				Title="BxSAPtor Configurator" Height="329.476" Width="216.812">
 
@@ -49,7 +48,9 @@
 
 	</Window.Resources>
 	<Window.DataContext>
-		<Binding Mode="OneWay" Source="{StaticResource VMLocator}"/>
+		<Binding Mode="OneWay"
+						 Path="BxSAPtor"
+						 Source="{StaticResource VMLocator}" />
 	</Window.DataContext>
 
 
@@ -68,7 +69,7 @@
 								IsTabStop="False"
 								IsDefault="True"
 								
-								Command="{Binding Path=OnSave}"
+								Command="{Binding Path=EnDisable}"
 
 					/>
 				<!--Command="{Binding SaveCommand, Mode=OneWay}"-->

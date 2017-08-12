@@ -2,11 +2,11 @@
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAPtor_V03.Source.ViewModels
 {
-	[ExportViewModel("ApplicationViewModel", false)]
-		class ApplicationViewModel : ViewModelBase
+	[ExportViewModel("BxSAPtor", false)]
+		class BxSAPtorViewModel : ViewModelBase
 			{
 
-				public ApplicationViewModel()
+				public BxSAPtorViewModel()
 					{
 						EnDisable = new RelayCommand(	() =>	{	isEnabled = !isEnabled;
 																									Action.RaiseCanExecuteChanged();

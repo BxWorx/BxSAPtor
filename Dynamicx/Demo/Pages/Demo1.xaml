@@ -3,13 +3,13 @@
 			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-			mc:Ignorable="d" 
-			DataContext="{Binding Path=Demo1, Source={StaticResource Locator}}"
+			mc:Ignorable="d"
+			DataContext="{Binding Demo1, Source={StaticResource Locator}}"
 			d:DesignHeight="342" d:DesignWidth="636"
 	Title="Demo1">
 
 		<Grid>
-				<Button Content="Action" Height="113" HorizontalAlignment="Left" Margin="59,62,0,0" Name="button1" VerticalAlignment="Top" Width="127" Command="{Binding Path=Action}" />
-				<Button Content="En/Disable" Height="113" HorizontalAlignment="Left" Margin="237,62,0,0" Name="button2" VerticalAlignment="Top" Width="127" Command="{Binding Path=EnDisable}" />
+				<Button Content="Action" Height="113" HorizontalAlignment="Left" Margin="59,62,0,0" Name="button1" VerticalAlignment="Top"			Width="127"	Command="{Binding Action}" />
+				<Button Content="En/Disable" Height="113" HorizontalAlignment="Left" Margin="237,62,0,0" Name="button2" VerticalAlignment="Top" Width="127"	Command="{Binding EnDisable}" />
 		</Grid>
 </Page>

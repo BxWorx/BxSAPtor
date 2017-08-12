@@ -73,6 +73,7 @@
     <Compile Include="Source\MVVM\RelayCommands.cs" />
     <Compile Include="Source\MVVM\ViewModelBase.cs" />
     <Compile Include="Source\MVVM\ViewModelLocator.cs" />
+    <Compile Include="Source\ViewModels\BxSAPtorViewModel.cs" />
     <Compile Include="Source\ViewModels\ApplicationViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

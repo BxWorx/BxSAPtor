@@ -20,7 +20,7 @@ namespace BxSAPtor.Configurator.MVVM
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 				#region Properties
 
-					[ImportMany("ViewMod    el", AllowRecomposition = true)]
+					[ImportMany("ViewModel", AllowRecomposition = true)]
 					private IEnumerable<Lazy<object, IViewModelMetadata>>	ViewModels	{ get; set; }
 					public	int																						Count				{ get { return _dictionary.Count; } }
 

@@ -13,7 +13,7 @@ namespace BxSAPtor.Configurator.MVVM
 				public string Name { get; private set; }
 
 				public ExportViewModel(string name, bool isStatic)
-						: base("ViewModelBase")
+						: base("ViewModel")
 				{
 						Name = name;
 				}
