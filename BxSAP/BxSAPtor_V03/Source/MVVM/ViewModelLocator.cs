@@ -6,6 +6,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Dynamic;
 using System.Linq;
 using BxSAPtor_V03.Source.MVVM;
+using System.Reflection;
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAPtor.MVVM
 	{
@@ -38,7 +39,8 @@ namespace BxSAPtor.MVVM
 											if (ViewModels == null)
 											{
 													AggregateCatalog	agcatalog	= new AggregateCatalog();
-													agcatalog.Catalogs.Add(new AssemblyCatalog(typeof(VMLocator).Assembly));
+													agcatalog.Catalogs.Add(	new AssemblyCatalog(typeof(VMLocator).Assembly)			);
+													agcatalog.Catalogs.Add(	new AssemblyCatalog(Assembly.GetCallingAssembly())	);
 													CompositionContainer	compositionContainer = new CompositionContainer(agcatalog);
 													compositionContainer.ComposeParts(this);
 											}
