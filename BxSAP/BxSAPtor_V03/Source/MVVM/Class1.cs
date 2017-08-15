@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BxSAPtor_V03.Source.MVVM
 	{
-	class Class1
-		{
-		}
+		class Class1
+			{
+			}
 
 
 	/// <summary>
@@ -52,7 +52,7 @@ namespace BxSAPtor_V03.Source.MVVM
 		public override System.Linq.IQueryable<ComposablePartDefinition>
 			{
 				 get { return _catalog.Parts; }
-	}
+			}
 
 /// <summary>
 /// Returns the exports in the catalog that match a given definition of an import.

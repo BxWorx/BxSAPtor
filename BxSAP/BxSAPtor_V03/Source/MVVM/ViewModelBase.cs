@@ -31,6 +31,11 @@ namespace BxSAPtor.MVVM
 
 				#endregion
 
+					protected void SetName([CallerMemberName] string CallerName = null)
+						{
+							this.cc_myName = CallerName;
+						}
+
 			}
 	}
 
