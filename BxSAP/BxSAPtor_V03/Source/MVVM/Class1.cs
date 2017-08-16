@@ -145,3 +145,23 @@ protected static bool ToBool(object value)
 
 
 
+public class LazySingleton3
+	 2: {
+	 3:     // static holder for instance, need to use lambda to construct since constructor private
+	 4:     private static readonly Lazy<LazySingleton3> _instance
+	 5:         = new Lazy<LazySingleton3>(() => new LazySingleton3());
+	 6:  
+	 7:     // private to prevent direct instantiation.
+	 8:     private LazySingleton3()
+	 9:     {
+	10:     }
+	11:  
+	12:     // accessor for instance
+	13:     public static LazySingleton3 Instance
+	14:     {
+	15:         get
+	16:         {
+	17:             return _instance.Value;
+	18:         }
+	19:     }
+
