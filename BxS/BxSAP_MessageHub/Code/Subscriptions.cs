@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BxSAP_MessageHub
 {
-		public class Class1
+		public class Subscriptions
 		{
 			//sadasdasd
 		}
