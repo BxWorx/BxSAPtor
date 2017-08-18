@@ -7,7 +7,12 @@ using MVVM;
 
 namespace BxSAP_App.Main
 	{
-	class BxSAP_MainViewModel : ViewModelBase
-		{
-		}
+		class BxSAP_MainViewModel : ViewModelBase
+			{
+				
+				public BxSAP_MainViewModel()
+					{
+						
+					}
+			}
 	}
