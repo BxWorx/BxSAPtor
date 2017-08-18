@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BxSAP_MessageHub", "BxSAP_MessageHub\BxSAP_MessageHub.csproj", "{2C4F4CAB-93C1-4C38-BF32-7475581F8384}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BxSAP_App", "BxSAP_App\BxSAP_App.csproj", "{73348893-2E22-452E-BA44-8BED6A02B3CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2C4F4CAB-93C1-4C38-BF32-7475581F8384}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4F4CAB-93C1-4C38-BF32-7475581F8384}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4F4CAB-93C1-4C38-BF32-7475581F8384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73348893-2E22-452E-BA44-8BED6A02B3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73348893-2E22-452E-BA44-8BED6A02B3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73348893-2E22-452E-BA44-8BED6A02B3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73348893-2E22-452E-BA44-8BED6A02B3CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
