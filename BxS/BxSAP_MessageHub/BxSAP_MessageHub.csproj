@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Hub.cs" />
+    <Compile Include="Code\ISubscription.cs" />
     <Compile Include="Code\Subscription.cs" />
     <Compile Include="Code\Subscriptions - Copy.cs" />
     <Compile Include="Code\Subscriptions.cs" />
