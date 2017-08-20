@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MsgHub;
+using System;
 
 namespace BxSAP_UT_MessageHub.Unit_Tests
 {
@@ -59,24 +60,26 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		[TestMethod]
 		public void MsgHub_UT_Subscriptions_Base()
 			{
+				var lo_guid		= new Guid();
 				var lc_Topic	= "Test";
 				var lo_Subs		= new Subscriptions( lc_Topic);
-				var lo_Sub		= MsgHubFactory.Subscription<string>(this.test);
+
+				var lo_Sub		= MsgHubFactory.Subscription<string>(lo_guid, lc_Topic, false, true, this.test);
 
 				Assert.IsNotNull(lo_Subs);
 				Assert.AreSame(lc_Topic, lo_Subs.Topic);
 
 				lo_Subs.Register(lo_Sub);
-				Assert.AreEqual(1, lo_Subs.Count);
-				Assert.IsTrue(lo_Subs.ContainsKey(lo_Sub.MyToken));
+				Assert.AreEqual(1, lo_Subs.SubscriptionCount);
+				Assert.IsTrue(lo_Subs.SubscriptionExists(lo_Sub.MyToken));
 				Assert.IsTrue(lo_Subs.RemoveSubscription(lo_Sub.MyToken));
 
 				lo_Subs.Register(lo_Sub);
-				Assert.AreEqual(1, lo_Subs.Count);
-				Assert.IsTrue(lo_Subs.ContainsKey(lo_Sub.MyToken));
+				Assert.AreEqual(1, lo_Subs.SubscriptionCount);
+				Assert.IsTrue(lo_Subs.SubscriptionExists(lo_Sub.MyToken));
 
 				lo_Subs.Clear();
-				Assert.AreEqual(0, lo_Subs.Count);
+				Assert.AreEqual(0, lo_Subs.SubscriptionCount);
 		}
 
 		private void test(string name)

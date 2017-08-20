@@ -10,11 +10,12 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 	[TestClass]
 	public class MsgHub_UT_Subscription
 	{
+
+		private static Guid co_GuidEmpty;
+
 		public MsgHub_UT_Subscription()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
+			co_GuidEmpty = new Guid();
 		}
 
 		private TestContext testContextInstance;
@@ -60,11 +61,12 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		[TestMethod]
 		public void MsgHub_UT_Subscription_Base()
 			{
-				var lo_guid		= new Guid();
-				var lo_Sub		= MsgHubFactory.Subscription<string>(this.test);
+				var lo_guid		= Guid.NewGuid();
+				var lc_Topic	= "Test";
+				var lo_Sub		= MsgHubFactory.Subscription<string>(lo_guid, lc_Topic, false, true, this.test);
 
 				Assert.IsNotNull(lo_Sub);
-				Assert.AreNotEqual(lo_guid,lo_Sub.MyToken);
+				Assert.AreNotEqual(co_GuidEmpty, lo_Sub.MyToken);
 			}
 
 		private void test(string name)
