@@ -8,8 +8,8 @@ namespace MsgHub
 			{
 				#region **[Declarations]**
 
-					private	readonly ConcurrentDictionary<string,	Subscriptions	>		ct_Topics;
-					private readonly ConcurrentDictionary<Guid,		IList<string>	>		ct_ClientTopics;
+					private	readonly ConcurrentDictionary<string,	Subscriptions	>		ct_Topics;				// key  = topic			,	value = subscription
+					private readonly ConcurrentDictionary<Guid,		IList<string>	>		ct_ClientTopics;	// key	= client id	,	value	= topic
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -30,45 +30,51 @@ namespace MsgHub
 				#region **[Methods:Exposed]**
 
 					//____________________________________________________________________________________________
-					public Guid Subscribe(Guid ClientID, string Topic, bool AllowMultiple = true)
+					public Guid Subscribe(Subscription subscription)
 						{
-							var	lt_Subs	= this.GetAddTopicSubscriptions(Topic);
+							var	lt_Subscriptions	= this.GetAddTopicSubscriptions(subscription.Topic);
 
-							if (!AllowMultiple)
+							if (!subscription.AllowMany)
 								{
-									if (this.IsClientSubscribedToTopic(ClientID, Topic))
+									if (this.IsClientSubscribedToTopic(subscription.ClientID, subscription.Topic))
 										{
 											
 										}
 								}
-							
-							var	Sub	= new Subscription();
-							lt_Subs.AddUpdateSubscription(Sub.MyID, Sub);
 
-							return Sub.MyID;
+							return	lt_Subscriptions.Register(subscription);
 						}
 
 					//____________________________________________________________________________________________
-					public Guid UnSubscribe()
+					public Guid Subscribe<T>(Guid clientid, string topic, Action<T> action, bool allowmany = true)
 						{
-							var Sub = new Subscription();
-							
-							
-
-
-							return Sub.MyID;
+							return	this.Subscribe(	MsgHubFactory.Subscription(clientid, topic, allowmany, action) );
 						}
 
 					//____________________________________________________________________________________________
-					public Guid UnSubscribeAll()
-						{
-							var Sub = new Subscription();
+					//public Guid UnSubscribe()
+					//	{
+					//		//var Sub = new Subscription();
 							
 							
 
 
-							return Sub.MyID;
-						}
+					//		//return Sub.MyID;
+					//	}
+
+					//____________________________________________________________________________________________
+					//public Guid UnSubscribeAll()
+					//	{
+					//		//var Sub = new Subscription();
+							
+							
+
+
+					//		//return Sub.MyID;
+					//	}
+
+					
+
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -81,11 +87,11 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					private IList<string>	GetClientTopics(Guid ClientID)
+					private IList<string>	GetClientTopics(Guid clientid)
 						{
 							IList<string> lt_Topics;
 
-							if (!this.ct_ClientTopics.TryGetValue(ClientID, out lt_Topics))
+							if (!this.ct_ClientTopics.TryGetValue(clientid, out lt_Topics))
 								{
 									lt_Topics = new List<string>();
 								}
@@ -94,14 +100,14 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					private Subscriptions GetAddTopicSubscriptions(string Topic)
+					private Subscriptions GetAddTopicSubscriptions(string topic)
 						{
 							Subscriptions lo_Subs;
 
-							if (!this.ct_Topics.TryGetValue(Topic, out lo_Subs))
+							if (!this.ct_Topics.TryGetValue(topic, out lo_Subs))
 								{
-									lo_Subs = new Subscriptions(Topic);
-									this.ct_Topics.TryAdd(Topic, lo_Subs);
+									lo_Subs = new Subscriptions(topic);
+									this.ct_Topics.TryAdd(topic, lo_Subs);
 								}
 
 							return lo_Subs;

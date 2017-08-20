@@ -60,11 +60,15 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		[TestMethod]
 		public void MsgHub_UT_Subscription_Base()
 			{
-				var lo_guid						= new Guid();
-				ISubscription lo_Sub	= new Subscription();
+				var lo_guid		= new Guid();
+				var lo_Sub		= MsgHubFactory.Subscription<string>(this.test);
 
 				Assert.IsNotNull(lo_Sub);
-				Assert.AreNotEqual(lo_guid,lo_Sub.MyID);
+				Assert.AreNotEqual(lo_guid,lo_Sub.MyToken);
 			}
+
+		private void test(string name)
+			{ }
+
 	}
 }

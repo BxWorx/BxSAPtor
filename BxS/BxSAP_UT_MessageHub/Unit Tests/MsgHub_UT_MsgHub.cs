@@ -1,19 +1,21 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MsgHub;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BxSAP_UT_MessageHub.Unit_Tests
-{
+	{
 	/// <summary>
-	/// Summary description for MsgHub_UT_Subscriptions
+	/// Summary description for MsgHub_UT_MsgHub
 	/// </summary>
 	[TestClass]
-	public class MsgHub_UT_Subscriptions
-	{
-		public MsgHub_UT_Subscriptions()
+	public class MsgHub_UT_MsgHub
+		{
+		public MsgHub_UT_MsgHub()
 			{
-				//
-				// TODO: Add constructor logic here
-				//
+			//
+			// TODO: Add constructor logic here
+			//
 			}
 
 		private TestContext testContextInstance;
@@ -23,16 +25,16 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		///information about and functionality for the current test run.
 		///</summary>
 		public TestContext TestContext
-		{
+			{
 			get
-			{
+				{
 				return testContextInstance;
-			}
+				}
 			set
-			{
+				{
 				testContextInstance = value;
+				}
 			}
-		}
 
 		#region Additional test attributes
 		//
@@ -57,30 +59,22 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		#endregion
 
 		[TestMethod]
-		public void MsgHub_UT_Subscriptions_Base()
+		public void MsgHub_UT_MsgHub_Base()
 			{
-				var lc_Topic	= "Test";
-				var lo_Subs		= new Subscriptions( lc_Topic);
-				var lo_Sub		= MsgHubFactory.Subscription<string>(this.test);
+				var lo_Guid		= new Guid();
+				var lo_CID		= Guid.NewGuid();
+				var lo_Hub		= new MsgHub.Hub();
 
-				Assert.IsNotNull(lo_Subs);
-				Assert.AreSame(lc_Topic, lo_Subs.Topic);
+				var lo_Token0	= lo_Hub.Subscribe(lo_CID, "XX", (string msg) => this.test(msg), false);
+				Assert.AreNotSame(lo_Guid, lo_Token0);
 
-				lo_Subs.Register(lo_Sub);
-				Assert.AreEqual(1, lo_Subs.Count);
-				Assert.IsTrue(lo_Subs.ContainsKey(lo_Sub.MyToken));
-				Assert.IsTrue(lo_Subs.RemoveSubscription(lo_Sub.MyToken));
-
-				lo_Subs.Register(lo_Sub);
-				Assert.AreEqual(1, lo_Subs.Count);
-				Assert.IsTrue(lo_Subs.ContainsKey(lo_Sub.MyToken));
-
-				lo_Subs.Clear();
-				Assert.AreEqual(0, lo_Subs.Count);
-		}
+				var lo_Token1	= lo_Hub.Subscribe(lo_CID, "XX", (string msg) => this.test(msg), false);
+				Assert.AreNotSame(lo_Guid, lo_Token1);
+				Assert.AreNotSame(lo_Token0, lo_Token1);
+			}
 
 		private void test(string name)
 			{ }
 
+		}
 	}
-}

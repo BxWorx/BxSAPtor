@@ -2,7 +2,7 @@
 //••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace MsgHub
 	{
-		public interface ISubscription
+		internal interface ISubscription
 			{
 				Guid MyID { get; }
 			}
