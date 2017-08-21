@@ -49,6 +49,9 @@ namespace MsgHub
 									,TaskCreationOptions.PreferFairness );
 						}
 
+		//lo_Tasks.Add(Task.Factory.StartNew<iExcelRow>(() => { return new ExcelRow(indexNo: ln_Idx, i_RowNo: ln_RowNo, i_Data: lo_RowData, i_SearchEOT: _SearchEOT); }, _ct))
+
+
 					//____________________________________________________________________________________________
 					public int SubscriptionCount(string topic)
 						{
