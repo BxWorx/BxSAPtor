@@ -72,7 +72,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 				lo_Subs.Register(lo_Sub);
 				Assert.AreEqual(1, lo_Subs.SubscriptionCount);
 				Assert.IsTrue(lo_Subs.SubscriptionExists(lo_Sub.MyToken));
-				Assert.IsTrue(lo_Subs.RemoveSubscription(lo_Sub.MyToken));
+				Assert.IsTrue(lo_Subs.DeRegister(lo_Sub.MyToken));
 
 				lo_Subs.Register(lo_Sub);
 				Assert.AreEqual(1, lo_Subs.SubscriptionCount);

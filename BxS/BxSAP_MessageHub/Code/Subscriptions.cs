@@ -10,8 +10,7 @@ namespace MsgHub
 
 					private readonly string																		cc_Topic;
 					private readonly ConcurrentDictionary<Guid, Subscription>	ct_Subscriptions;   // key	= subscription ID		value = subscription
-					private readonly ConcurrentDictionary<Guid, int>					ct_Clients;					// key	= Client ID					value	= membership count
-					//private readonly IList<Guid>															ct_Client; 
+					private readonly ConcurrentDictionary<Guid, int>					ct_Clients;					// key	= client ID					value	= membership count
 
 				#endregion
 				//_________________________________________________________________________________________
@@ -20,6 +19,8 @@ namespace MsgHub
 					public string	Topic							{ get { return	this.cc_Topic; } }
 					public int		SubscriptionCount	{ get { return	this.ct_Subscriptions.Count; } }
 					public int		ClientCount				{ get { return	this.ct_Clients.Count; } }
+
+					public IList<Subscription>	SubscriptionList { get { return new List<Subscription>(this.ct_Subscriptions.Values); } }
 
 				#endregion
 				//_________________________________________________________________________________________
@@ -76,7 +77,7 @@ namespace MsgHub
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public bool RemoveSubscription(Guid SubscriptionToken)
+					public bool DeRegister(Guid SubscriptionToken)
 						{
 							bool lb_Ret	= false;
 							Subscription lo_Sub;

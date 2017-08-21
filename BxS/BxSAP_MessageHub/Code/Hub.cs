@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 //••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace MsgHub
 	{
@@ -8,7 +9,7 @@ namespace MsgHub
 			{
 				#region **[Declarations]**
 
-					private	readonly ConcurrentDictionary<string,	Subscriptions	>		ct_Topics;				// key  = topic			,	value = subscription
+					private	readonly ConcurrentDictionary<string,	Subscriptions	>		ct_Topics;		// key  = topic
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -28,12 +29,47 @@ namespace MsgHub
 				#region **[Methods:Exposed]**
 
 					//____________________________________________________________________________________________
-					public int SubscriptionCount(string Topic)
-						{ return this.SubsCount(Topic); }
+					public void Publish<T>(string topic, T message)
+						{
+							foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
+								{
+									if (lo_sub != null)	lo_sub.Invoke(message);
+								}
+						}
+					//____________________________________________________________________________________________
+					public async Task PublishAsync<T>(string topic, T message)
+						{
+							await Task.Factory.StartNew(	() =>
+									{
+										foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
+											{
+												if (lo_sub != null)	lo_sub.Invoke(message);
+											}
+									}
+									,TaskCreationOptions.PreferFairness );
+						}
 
 					//____________________________________________________________________________________________
-					public int ClientCount(string Topic)
-						{ return this.ClntCount(Topic); }
+					public int SubscriptionCount(string topic)
+						{
+							Subscriptions lo_Subs;
+
+							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
+								{	return	lo_Subs.SubscriptionCount; }
+							else
+								{ return 0;	}
+						}
+
+					//____________________________________________________________________________________________
+					public int ClientCount(string topic)
+						{
+							Subscriptions lo_Subs;
+
+							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
+								{	return	lo_Subs.ClientCount; }
+							else
+								{ return 0;	}
+						}
 
 					//____________________________________________________________________________________________
 					public Guid Subscribe(Subscription subscription)
@@ -53,52 +89,43 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					//public Guid UnSubscribe()
-					//	{
-					//		//var Sub = new Subscription();
-							
-							
-
-
-					//		//return Sub.MyID;
-					//	}
+					public void UnSubscribe(Subscription subscription)
+						{
+							this.UnsubscribeToken(subscription.MyToken);
+						}
 
 					//____________________________________________________________________________________________
-					//public Guid UnSubscribeAll()
-					//	{
-					//		//var Sub = new Subscription();
-							
-							
+					public void UnSubscribe(Guid token)
+						{
+							this.UnsubscribeToken(token);
+						}
 
+					//____________________________________________________________________________________________
+					public void UnSubscribe(string topic)
+						{
+							Subscriptions lo_Subs;
 
-					//		//return Sub.MyID;
-					//	}
+							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))		lo_Subs.Clear();							
+						}
 
-					
-
+					//____________________________________________________________________________________________
+					public void UnSubscribeAll()
+						{
+							this.ct_Topics.Clear();
+						}
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 				#region **[Methods:Private]**
 
-					////____________________________________________________________________________________________
-					//private bool IsClientSubscribedToTopic(Guid ClientID, string Topic)
-					//	{
-					//		return this.GetClientTopics(ClientID).Contains(Topic);
-					//	}
-
-					////____________________________________________________________________________________________
-					//private IList<string>	GetClientTopics(Guid clientid)
-					//	{
-					//		IList<string> lt_Topics;
-
-					//		if (!this.ct_ClientTopics.TryGetValue(clientid, out lt_Topics))
-					//			{
-					//				lt_Topics = new List<string>();
-					//			}
-
-					//		return lt_Topics;
-					//	}
+					//____________________________________________________________________________________________
+					private void UnsubscribeToken(Guid token)
+						{
+							foreach (var lo_Subs in this.ct_Topics)
+								{
+									if (lo_Subs.Value.DeRegister(token)) { break; }
+								}
+						}
 
 					//____________________________________________________________________________________________
 					private Subscriptions GetAddTopicSubscriptions(string topic)
@@ -115,25 +142,9 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					private int SubsCount(string topic)
+					private IList<Subscription> GetTopicSubscriptions(string topic)
 						{
-							Subscriptions lo_Subs;
-
-							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
-								{	return	lo_Subs.SubscriptionCount; }
-							else
-								{ return 0;	}
-						}
-
-					//____________________________________________________________________________________________
-					private int ClntCount(string topic)
-						{
-							Subscriptions lo_Subs;
-
-							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
-								{	return	lo_Subs.ClientCount; }
-							else
-								{ return 0;	}
+							return	this.ct_Topics[topic].SubscriptionList;
 						}
 
 				#endregion

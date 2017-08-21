@@ -81,7 +81,7 @@ namespace MsgHub
 									lo_Action = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), this.co_MInfo);
 								}
 							//..................................................
-							if (lo_Action != null)	lo_Action(Msg);
+							lo_Action?.Invoke( Msg );
 						}
 
 				#endregion
