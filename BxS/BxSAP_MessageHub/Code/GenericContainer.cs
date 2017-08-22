@@ -3,14 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace BxSAP_MessageHub.Code
+//••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+namespace MsgHub
 	{
-	class GenericContainer
-		{
-		}
+		internal class GenericContainer
+			{
 
-public static class GenericLists
+					private Dictionary<Type, object> MyDict;
+
+					internal GenericContainer()
+						{
+							this.MyDict = new Dictionary<Type, object>();
+						}
+
+					//internal void NewEntry<T>() { this.MyDict.Add() }
+
+
+	}
+
+	public static class GenericLists
 {
 		private static Dictionary<Type, object> MyDict = new Dictionary<Type, object>();
 		public static void NewEntry<T>()

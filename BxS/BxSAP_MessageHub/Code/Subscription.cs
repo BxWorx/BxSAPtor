@@ -34,14 +34,13 @@ namespace MsgHub
 				#region ** [Constructors]**
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public Subscription(Guid			token			,
-															Guid			clientid	,
+					public Subscription(Guid			clientid	,
 															string		topic			,
 															bool			allowmany	,
 															bool			replace		,
 															Action<T>	action			)
 						{
-							this.cc_Token			= token;
+							this.cc_Token			= Guid.NewGuid();
 							this.cc_ClientID	= clientid;
 							this.cc_Topic			= topic;
 							this.cb_AllowMany	= allowmany;
@@ -71,7 +70,7 @@ namespace MsgHub
 									lo_Action = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), this.co_MInfo);
 								}
 							//..................................................
-							lo_Action?.Invoke( Msg );
+							lo_Action?.Invoke(Msg);
 						}
 
 				#endregion

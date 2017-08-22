@@ -10,6 +10,7 @@ namespace MsgHub
 
 					private readonly string																		cc_Topic;
 					private readonly ConcurrentDictionary<Guid, Subscription>	ct_Subscriptions;   // key	= subscription ID		value = subscription
+					private readonly ConcurrentDictionary<Guid, object>				ct_Subs;						// key	= subscription ID		value = subscription
 					private readonly ConcurrentDictionary<Guid, int>					ct_Clients;					// key	= client ID					value	= membership count
 
 				#endregion
@@ -20,8 +21,20 @@ namespace MsgHub
 					public int		SubscriptionCount	{ get { return	this.ct_Subscriptions.Count; } }
 					public int		ClientCount				{ get { return	this.ct_Clients.Count; } }
 
-					public IList<Subscription>	SubscriptionList { get { return new List<Subscription>(this.ct_Subscriptions.Values); } }
-
+					public IList<Subscription>	SubscriptionList	{ get { return new List<Subscription>(this.ct_Subscriptions.Values); } }
+					public IList<Subscription>	SubsList
+						{
+							get
+								{
+									var lt_Ret	= new List<Subscription>();
+									foreach (var item in this.ct_Subs.Values)
+										{
+											lt_Ret.Add((Subscription)item);
+										}
+									return lt_Ret;
+								}
+						}
+					
 				#endregion
 				//_________________________________________________________________________________________
 				#region **[Constructors]**
@@ -31,6 +44,7 @@ namespace MsgHub
 						{
 							this.cc_Topic						= Topic;
 							this.ct_Subscriptions		= new ConcurrentDictionary<Guid, Subscription>();
+							this.ct_Subs						= new ConcurrentDictionary<Guid, object>();
 							this.ct_Clients					= new ConcurrentDictionary<Guid, int>();
 						}
 
@@ -41,6 +55,7 @@ namespace MsgHub
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public void Clear()
 						{
+							this.ct_Subs.Clear();
 							this.ct_Subscriptions.Clear();
 							this.ct_Clients.Clear();
 						}
@@ -48,7 +63,8 @@ namespace MsgHub
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public bool SubscriptionExists(Guid SubscriptionToken)
 						{
-							return	this.ct_Subscriptions.ContainsKey(SubscriptionToken);
+							return	this.ct_Subs.ContainsKey(SubscriptionToken);
+							//return	this.ct_Subscriptions.ContainsKey(SubscriptionToken);
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -62,14 +78,21 @@ namespace MsgHub
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public bool Register(Subscription Subscription)
+					public bool Register<T>(Subscription<T> Subscription)
 						{
 							if ( this.SubscriptionExists(Subscription.MyToken)	&& !Subscription.Replace )		{ return	false; }
 							if ( this.ClientExists(Subscription.ClientToken)		&& !Subscription.AllowMany )	{ return	false; }
 							//...........................................
-							this.ct_Subscriptions.AddOrUpdate(Subscription.MyToken	,
-																								Subscription					,
-																								(key, OldVal) => Subscription	);
+
+
+							//this.ct_Subscriptions.AddOrUpdate(Subscription.MyToken	,
+							//																	Subscription					,
+							//																	(key, OldVal) => Subscription	);
+
+							this.ct_Subs.AddOrUpdate(	Subscription.MyToken	,
+																				Subscription					,
+																				(key, OldVal) => Subscription	);
+
 							this.ct_Clients.AddOrUpdate(Subscription.ClientToken		,
 																					1														,
 																					(key, oldVal)	=> oldVal + 1		);
@@ -82,11 +105,27 @@ namespace MsgHub
 							bool lb_Ret	= false;
 							Subscription lo_Sub;
 
-							if (this.ct_Subscriptions.TryRemove(SubscriptionToken, out lo_Sub))
+							//if (this.ct_Subscriptions.TryRemove(SubscriptionToken, out lo_Sub))
+							//	{
+							//		int ln_CurVal;
+							//		int ln_NewVal;
+
+							//		if (this.ct_Clients.TryGetValue(lo_Sub.ClientToken, out ln_CurVal))
+							//			{
+							//				ln_NewVal	= ln_CurVal - 1;
+							//				this.ct_Clients.TryUpdate(lo_Sub.ClientToken, ln_NewVal, ln_CurVal);
+							//				lb_Ret	= true;
+							//			}
+							//	}
+
+							object lo_Obj;
+
+							if (this.ct_Subs.TryRemove(SubscriptionToken, out lo_Obj))
 								{
 									int ln_CurVal;
 									int ln_NewVal;
 
+									lo_Sub	= (Subscription)lo_Obj;
 									if (this.ct_Clients.TryGetValue(lo_Sub.ClientToken, out ln_CurVal))
 										{
 											ln_NewVal	= ln_CurVal - 1;
@@ -94,6 +133,9 @@ namespace MsgHub
 											lb_Ret	= true;
 										}
 								}
+
+
+
 							//...........................................
 							return	lb_Ret;
 						}

@@ -90,7 +90,7 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					public Guid Subscribe(Subscription subscription)
+					public Guid Subscribe<T>(Subscription<T> subscription)
 						{
 							var	lt_Subscriptions	= this.GetAddTopicSubscriptions(subscription.Topic);
 
@@ -103,7 +103,9 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					public Guid Subscribe<T>(Guid clientid, string topic, Action<T> action, bool allowmany = false, bool replace = true)
 						{
-							return	this.Subscribe(	MsgHubFactory.Subscription(clientid, topic, allowmany, replace, action) );
+							var lo_Subs	= new Subscription<T>(clientid, topic, allowmany, replace, action);
+							return	this.Subscribe(	lo_Subs );
+							//return	this.Subscribe(	MsgHubFactory.Subscription(clientid, topic, allowmany, replace, action) );
 						}
 
 					//____________________________________________________________________________________________

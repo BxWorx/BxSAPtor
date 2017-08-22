@@ -75,7 +75,12 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		public void MsgHub_UT_MsgHub_Base()
 			{
 				var lo_CustID	= Guid.NewGuid();
-				var lo_Sub		= MsgHub.MsgHubFactory.Subscription(lo_CustID, this.cc_Topic, false, false, (string msg) => this.test(msg));
+
+				//var lo_Sub		= MsgHub.MsgHubFactory.Subscription(lo_CustID, this.cc_Topic, false, false, (string msg) => this.test(msg));
+
+				var lo_Sub		= new MsgHub.Subscription<string>(lo_CustID, this.cc_Topic, false, false, (string msg) => this.test(msg));
+
+
 				var lo_Token0	= this.co_Hub.Subscribe(lo_Sub);
 				Assert.AreNotSame(co_GuidEmpty, lo_Token0);
 			}
