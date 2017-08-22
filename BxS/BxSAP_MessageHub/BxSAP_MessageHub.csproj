@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\GenericContainer.cs" />
     <Compile Include="Code\Hub.cs" />
     <Compile Include="Code\MsgHubFactory.cs" />
     <Compile Include="Code\Subscription.cs" />
-    <Compile Include="Code - Ref\Subscriptions - Copy.cs" />
     <Compile Include="Code\Subscriptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

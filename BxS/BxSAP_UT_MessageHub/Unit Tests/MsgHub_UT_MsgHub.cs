@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BxSAP_UT_MessageHub.Unit_Tests
@@ -160,10 +161,17 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		[TestMethod]
 		public void MsgHub_UT_MsgHub_PublishAsync()
 			{
-				cn_Cnt	= 0;
 				this.LoadSubscribers();
+
+				cn_Cnt	= 0;
 				this.co_Hub.PublishAsync(this.cc_Topic, "BB").Wait();
-				Assert.AreEqual(3, cn_Cnt, "MsgHub: Publish: 001: Sub count");
+				Assert.AreEqual(3, cn_Cnt, "MsgHub: Publish: 001: Publish Async");
+
+				cn_Cnt	= 0;
+				this.co_Hub.PublishBackground(this.cc_Topic, "BB");
+				Thread.Sleep(2);
+				Assert.AreEqual(3, cn_Cnt, "MsgHub: Publish: 002: Sub count");
+
 			}
 		//*************************************************************************
 		private void LoadSubscribers()

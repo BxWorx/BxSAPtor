@@ -12,8 +12,6 @@ namespace MsgHub
 
 					private	readonly	ConcurrentDictionary<string,	Subscriptions	>		ct_Topics;		// key  = topic
 
-					private	CancellationTokenSource		co_cts;
-
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 				#region **[Properties]**
@@ -33,7 +31,7 @@ namespace MsgHub
 				#region **[Methods:Exposed]**
 
 					//____________________________________________________________________________________________
-					public void Publish<T>(string topic, T message)
+					public void Publish<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
 							foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
 								{
@@ -42,7 +40,7 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					public async Task PublishAsync<T>(string topic, T message)
+					public async Task PublishAsync<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
 							await Task.Factory.StartNew(	() =>
 									{
@@ -50,101 +48,27 @@ namespace MsgHub
 											{
 												if (lo_sub != null)	lo_sub.Invoke(message);
 											}
-									}
-									,TaskCreationOptions.PreferFairness );
+									}	, ct,	TaskCreationOptions.PreferFairness, TaskScheduler.Default );
 						}
 
 					//____________________________________________________________________________________________
-					public async Task PublishManyAsync<T>(string topic, T message)
+					public void PublishBackground<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
-							this.co_cts	= new CancellationTokenSource();
-							var lo_ct		= this.co_cts.Token;
-
-							IList<Task<bool>> lt_Tasks	= new List<Task<bool>>();
-
 							foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
 								{
 									if (lo_sub != null)
 										{
-											Subscription lo_TObj	= lo_sub;
-											lt_Tasks.Add(
-												Task.Factory.StartNew<bool>(
-													() => {
-																	lo_TObj?.Invoke(message);
-																	return	true;
-																}, lo_ct ));
+											Subscription lo_ExecSub	= lo_sub;
+											Task.Factory.StartNew( () =>
+												{
+													lo_ExecSub.Invoke(message);
+												} , ct	,	TaskCreationOptions.PreferFairness,	TaskScheduler.Default );
 										}
 								}
-							//...........................................
-							while (lt_Tasks.Count > 0)
-								{
-									if (lo_ct.IsCancellationRequested)
-										{
-											this.
-										}
+						}
 
-
-
-
-								}
-
-
-					If _ct.IsCancellationRequested
-						Me.ct_Rows.Clear()
-						_ct.ThrowIfCancellationRequested()
-					End If
-
-					Dim lo_DoneTask As Task(Of iExcelRow) = Await Task.WhenAny(lo_Tasks)
-
-					lo_Tasks.Remove(lo_DoneTask)
-
-					Select Case lo_DoneTask.Status
-
-						Case TaskStatus.RanToCompletion
-
-							If lo_DoneTask.Result.Values.Count > 0
-								If Not Me.ct_Rows.TryAdd(lo_DoneTask.Result.RowNo, lo_DoneTask.Result)
-									'Handle(completed.Exception.InnerException)
-								End If
-							End If
-
-						Case TaskStatus.Faulted
-							'Handle(completed.Exception.InnerException)
-
-					End Select
-
-				End While
-
-				If Me.ct_Rows.Count = 0
-
-					so_MsgHub.Value.Publish(so_NotifyDTO.Value.Clone(String.Format("No items selected (Column:[{0}])", _wsprofile.SelectArea.tlColumnID)))
-					Return False
-
-				Else
-
-					Me.ct_RowIndex = Me.ct_Rows.Keys.ToList()
-					Me.ct_RowIndex.Sort()
-
-					Return True
-
-				End If
-
-
-
-
-
-
-			//	lo_Tasks.Add(
-			//		Task.Factory.StartNew<iExcelRow>(
-			//			() => {
-			//							return new ExcelRow(indexNo: ln_Idx, i_RowNo: ln_RowNo, i_Data: lo_RowData, i_SearchEOT: _SearchEOT);
-			//							}, _ct ))
-
-
-			}
-
-		//____________________________________________________________________________________________
-		public int SubscriptionCount(string topic)
+					//____________________________________________________________________________________________
+					public int SubscriptionCount(string topic)
 						{
 							Subscriptions lo_Subs;
 
@@ -245,3 +169,36 @@ namespace MsgHub
 
 			}
 	}
+
+
+
+			//	lo_Tasks.Add(
+			//		Task.Factory.StartNew<iExcelRow>(
+			//			() => {
+			//							return new ExcelRow(indexNo: ln_Idx, i_RowNo: ln_RowNo, i_Data: lo_RowData, i_SearchEOT: _SearchEOT);
+			//							}, _ct ))
+
+							//IList<Task<bool>> lt_Tasks	= new List<Task<bool>>();
+
+							//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
+							//	{
+							//		if (lo_sub != null)
+							//			{
+							//				Subscription lo_TObj	= lo_sub;
+							//				lt_Tasks.Add(
+							//					Task.Factory.StartNew<bool>(
+							//						() => {
+							//										lo_TObj?.Invoke(message);
+							//										return	true;
+							//									}, lo_ct ));
+							//			}
+							//	}
+							////...........................................
+							//while (lt_Tasks.Count > 0)
+							//	{
+							//		if (lo_ct.IsCancellationRequested)
+							//			{
+							//				this.
+							//			}
+
+							//	}
