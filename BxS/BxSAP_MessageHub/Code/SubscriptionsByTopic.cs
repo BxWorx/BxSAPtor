@@ -4,71 +4,61 @@ using System.Collections.Generic;
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace MsgHub
 	{
-		internal sealed class Subscriptions
+		internal sealed class SubscriptionsByTopic
 			{
 				#region **[Declarations]**
 
-					private readonly string																		cc_Topic;
-					private readonly ConcurrentDictionary<Guid, Subscription>	ct_Subscriptions;   // key	= subscription ID		value = subscription
-					private readonly ConcurrentDictionary<Guid, object>				ct_Subs;						// key	= subscription ID		value = subscription
-					private readonly ConcurrentDictionary<Guid, int>					ct_Clients;					// key	= client ID					value	= membership count
+					private readonly string														cc_Topic;
+					private readonly SubscriptionsByType							co_SubsByType;
+					private readonly ConcurrentDictionary<Guid, int>	ct_Clients;		// key=client ID,	value	= membership count
+
+					private	object co_lock;
 
 				#endregion
 				//_________________________________________________________________________________________
 				#region **[Properties]**
 
-					public string	Topic							{ get { return	this.cc_Topic; } }
-					public int		SubscriptionCount	{ get { return	this.ct_Subscriptions.Count; } }
-					public int		ClientCount				{ get { return	this.ct_Clients.Count; } }
+					internal  string	Topic							{ get { return	this.cc_Topic; } }
+					internal  int			Count							{ get { return	this.co_SubsByType.Count; } }
+					internal  int			ClientCount				{ get { return	this.ct_Clients.Count; } }
 
-					public IList<Subscription>	SubscriptionList	{ get { return new List<Subscription>(this.ct_Subscriptions.Values); } }
-					public IList<Subscription>	SubsList
-						{
-							get
-								{
-									var lt_Ret	= new List<Subscription>();
-									foreach (var item in this.ct_Subs.Values)
-										{
-											lt_Ret.Add((Subscription)item);
-										}
-									return lt_Ret;
-								}
-						}
-					
 				#endregion
 				//_________________________________________________________________________________________
 				#region **[Constructors]**
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					internal Subscriptions(string Topic)
+					internal SubscriptionsByTopic(string Topic)
 						{
-							this.cc_Topic						= Topic;
-							this.ct_Subscriptions		= new ConcurrentDictionary<Guid, Subscription>();
-							this.ct_Subs						= new ConcurrentDictionary<Guid, object>();
-							this.ct_Clients					= new ConcurrentDictionary<Guid, int>();
+							this.cc_Topic				= Topic;
+							this.co_SubsByType	= new SubscriptionsByType(Topic);
+							this.ct_Clients			= new ConcurrentDictionary<Guid, int>();
 						}
 
 				#endregion
 				//_________________________________________________________________________________________
 				#region **[Methods:Exposed]**
 
-					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public void Clear()
+					internal IList<ISubscription<T>> SubsList<T>()
 						{
-							this.ct_Subs.Clear();
-							this.ct_Subscriptions.Clear();
+							return	new List<ISubscription<T>>(this.co_SubsByType.GetOrAdd<T>().Values);
+						}
+	
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					internal  void Reset()
+						{
+							this.co_SubsByType.Reset();
 							this.ct_Clients.Clear();
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public bool SubscriptionExists(Guid SubscriptionToken)
+					internal  bool SubscriptionExists(Guid SubscriptionToken)
 						{
 							return	this.ct_Subs.ContainsKey(SubscriptionToken);
 							//return	this.ct_Subscriptions.ContainsKey(SubscriptionToken);
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public bool ClientExists(Guid ClientToken)
+					internal  bool ClientHasSubscribed(Guid ClientToken)
 						{
 							int ln_CurVal	= 0;
 
@@ -78,10 +68,10 @@ namespace MsgHub
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public bool Register<T>(Subscription<T> Subscription)
+					internal  bool Register(ISubscription Subscription)
 						{
-							if ( this.SubscriptionExists(Subscription.MyToken)	&& !Subscription.Replace )		{ return	false; }
-							if ( this.ClientExists(Subscription.ClientToken)		&& !Subscription.AllowMany )	{ return	false; }
+							if ( this.SubscriptionExists(Subscription.MyToken)				&& !Subscription.Replace )		{ return	false; }
+							if ( this.ClientHasSubscribed(Subscription.ClientToken)		&& !Subscription.AllowMany )	{ return	false; }
 							//...........................................
 
 
@@ -100,10 +90,9 @@ namespace MsgHub
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-					public bool DeRegister(Guid SubscriptionToken)
+					internal bool DeRegister(ISubscription Subscription)
 						{
-							bool lb_Ret	= false;
-							Subscription lo_Sub;
+							//ISubscription<T>	lo_Sub;
 
 							//if (this.ct_Subscriptions.TryRemove(SubscriptionToken, out lo_Sub))
 							//	{
@@ -118,28 +107,51 @@ namespace MsgHub
 							//			}
 							//	}
 
-							object lo_Obj;
+							object	lo_Obj;
 
-							if (this.ct_Subs.TryRemove(SubscriptionToken, out lo_Obj))
+							if (this.ct_Subs.TryRemove(Subscription.MyToken, out lo_Obj))
 								{
 									int ln_CurVal;
 									int ln_NewVal;
 
-									lo_Sub	= (Subscription)lo_Obj;
+									var	lo_Sub	= (ISubscription)lo_Obj;
 									if (this.ct_Clients.TryGetValue(lo_Sub.ClientToken, out ln_CurVal))
 										{
 											ln_NewVal	= ln_CurVal - 1;
 											this.ct_Clients.TryUpdate(lo_Sub.ClientToken, ln_NewVal, ln_CurVal);
-											lb_Ret	= true;
+											return	true;
 										}
 								}
-
-
-
 							//...........................................
-							return	lb_Ret;
+							return	false;
 						}
 
 				#endregion
 			}
 	}
+
+
+
+					//private readonly ConcurrentDictionary<Guid, Subscription>	ct_Subscriptions;   // key	= subscription ID		value = subscription
+					//private readonly ConcurrentDictionary<Guid, SubscriptionsByType>		ct_Subs;						// key	= subscription ID		value = subscription
+					//public IList<Subscription>	SubscriptionList	{ get { return new List<Subscription>(this.ct_Subscriptions.Values); } }
+
+						//public int		SubscriptionCount	{ get { return	this.ct_Subscriptions.Count; } }
+
+					//internal  IList<ISubscription<T>>	SubsList<T>
+					//	{
+					//		get
+					//			{
+					//				var lt_Ret	= new List<Subscription>();
+					//				foreach (var item in this.ct_Subs.Values)
+					//					{
+					//						lt_Ret.Add((Subscription)item);
+					//					}
+					//				return lt_Ret;
+					//			}
+					//	}
+					
+								//this.ct_Subscriptions		= new ConcurrentDictionary<Guid, Subscription>();
+								//this.ct_Subs						= new ConcurrentDictionary<Guid, object>();
+
+							//this.ct_Subscriptions.Clear();

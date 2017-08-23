@@ -11,6 +11,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 	public class MsgHub_UT_Subscription
 	{
 
+	  private string cc_Test;
 		private static Guid co_GuidEmpty;
 
 		public MsgHub_UT_Subscription()
@@ -63,14 +64,23 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			{
 				var lo_guid		= Guid.NewGuid();
 				var lc_Topic	= "Test";
-				var lo_Sub		= MsgHubFactory.Subscription<string>(lo_guid, lc_Topic, false, true, this.test);
 
-				Assert.IsNotNull(lo_Sub);
-				Assert.AreNotEqual(co_GuidEmpty, lo_Sub.MyToken);
+				ISubscription<string> lo_Subw		= new SubscriptionWeak<string>(lo_guid, lc_Topic, false, true, this.test);
+				ISubscription<string> lo_Subs		= new Subscription<string>(lo_guid, lc_Topic, false, true, this.test);
+
+				Assert.IsNotNull(lo_Subw);
+				Assert.AreNotEqual(co_GuidEmpty, lo_Subw.MyToken);
+
+				lo_Subw?.Invoke("A");
+				Assert.AreEqual("A", this.cc_Test);
+
+				lo_Subs?.Invoke("B");
+				Assert.AreEqual("B", this.cc_Test);
+
 			}
 
-		private void test(string name)
-			{ }
+		private void test(string msg)
+			{ this.cc_Test	= msg; }
 
 	}
 }

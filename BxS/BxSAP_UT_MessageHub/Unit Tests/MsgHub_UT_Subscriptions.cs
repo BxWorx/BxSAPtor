@@ -62,23 +62,23 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			{
 				var lo_guid		= new Guid();
 				var lc_Topic	= "Test";
-				var lo_Subs		= new Subscriptions( lc_Topic);
+				var lo_Subs		= new SubscriptionsByType( lc_Topic);
 
 				var lo_Sub		= MsgHubFactory.Subscription<string>(lo_guid, lc_Topic, false, true, this.test);
 
 				Assert.IsNotNull(lo_Subs);
 				Assert.AreSame(lc_Topic, lo_Subs.Topic);
 
-				lo_Subs.Register(lo_Sub);
+				//lo_Subs.Register(lo_Sub);
 				Assert.AreEqual(1, lo_Subs.SubscriptionCount);
 				Assert.IsTrue(lo_Subs.SubscriptionExists(lo_Sub.MyToken));
 				Assert.IsTrue(lo_Subs.DeRegister(lo_Sub.MyToken));
 
-				lo_Subs.Register(lo_Sub);
+				//lo_Subs.Register(lo_Sub);
 				Assert.AreEqual(1, lo_Subs.SubscriptionCount);
 				Assert.IsTrue(lo_Subs.SubscriptionExists(lo_Sub.MyToken));
 
-				lo_Subs.Clear();
+				lo_Subs.Reset();
 				Assert.AreEqual(0, lo_Subs.SubscriptionCount);
 		}
 

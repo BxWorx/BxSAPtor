@@ -10,7 +10,7 @@ namespace MsgHub
 			{
 				#region **[Declarations]**
 
-					private	readonly	ConcurrentDictionary<string,	Subscriptions	>		ct_Topics;		// key  = topic
+					private	readonly	ConcurrentDictionary<string,	SubscriptionsByType	>		ct_Topics;		// key  = topic
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -23,7 +23,7 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					public Hub()
 						{
-							this.ct_Topics	= new ConcurrentDictionary<string,	Subscriptions>();
+							this.ct_Topics	= new ConcurrentDictionary<string,	SubscriptionsByType>();
 						}
 
 				#endregion
@@ -33,10 +33,10 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					public void Publish<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
-							foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
-								{
-									if (lo_sub != null)	lo_sub.Invoke(message);
-								}
+							//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
+							//	{
+							//		if (lo_sub != null)	lo_sub.Invoke(message);
+							//	}
 						}
 
 					//____________________________________________________________________________________________
@@ -44,33 +44,33 @@ namespace MsgHub
 						{
 							await Task.Factory.StartNew(	() =>
 									{
-										foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
-											{
-												if (lo_sub != null)	lo_sub.Invoke(message);
-											}
+										//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
+										//	{
+										//		if (lo_sub != null)	lo_sub.Invoke(message);
+										//	}
 									}	, ct,	TaskCreationOptions.PreferFairness, TaskScheduler.Default );
 						}
 
 					//____________________________________________________________________________________________
 					public void PublishBackground<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
-							foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
-								{
-									if (lo_sub != null)
-										{
-											Subscription lo_ExecSub	= lo_sub;
-											Task.Factory.StartNew( () =>
-												{
-													lo_ExecSub.Invoke(message);
-												} , ct	,	TaskCreationOptions.PreferFairness,	TaskScheduler.Default );
-										}
-								}
+							//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
+							//	{
+							//		if (lo_sub != null)
+							//			{
+							//				Subscription lo_ExecSub	= lo_sub;
+							//				Task.Factory.StartNew( () =>
+							//					{
+							//						lo_ExecSub.Invoke(message);
+							//					} , ct	,	TaskCreationOptions.PreferFairness,	TaskScheduler.Default );
+							//			}
+							//	}
 						}
 
 					//____________________________________________________________________________________________
 					public int SubscriptionCount(string topic)
 						{
-							Subscriptions lo_Subs;
+							SubscriptionsByType lo_Subs;
 
 							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
 								{	return	lo_Subs.SubscriptionCount; }
@@ -81,7 +81,7 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					public int ClientCount(string topic)
 						{
-							Subscriptions lo_Subs;
+							SubscriptionsByType lo_Subs;
 
 							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
 								{	return	lo_Subs.ClientCount; }
@@ -90,7 +90,7 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					public Guid Subscribe<T>(Subscription<T> subscription)
+					public Guid Subscribe<T>(SubscriptionWeak<T> subscription)
 						{
 							var	lt_Subscriptions	= this.GetAddTopicSubscriptions(subscription.Topic);
 
@@ -103,13 +103,13 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					public Guid Subscribe<T>(Guid clientid, string topic, Action<T> action, bool allowmany = false, bool replace = true)
 						{
-							var lo_Subs	= new Subscription<T>(clientid, topic, allowmany, replace, action);
+							var lo_Subs	= new SubscriptionWeak<T>(clientid, topic, allowmany, replace, action);
 							return	this.Subscribe(	lo_Subs );
 							//return	this.Subscribe(	MsgHubFactory.Subscription(clientid, topic, allowmany, replace, action) );
 						}
 
 					//____________________________________________________________________________________________
-					public void UnSubscribe(Subscription subscription)
+					public void UnSubscribe(ISubscription subscription)
 						{
 							this.UnsubscribeToken(subscription.MyToken);
 						}
@@ -123,9 +123,9 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					public void UnSubscribe(string topic)
 						{
-							Subscriptions lo_Subs;
+							SubscriptionsByType lo_Subs;
 
-							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))		lo_Subs.Clear();							
+							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))		lo_Subs.Reset();							
 						}
 
 					//____________________________________________________________________________________________
@@ -143,18 +143,18 @@ namespace MsgHub
 						{
 							foreach (var lo_Subs in this.ct_Topics)
 								{
-									if (lo_Subs.Value.DeRegister(token)) { break; }
+									//if (lo_Subs.Value.DeRegister(token)) { break; }
 								}
 						}
 
 					//____________________________________________________________________________________________
-					private Subscriptions GetAddTopicSubscriptions(string topic)
+					private SubscriptionsByType GetAddTopicSubscriptions(string topic)
 						{
-							Subscriptions lo_Subs;
+							SubscriptionsByType lo_Subs;
 
 							if (!this.ct_Topics.TryGetValue(topic, out lo_Subs))
 								{
-									lo_Subs = new Subscriptions(topic);
+									lo_Subs = new SubscriptionsByType(topic);
 									this.ct_Topics.TryAdd(topic, lo_Subs);
 								}
 
@@ -162,9 +162,10 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					private IList<Subscription> GetTopicSubscriptions(string topic)
+					private IList<ISubscription> GetTopicSubscriptions(string topic)
 						{
-							return	this.ct_Topics[topic].SubscriptionList;
+							return	new List<ISubscription>();
+							//return	this.ct_Topics[topic].SubscriptionList;
 						}
 
 				#endregion
