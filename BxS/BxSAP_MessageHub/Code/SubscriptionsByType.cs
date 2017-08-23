@@ -47,6 +47,34 @@ namespace MsgHub
 				#region **[Methods: Exposed]**
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					internal bool DeRegister<T>(ISubscription<T> Subscription)
+						{
+							return	this.GetOrAdd<T>().Remove(Subscription.MyToken);
+						}
+
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					internal bool Register<T>(ISubscription<T> Subscription)
+						{
+							bool	lb_Ret			= false;
+							var		lt_SubsType	= this.GetOrAdd<T>();
+							//...........................................
+							if ( lt_SubsType.ContainsKey(Subscription.MyToken) )
+								{
+									if (Subscription.Replace)
+										{
+											lt_SubsType[Subscription.MyToken]	= Subscription;
+											lb_Ret	= true;
+										}
+								}
+							else
+								{
+									lt_SubsType.Add(Subscription.MyToken, Subscription);
+								}
+							//...........................................
+							return	lb_Ret;
+						}
+
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					internal void Reset()
 						{
 							this.ct_SubsByType.Clear();
@@ -70,7 +98,9 @@ namespace MsgHub
 							var lo_T	= typeof(T);
 
 							if (!this.ct_SubsByType.ContainsKey(lo_T))
-								{	this.ct_SubsByType.Add( lo_T, new Dictionary<Guid, ISubscription<T>>() ); }
+								{
+									this.ct_SubsByType.Add( lo_T, new Dictionary<Guid, ISubscription<T>>() );
+								}
 
 							return	(Dictionary<Guid, ISubscription<T>>)this.ct_SubsByType[lo_T];
 						}

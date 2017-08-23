@@ -10,11 +10,7 @@ namespace MsgHub
 			{
 				#region **[Declarations]**
 
-					private	readonly	ConcurrentDictionary<string,	SubscriptionsByType	>		ct_Topics;		// key  = topic
-
-				#endregion
-				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-				#region **[Properties]**
+					private	readonly	ConcurrentDictionary<string, SubscriptionsByTopic>	ct_SubsByTopic;		// key=topic
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
@@ -23,70 +19,31 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					public Hub()
 						{
-							this.ct_Topics	= new ConcurrentDictionary<string,	SubscriptionsByType>();
+							this.ct_SubsByTopic	= new ConcurrentDictionary<string,	SubscriptionsByTopic>();
 						}
 
 				#endregion
 				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 				#region **[Methods:Exposed]**
 
-					//____________________________________________________________________________________________
-					public void Publish<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					public ISubscription<T>	CreateSubscription<T>(Guid			clientid					,
+																												string		topic							,
+																												Action<T>	action						,
+																												bool			allowmany = false	,
+																												bool			replace		= true		)
 						{
-							//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
-							//	{
-							//		if (lo_sub != null)	lo_sub.Invoke(message);
-							//	}
+							return	new Subscription<T>(clientid, topic, allowmany, replace, action);
 						}
 
-					//____________________________________________________________________________________________
-					public async Task PublishAsync<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					public ISubscription<T>	CreateSubscriptionWeak<T>(Guid			clientid					,
+																														string		topic							,
+																														Action<T>	action						,
+																														bool			allowmany = false	,
+																														bool			replace		= true		)
 						{
-							await Task.Factory.StartNew(	() =>
-									{
-										//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
-										//	{
-										//		if (lo_sub != null)	lo_sub.Invoke(message);
-										//	}
-									}	, ct,	TaskCreationOptions.PreferFairness, TaskScheduler.Default );
-						}
-
-					//____________________________________________________________________________________________
-					public void PublishBackground<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
-						{
-							//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
-							//	{
-							//		if (lo_sub != null)
-							//			{
-							//				Subscription lo_ExecSub	= lo_sub;
-							//				Task.Factory.StartNew( () =>
-							//					{
-							//						lo_ExecSub.Invoke(message);
-							//					} , ct	,	TaskCreationOptions.PreferFairness,	TaskScheduler.Default );
-							//			}
-							//	}
-						}
-
-					//____________________________________________________________________________________________
-					public int SubscriptionCount(string topic)
-						{
-							SubscriptionsByType lo_Subs;
-
-							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
-								{	return	lo_Subs.SubscriptionCount; }
-							else
-								{ return 0;	}
-						}
-
-					//____________________________________________________________________________________________
-					public int ClientCount(string topic)
-						{
-							SubscriptionsByType lo_Subs;
-
-							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
-								{	return	lo_Subs.ClientCount; }
-							else
-								{ return 0;	}
+							return	new SubscriptionWeak<T>(clientid, topic, allowmany, replace, action);
 						}
 
 					//____________________________________________________________________________________________
@@ -101,15 +58,71 @@ namespace MsgHub
 						}
 
 					//____________________________________________________________________________________________
-					public Guid Subscribe<T>(Guid clientid, string topic, Action<T> action, bool allowmany = false, bool replace = true)
+					public void Publish<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
-							var lo_Subs	= new SubscriptionWeak<T>(clientid, topic, allowmany, replace, action);
-							return	this.Subscribe(	lo_Subs );
-							//return	this.Subscribe(	MsgHubFactory.Subscription(clientid, topic, allowmany, replace, action) );
+							foreach (var lo_sub in this.ct_SubsByTopic[topic].SubscriptionList<T>())
+								{
+									if (ct.IsCancellationRequested)	break;
+									if (lo_sub != null)	lo_sub.Invoke(message);
+								}
 						}
 
 					//____________________________________________________________________________________________
-					public void UnSubscribe(ISubscription subscription)
+					public async Task PublishAsync<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
+						{
+							await Task.Factory.StartNew( () =>
+								{
+									foreach (var lo_sub in this.ct_SubsByTopic[topic].SubscriptionList<T>())
+										{
+											if (lo_sub != null)	lo_sub.Invoke(message);
+										}
+								}	, ct,	TaskCreationOptions.PreferFairness, TaskScheduler.Default );
+						}
+
+					//____________________________________________________________________________________________
+					public void PublishBackground<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
+						{
+							foreach (var lo_sub in this.ct_SubsByTopic[topic].SubscriptionList<T>())
+								{
+									if (lo_sub != null)
+										{
+											ISubscription<T> lo_ExecSub	= lo_sub;
+											Task.Factory.StartNew( () =>
+												{
+													lo_ExecSub.Invoke(message);
+												} , ct	,	TaskCreationOptions.PreferFairness,	TaskScheduler.Default );
+										}
+								}
+						}
+
+					////____________________________________________________________________________________________
+					//public int SubscriptionCount(string topic)
+					//	{
+					//		SubscriptionsByType lo_Subs;
+
+					//		if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
+					//			{	return	lo_Subs.SubscriptionCount; }
+					//		else
+					//			{ return 0;	}
+					//	}
+
+					////____________________________________________________________________________________________
+					//public int ClientCount(string topic)
+					//	{
+
+
+					//		//SubscriptionsByType lo_Subs;
+
+					//		//if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
+					//		//	{	return	lo_Subs.ClientCount; }
+					//		//else
+					//		//	{ return 0;	}
+					//	}
+
+
+
+					//____________________________________________________________________________________________
+					public void UnSubscribe<T>(ISubscription<T> subscription)
 						{
 							this.UnsubscribeToken(subscription.MyToken);
 						}
@@ -123,15 +136,15 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					public void UnSubscribe(string topic)
 						{
-							SubscriptionsByType lo_Subs;
+							SubscriptionsByTopic lo_Subs;
 
-							if (this.ct_Topics.TryGetValue(topic, out lo_Subs))		lo_Subs.Reset();							
+							if (this.ct_SubsByTopic.TryGetValue(topic, out lo_Subs))		lo_Subs.Reset();							
 						}
 
 					//____________________________________________________________________________________________
 					public void UnSubscribeAll()
 						{
-							this.ct_Topics.Clear();
+							this.ct_SubsByTopic.Clear();
 						}
 
 				#endregion
@@ -141,7 +154,7 @@ namespace MsgHub
 					//____________________________________________________________________________________________
 					private void UnsubscribeToken(Guid token)
 						{
-							foreach (var lo_Subs in this.ct_Topics)
+							foreach (var lo_Subs in this.ct_SubsByTopic)
 								{
 									//if (lo_Subs.Value.DeRegister(token)) { break; }
 								}
@@ -152,21 +165,21 @@ namespace MsgHub
 						{
 							SubscriptionsByType lo_Subs;
 
-							if (!this.ct_Topics.TryGetValue(topic, out lo_Subs))
+							if (!this.ct_SubsByTopic.TryGetValue(topic, out lo_Subs))
 								{
 									lo_Subs = new SubscriptionsByType(topic);
-									this.ct_Topics.TryAdd(topic, lo_Subs);
+									this.ct_SubsByTopic.TryAdd(topic, lo_Subs);
 								}
 
 							return lo_Subs;
 						}
 
-					//____________________________________________________________________________________________
-					private IList<ISubscription> GetTopicSubscriptions(string topic)
-						{
-							return	new List<ISubscription>();
-							//return	this.ct_Topics[topic].SubscriptionList;
-						}
+					////____________________________________________________________________________________________
+					//private IList<ISubscription> GetTopicSubscriptions(string topic)
+					//	{
+					//		return	new List<ISubscription>();
+					//		//return	this.ct_Topics[topic].SubscriptionList;
+					//	}
 
 				#endregion
 
@@ -175,33 +188,41 @@ namespace MsgHub
 
 
 
-			//	lo_Tasks.Add(
-			//		Task.Factory.StartNew<iExcelRow>(
-			//			() => {
-			//							return new ExcelRow(indexNo: ln_Idx, i_RowNo: ln_RowNo, i_Data: lo_RowData, i_SearchEOT: _SearchEOT);
-			//							}, _ct ))
+//	lo_Tasks.Add(
+//		Task.Factory.StartNew<iExcelRow>(
+//			() => {
+//							return new ExcelRow(indexNo: ln_Idx, i_RowNo: ln_RowNo, i_Data: lo_RowData, i_SearchEOT: _SearchEOT);
+//							}, _ct ))
 
-							//IList<Task<bool>> lt_Tasks	= new List<Task<bool>>();
+//IList<Task<bool>> lt_Tasks	= new List<Task<bool>>();
 
-							//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
-							//	{
-							//		if (lo_sub != null)
-							//			{
-							//				Subscription lo_TObj	= lo_sub;
-							//				lt_Tasks.Add(
-							//					Task.Factory.StartNew<bool>(
-							//						() => {
-							//										lo_TObj?.Invoke(message);
-							//										return	true;
-							//									}, lo_ct ));
-							//			}
-							//	}
-							////...........................................
-							//while (lt_Tasks.Count > 0)
-							//	{
-							//		if (lo_ct.IsCancellationRequested)
-							//			{
-							//				this.
-							//			}
+//foreach (var lo_sub in this.ct_Topics[topic].SubscriptionList)
+//	{
+//		if (lo_sub != null)
+//			{
+//				Subscription lo_TObj	= lo_sub;
+//				lt_Tasks.Add(
+//					Task.Factory.StartNew<bool>(
+//						() => {
+//										lo_TObj?.Invoke(message);
+//										return	true;
+//									}, lo_ct ));
+//			}
+//	}
+////...........................................
+//while (lt_Tasks.Count > 0)
+//	{
+//		if (lo_ct.IsCancellationRequested)
+//			{
+//				this.
+//			}
 
-							//	}
+//	}
+
+////____________________________________________________________________________________________
+//public Guid Subscribe<T>(Guid clientid, string topic, Action<T> action, bool allowmany = false, bool replace = true)
+//	{
+//	var lo_Subs = new SubscriptionWeak<T>(clientid, topic, allowmany, replace, action);
+//	return this.Subscribe(lo_Subs);
+//	//return	this.Subscribe(	MsgHubFactory.Subscription(clientid, topic, allowmany, replace, action) );
+//	}
