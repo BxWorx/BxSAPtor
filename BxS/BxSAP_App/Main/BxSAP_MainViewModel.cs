@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MVVM;
-
+﻿using MVVM;
+using MsgHub;
+//••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAP_App.Main
-	{
-		class BxSAP_MainViewModel : ViewModelBase
-			{
-				
-				public BxSAP_MainViewModel()
-					{
-						
-					}
-			}
-	}
+{
+	public class BxSAP_MainViewModel : ViewModelBase
+		{
+			private IMessageHub	co_MsgHub;
+
+
+			public BxSAP_MainViewModel(IMessageHub MsgHub)
+				{
+					this.co_MsgHub	= MsgHub;
+				}
+		}
+}

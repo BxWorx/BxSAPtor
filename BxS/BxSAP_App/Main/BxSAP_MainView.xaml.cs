@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-
+//••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace BxSAP_App.Main
 {
 	/// <summary>
@@ -7,9 +7,10 @@ namespace BxSAP_App.Main
 	/// </summary>
 	public partial class BxSAP_MainView : Window
 			{
-				public BxSAP_MainView()
+				public BxSAP_MainView(BxSAP_MainViewModel vm)
 					{
 						InitializeComponent();
+						DataContext	= vm;
 					}
 			}
 	}

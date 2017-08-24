@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\ISubscription.cs" />
+    <Compile Include="Code\IMessageHub.cs" />
+    <Compile Include="Code\SubscriptionWeak.cs" />
+    <Compile Include="Code\SubscriptionBase.cs" />
     <Compile Include="Code\SubscriptionsByType.cs" />
-    <Compile Include="Code\Hub.cs" />
-    <Compile Include="Code\MsgHubFactory.cs" />
+    <Compile Include="Code\MessageHub.cs" />
     <Compile Include="Code\Subscription.cs" />
     <Compile Include="Code\SubscriptionsByTopic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

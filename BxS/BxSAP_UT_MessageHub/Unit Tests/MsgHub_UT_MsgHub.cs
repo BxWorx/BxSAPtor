@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BxSAP_UT_MessageHub.Unit_Tests
@@ -15,7 +14,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			private static Guid	co_GuidEmpty;
 			private string			cc_Topic;
 
-			private MsgHub.Hub	co_Hub;
+			private MsgHub.IMessageHub	co_Hub;
 
 		public MsgHub_UT_MsgHub()
 			{
@@ -61,7 +60,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		[TestInitialize()]
 		public void MyTestInitialize()
 			{
-				this.co_Hub = new MsgHub.Hub();
+				this.co_Hub = new MsgHub.MessageHub();
 			}
 		//
 		// Use TestCleanup to run code after each test has run

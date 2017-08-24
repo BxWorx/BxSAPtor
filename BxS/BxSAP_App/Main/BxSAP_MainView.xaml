@@ -10,23 +10,17 @@
 				
 				Title		="BxSAP Configurator"
 				Height	="300"
-				Width		="300"
-
-				
-				
-				>
-	
-	<Grid>
+				Width="297">
 		
-		<DockPanel HorizontalAlignment="Left"
-							 LastChildFill="False"
-							 Margin="0,0,0,0"
-							 VerticalAlignment="Top"
-							 >
-			
-			
-			
-		</DockPanel>
+	<DockPanel LastChildFill="False"
+							Margin="0,0,0,0">
+		<ToolBar x:Name="toolBar"
+						 VerticalAlignment="Top"
+						 DockPanel.Dock="Top">
+			<Button Content="Save"
+							IsCancel="True" />
+			<Button Content="Refresh" />
+		</ToolBar>
+	</DockPanel>
 
-	</Grid>
 </Window>
