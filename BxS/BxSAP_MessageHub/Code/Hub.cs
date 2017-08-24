@@ -13,17 +13,17 @@ namespace MsgHub
 					private	readonly	ConcurrentDictionary<string, SubscriptionsByTopic>	ct_SubsByTopic;		// key=topic
 
 				#endregion
-				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+				//_________________________________________________________________________________________
 				#region **[Constructors]**
 
-					//____________________________________________________________________________________________
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public Hub()
 						{
 							this.ct_SubsByTopic	= new ConcurrentDictionary<string,	SubscriptionsByTopic>();
 						}
 
 				#endregion
-				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+				//_________________________________________________________________________________________
 				#region **[Methods:Exposed]**
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -33,7 +33,7 @@ namespace MsgHub
 																												bool			allowmany = false	,
 																												bool			replace		= true		)
 						{
-							return	new Subscription<T>(clientid, topic, allowmany, replace, action);
+							return	new Subscription<T>(clientid, topic, action, allowmany, replace);
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -43,11 +43,11 @@ namespace MsgHub
 																														bool			allowmany = false	,
 																														bool			replace		= true		)
 						{
-							return	new SubscriptionWeak<T>(clientid, topic, allowmany, replace, action);
+							return	new SubscriptionWeak<T>(clientid, topic, action, allowmany, replace);
 						}
 
-					//____________________________________________________________________________________________
-					public Guid Subscribe<T>(SubscriptionWeak<T> subscription)
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					public Guid Subscribe<T>(ISubscription<T> subscription)
 						{
 							var	lt_Subscriptions	= this.GetAddTopicSubscriptions(subscription.Topic);
 
@@ -57,7 +57,7 @@ namespace MsgHub
 							return	new Guid();
 						}
 
-					//____________________________________________________________________________________________
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public void Publish<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
 							foreach (var lo_sub in this.ct_SubsByTopic[topic].SubscriptionList<T>())
@@ -67,7 +67,7 @@ namespace MsgHub
 								}
 						}
 
-					//____________________________________________________________________________________________
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public async Task PublishAsync<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
 							await Task.Factory.StartNew( () =>
@@ -79,7 +79,7 @@ namespace MsgHub
 								}	, ct,	TaskCreationOptions.PreferFairness, TaskScheduler.Default );
 						}
 
-					//____________________________________________________________________________________________
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public void PublishBackground<T>(string topic, T message, CancellationToken ct = default(CancellationToken))
 						{
 							foreach (var lo_sub in this.ct_SubsByTopic[topic].SubscriptionList<T>())
@@ -95,45 +95,13 @@ namespace MsgHub
 								}
 						}
 
-					////____________________________________________________________________________________________
-					//public int SubscriptionCount(string topic)
-					//	{
-					//		SubscriptionsByType lo_Subs;
-
-					//		if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
-					//			{	return	lo_Subs.SubscriptionCount; }
-					//		else
-					//			{ return 0;	}
-					//	}
-
-					////____________________________________________________________________________________________
-					//public int ClientCount(string topic)
-					//	{
-
-
-					//		//SubscriptionsByType lo_Subs;
-
-					//		//if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
-					//		//	{	return	lo_Subs.ClientCount; }
-					//		//else
-					//		//	{ return 0;	}
-					//	}
-
-
-
-					//____________________________________________________________________________________________
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public void UnSubscribe<T>(ISubscription<T> subscription)
 						{
-							this.UnsubscribeToken(subscription.MyToken);
+							this.UnsubscribeFromTypes(subscription);
 						}
 
-					//____________________________________________________________________________________________
-					public void UnSubscribe(Guid token)
-						{
-							this.UnsubscribeToken(token);
-						}
-
-					//____________________________________________________________________________________________
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public void UnSubscribe(string topic)
 						{
 							SubscriptionsByTopic lo_Subs;
@@ -141,50 +109,73 @@ namespace MsgHub
 							if (this.ct_SubsByTopic.TryGetValue(topic, out lo_Subs))		lo_Subs.Reset();							
 						}
 
-					//____________________________________________________________________________________________
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public void UnSubscribeAll()
 						{
 							this.ct_SubsByTopic.Clear();
 						}
 
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					public int SubscriptionCount(string topic)
+						{
+							SubscriptionsByTopic lo_Subs;
+
+							if (this.ct_SubsByTopic.TryGetValue(topic, out lo_Subs))
+								{	return	lo_Subs.Count; }
+							else
+								{ return 0;	}
+						}
+
 				#endregion
-				//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+				//_________________________________________________________________________________________
 				#region **[Methods:Private]**
 
-					//____________________________________________________________________________________________
-					private void UnsubscribeToken(Guid token)
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					private void UnsubscribeFromTypes<T>(ISubscription<T> subscription)
 						{
 							foreach (var lo_Subs in this.ct_SubsByTopic)
 								{
-									//if (lo_Subs.Value.DeRegister(token)) { break; }
+									if (lo_Subs.Value.DeRegister(subscription)) { }
 								}
 						}
 
-					//____________________________________________________________________________________________
-					private SubscriptionsByType GetAddTopicSubscriptions(string topic)
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					private SubscriptionsByTopic GetAddTopicSubscriptions(string topic)
 						{
-							SubscriptionsByType lo_Subs;
+							SubscriptionsByTopic lo_Subs;
 
 							if (!this.ct_SubsByTopic.TryGetValue(topic, out lo_Subs))
 								{
-									lo_Subs = new SubscriptionsByType(topic);
+									lo_Subs = new SubscriptionsByTopic(topic);
 									this.ct_SubsByTopic.TryAdd(topic, lo_Subs);
 								}
 
 							return lo_Subs;
 						}
 
-					////____________________________________________________________________________________________
+				#endregion
+
+			}
+	}
+
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					//private IList<ISubscription> GetTopicSubscriptions(string topic)
 					//	{
 					//		return	new List<ISubscription>();
 					//		//return	this.ct_Topics[topic].SubscriptionList;
 					//	}
 
-				#endregion
+					////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					//public int ClientCount(string topic)
+					//	{
+					//		return 0;
+					//		//SubscriptionsByType lo_Subs;
 
-			}
-	}
+					//		//if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
+					//		//	{	return	lo_Subs.ClientCount; }
+					//		//else
+					//		//	{ return 0;	}
+					//	}
 
 
 

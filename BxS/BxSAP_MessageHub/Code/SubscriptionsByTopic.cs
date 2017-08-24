@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 //•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace MsgHub
 	{
@@ -11,8 +12,6 @@ namespace MsgHub
 					private readonly string														cc_Topic;
 					private readonly SubscriptionsByType							co_SubsByType;
 					private readonly ConcurrentDictionary<Guid, int>	ct_Clients;		// key=client ID,	value	= membership count
-
-					private	object co_lock;
 
 				#endregion
 				//_________________________________________________________________________________________
@@ -60,8 +59,6 @@ namespace MsgHub
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					internal  bool Register<T>(ISubscription<T> Subscription)
 						{
-							bool	lb_Ret	= false;
-							//...........................................
 							lock (co_SubsByType)
 								{
 									if (this.co_SubsByType.Register(Subscription))
@@ -71,11 +68,12 @@ namespace MsgHub
 													this.ct_Clients.AddOrUpdate(Subscription.ClientToken		,
 																											1														,
 																											(key, oldVal)	=> oldVal + 1		);
+													return	true;
 												}
 										}
 								}
-							//...........................................
-							return	lb_Ret;
+
+							return	false;
 						}
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -94,11 +92,9 @@ namespace MsgHub
 										}
 
 								}
-
+	
 							return	false;
-
 						}
-
 
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					internal  bool ClientHasSubscribed(Guid ClientToken)
@@ -110,8 +106,19 @@ namespace MsgHub
 							return	(ln_CurVal == 0) ? false : true ;
 						}
 
+					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+					internal bool SubscriptionExists<T>(ISubscription<T> Subscription)
+						{
+							var lo_S	= this.SubscriptionList<T>();
+
+							if (lo_S.Count.Equals(0))
+								return	false;
+
+							return	lo_S.First( lo => lo.MyToken == Subscription.MyToken ) != null ? true : false;
+						}
 
 				#endregion
+
 			}
 	}
 
@@ -199,10 +206,3 @@ namespace MsgHub
 ////...........................................
 //return	false;
 
-
-////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-//internal bool SubscriptionExists(Guid SubscriptionToken)
-//	{
-//	return this.ct_Subs.ContainsKey(SubscriptionToken);
-//	//return	this.ct_Subscriptions.ContainsKey(SubscriptionToken);
-//	}

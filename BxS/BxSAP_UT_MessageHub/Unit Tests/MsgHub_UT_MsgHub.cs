@@ -75,82 +75,77 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		public void MsgHub_UT_MsgHub_Base()
 			{
 				var lo_CustID	= Guid.NewGuid();
-
-				//var lo_Sub		= MsgHub.MsgHubFactory.Subscription(lo_CustID, this.cc_Topic, false, false, (string msg) => this.test(msg));
-
-				var lo_Sub		= new MsgHub.SubscriptionWeak<string>(lo_CustID, this.cc_Topic, false, false, (string msg) => this.test(msg));
-
+				var lo_Sub		= new MsgHub.SubscriptionWeak<string>(lo_CustID, this.cc_Topic, (string msg) => this.test(msg));
 
 				var lo_Token0	= this.co_Hub.Subscribe(lo_Sub);
 				Assert.AreNotSame(co_GuidEmpty, lo_Token0);
+				Assert.AreEqual(1, this.co_Hub.SubscriptionCount(this.cc_Topic));
 			}
 		//*************************************************************************
 		[TestMethod]
 		public void MsgHub_UT_MsgHub_Replace()
 			{
-				//var lo_CustID	= Guid.NewGuid();
-				//var lo_Sub		= MsgHub.MsgHubFactory.Subscription(lo_CustID, this.cc_Topic, true, false, (string msg) => this.test(msg));
-				//var lo_Token0	= this.co_Hub.Subscribe(lo_Sub);
-				//Assert.AreEqual(lo_Sub.MyToken, lo_Token0);
+				var lo_CustID	= Guid.NewGuid();
+				var lo_Sub		= new MsgHub.SubscriptionWeak<string>(lo_CustID, this.cc_Topic, (string msg) => this.test(msg), true);
+				var lo_Token0	= this.co_Hub.Subscribe(lo_Sub);
+				Assert.AreEqual(lo_Sub.MyToken, lo_Token0);
 
-				//var lo_Token1	= this.co_Hub.Subscribe(lo_Sub);
-				//Assert.AreEqual(co_GuidEmpty, lo_Token1);
+				var lo_Token1	= this.co_Hub.Subscribe(lo_Sub);
+				Assert.AreEqual(co_GuidEmpty, lo_Token1);
 
-				//lo_Sub		= MsgHub.MsgHubFactory.Subscription(lo_CustID, this.cc_Topic, true, true, (string msg) => this.test(msg));
-				//var lo_T2	= this.co_Hub.Subscribe(lo_Sub);
-				//Assert.AreEqual(lo_Sub.MyToken, lo_T2);
-				//var lo_T3 = this.co_Hub.Subscribe(lo_Sub);
-				//Assert.AreNotEqual(co_GuidEmpty, lo_T3);
+				lo_Sub		= new MsgHub.SubscriptionWeak<string>(lo_CustID, this.cc_Topic, (string msg) => this.test(msg), true, true);
+				var lo_T2	= this.co_Hub.Subscribe(lo_Sub);
+				Assert.AreEqual(lo_Sub.MyToken, lo_T2);
+				var lo_T3 = this.co_Hub.Subscribe(lo_Sub);
+				Assert.AreNotEqual(co_GuidEmpty, lo_T3);
 			}
 		//*************************************************************************
 		[TestMethod]
 		public void MsgHub_UT_MsgHub_Allowmany()
 			{
-				//var lo_CustID = Guid.NewGuid();
-				//var lo_Sub		= MsgHub.MsgHubFactory.Subscription(lo_CustID, this.cc_Topic, false, true, (string msg) => this.test(msg));
-				//var lo_Token0 = this.co_Hub.Subscribe(lo_Sub);
-				//Assert.AreEqual(lo_Sub.MyToken, lo_Token0);
+				var lo_CustID = Guid.NewGuid();
+				var lo_Sub		= new MsgHub.SubscriptionWeak<string>(lo_CustID, this.cc_Topic, (string msg) => this.test(msg), false, true);
+				var lo_Token0 = this.co_Hub.Subscribe(lo_Sub);
+				Assert.AreEqual(lo_Sub.MyToken, lo_Token0);
 
-				//var lo_Token1 = this.co_Hub.Subscribe(lo_Sub);
-				//Assert.AreEqual(co_GuidEmpty, lo_Token1);
+				var lo_Token1 = this.co_Hub.Subscribe(lo_Sub);
+				Assert.AreEqual(co_GuidEmpty, lo_Token1);
 
-				//lo_Sub		= MsgHub.MsgHubFactory.Subscription(lo_CustID, this.cc_Topic, true, true, (string msg) => this.test(msg));
-				//var lo_T2 = this.co_Hub.Subscribe(lo_Sub);
-				//Assert.AreEqual(lo_Sub.MyToken, lo_T2);
+				lo_Sub		= new MsgHub.SubscriptionWeak<string>(lo_CustID, this.cc_Topic, (string msg) => this.test(msg), true, true);
+				var lo_T2 = this.co_Hub.Subscribe(lo_Sub);
+				Assert.AreEqual(lo_Sub.MyToken, lo_T2);
 
-				//Assert.AreEqual(this.co_Hub.SubscriptionCount(this.cc_Topic), 2);
-				//Assert.AreEqual(this.co_Hub.ClientCount(this.cc_Topic), 1);
+				Assert.AreEqual(this.co_Hub.SubscriptionCount(this.cc_Topic), 2);
 			}
 		//*************************************************************************
 		[TestMethod]
 		public void MsgHub_UT_MsgHub_Unsubscribe()
 			{
-				MsgHub.Subscription	lo_Sub1;
-				MsgHub.Subscription	lo_Sub2;
-				Guid								lo_T1;
-				Guid								lo_T2;
+				MsgHub.ISubscription<string>	lo_Sub1;
+				MsgHub.ISubscription<string>	lo_Sub2;
+
+				Guid	lo_T1;
+				Guid	lo_T2;
 
 				var lo_CustID1 = Guid.NewGuid();
 				var lo_CustID2 = Guid.NewGuid();
 
-				lo_Sub1		= MsgHub.MsgHubFactory.Subscription(lo_CustID1, this.cc_Topic, false, false, (string msg) => this.test(msg));
-				lo_Sub2		= MsgHub.MsgHubFactory.Subscription(lo_CustID2, this.cc_Topic, false, false, (string msg) => this.test(msg));
+				lo_Sub1		= new MsgHub.SubscriptionWeak<string>(lo_CustID1, this.cc_Topic, (string msg) => this.test(msg), false, false);
+				lo_Sub2		= new MsgHub.SubscriptionWeak<string>(lo_CustID2, this.cc_Topic, (string msg) => this.test(msg), false, false);
 
-				//lo_T1 = this.co_Hub.Subscribe(lo_Sub1);
-				//lo_T2 = this.co_Hub.Subscribe(lo_Sub2);
-				//Assert.AreEqual(2, this.co_Hub.SubscriptionCount(this.cc_Topic)	, "MsgHub: Unsubscribe: 001: Sub count");
-				//Assert.AreEqual(2, this.co_Hub.ClientCount(this.cc_Topic)				, "MsgHub: Unsubscribe: 002: Client count");
+				lo_T1 = this.co_Hub.Subscribe(lo_Sub1);
+				lo_T2 = this.co_Hub.Subscribe(lo_Sub2);
+				Assert.AreEqual(2, this.co_Hub.SubscriptionCount(this.cc_Topic)	, "MsgHub: Unsubscribe: 001: Sub count");
 
-				//this.co_Hub.UnSubscribe(lo_Sub1);
-				//this.co_Hub.UnSubscribe(lo_T2);
-				//Assert.AreEqual(0, this.co_Hub.SubscriptionCount(this.cc_Topic)	, "MsgHub: Unsubscribe: 003: Sub count");
+				this.co_Hub.UnSubscribe(lo_Sub1);
+				this.co_Hub.UnSubscribe(lo_Sub2);
+				Assert.AreEqual(0, this.co_Hub.SubscriptionCount(this.cc_Topic)	, "MsgHub: Unsubscribe: 003: Sub count");
 
-				//lo_T1 = this.co_Hub.Subscribe(lo_Sub1);
-				//lo_T2 = this.co_Hub.Subscribe(lo_Sub2);
-				//Assert.AreEqual(2, this.co_Hub.SubscriptionCount(this.cc_Topic)	, "MsgHub: Unsubscribe: 004: Sub count");
-				//this.co_Hub.UnSubscribeAll();
-				//Assert.AreEqual(0, this.co_Hub.SubscriptionCount(this.cc_Topic)	, "MsgHub: Unsubscribe: 005: Sub count");
-				//Assert.AreEqual(0, this.co_Hub.ClientCount(this.cc_Topic)				, "MsgHub: Unsubscribe: 006: Client count");
+				lo_T1 = this.co_Hub.Subscribe(lo_Sub1);
+				lo_T2 = this.co_Hub.Subscribe(lo_Sub2);
+				Assert.AreEqual(2, this.co_Hub.SubscriptionCount(this.cc_Topic)	, "MsgHub: Unsubscribe: 004: Sub count");
+				this.co_Hub.UnSubscribeAll();
+				Assert.AreEqual(0, this.co_Hub.SubscriptionCount(this.cc_Topic)	, "MsgHub: Unsubscribe: 005: Sub count");
 
 			}
 		//*************************************************************************
@@ -168,24 +163,24 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			{
 				this.LoadSubscribers();
 
-				cn_Cnt	= 0;
-				this.co_Hub.PublishAsync(this.cc_Topic, "BB").Wait();
-				Assert.AreEqual(3, cn_Cnt, "MsgHub: Publish: 001: Publish Async");
+				//cn_Cnt	= 0;
+				//this.co_Hub.PublishAsync(this.cc_Topic, "BB").Wait();
+				//Assert.AreEqual(3, cn_Cnt, "MsgHub: Publish: 001: Publish Async");
 
 				cn_Cnt	= 0;
 				this.co_Hub.PublishBackground(this.cc_Topic, "BB");
-				Thread.Sleep(2);
-				Assert.AreEqual(3, cn_Cnt, "MsgHub: Publish: 002: Sub count");
+				//Thread.Sleep(2);
+				//Assert.AreEqual(3, cn_Cnt, "MsgHub: Publish: 002: Sub count");
 
 			}
 		//*************************************************************************
 		private void LoadSubscribers()
 			{
-				var lo_Sub1		= MsgHub.MsgHubFactory.Subscription(Guid.NewGuid(), this.cc_Topic, false, false, (string msg) => this.test(msg));
-				var	lo_Sub2		= MsgHub.MsgHubFactory.Subscription(Guid.NewGuid(), this.cc_Topic, false, false, (string msg) => this.testa(msg));
+				var lo_Sub1		= new MsgHub.SubscriptionWeak<string>(Guid.NewGuid(), this.cc_Topic, (string msg) => this.test(msg),	false, false);
+				var lo_Sub2		= new MsgHub.SubscriptionWeak<string>(Guid.NewGuid(), this.cc_Topic, (string msg) => this.testa(msg), false, false);
 
-				//var	lo_T1 = this.co_Hub.Subscribe(lo_Sub1);
-				//var	lo_T2 = this.co_Hub.Subscribe(lo_Sub2);
+				var	lo_T1 = this.co_Hub.Subscribe(lo_Sub1);
+				var	lo_T2 = this.co_Hub.Subscribe(lo_Sub2);
 			}
 
 		private void test(string name)

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Reflection;
-//••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+//•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 namespace MsgHub
 	{
-
-		//public interface ISubscription
-		//	{
+		//*********************************************************************************************
+		//*********************************************************************************************
 		public interface ISubscription<T>
 			{
 				#region ** [Properties] **
@@ -99,12 +98,12 @@ namespace MsgHub
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public SubscriptionWeak(Guid			clientid	,
 																	string		topic			,
-																	bool			allowmany	,
-																	bool			replace		,
-																	Action<T>	action			) : base(	clientid	, 
-																																	topic			,
-																																	allowmany	,
-																																	replace			)
+																	Action<T>	action		,
+																	bool			allowmany	= false	,
+																	bool			replace		= false		) : base(	clientid	, 
+																																					topic			,
+																																					allowmany	,
+																																					replace			)
 						{
 							this.co_Type			= typeof(T);
 							this.co_TObj			= new WeakReference(action.Target);
@@ -151,12 +150,12 @@ namespace MsgHub
 					//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 					public Subscription(Guid			clientid	,
 															string		topic			,
-															bool			allowmany	,
-															bool			replace		,
-															Action<T>	action			) : base(	clientid	, 
-																															topic			,
-																															allowmany	,
-																															replace			)
+															Action<T>	action		,
+															bool			allowmany	= false	,
+															bool			replace		= false		) : base(	clientid	, 
+																																			topic			,
+																																			allowmany	,
+																																			replace			)
 						{
 							this.co_Action	= action;
 						}

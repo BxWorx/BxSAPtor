@@ -65,8 +65,8 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 				var lo_guid		= Guid.NewGuid();
 				var lc_Topic	= "Test";
 
-				ISubscription<string> lo_Subw		= new SubscriptionWeak<string>(lo_guid, lc_Topic, false, true, this.test);
-				ISubscription<string> lo_Subs		= new Subscription<string>(lo_guid, lc_Topic, false, true, this.test);
+				ISubscription<string> lo_Subw		= new SubscriptionWeak<string>(lo_guid, lc_Topic, this.test, false, true);
+				ISubscription<string> lo_Subs		= new Subscription<string>(lo_guid, lc_Topic, this.test, false, true);
 
 				Assert.IsNotNull(lo_Subw);
 				Assert.AreNotEqual(co_GuidEmpty, lo_Subw.MyToken);
