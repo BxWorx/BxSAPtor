@@ -17,6 +17,7 @@ namespace BxSAP_App
 				protected override void OnStartup(StartupEventArgs e)
 					{
 						App.Current.ShutdownMode	= ShutdownMode.OnMainWindowClose;
+						//.................................................
 						base.OnStartup(e);
 						//.................................................
 						this.co_MsgHub	= new MessageHub();
