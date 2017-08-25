@@ -34,14 +34,25 @@ namespace MsgHub
 
 			#endregion
 			//___________________________________________________________________________________________
+			#region ** [Methods: Protected]**
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				protected override bool GetIsAlive()
+					{
+						return	this.co_TObj.IsAlive;
+					}
+
+			#endregion
+			//___________________________________________________________________________________________
 			#region ** [Methods: Exposed] **
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public override void Invoke(T Msg)
 					{
 						Action<T> lo_Action = null;
+						if (!this.GetIsAlive())	return;
 						//..................................................
-						if (this.co_TObj.Target != null && this.co_TObj.IsAlive)
+						if (this.co_TObj.Target != null)
 							{
 								lo_Action = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), this.co_TObj.Target, this.co_MInfo);
 							}

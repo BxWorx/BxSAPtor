@@ -46,6 +46,31 @@ namespace MsgHub
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public ISubscription<T>	Subscripe<T>(	Guid			clientid					,
+																							string		topic							,
+																							Action<T>	action						,
+																							bool			allowmany = false	,
+																							bool			replace		= true	,
+																							bool			asweak		= true		)
+					{
+						ISubscription<T>	lo_Sub;
+						//.............................................
+						if (asweak)
+							{
+								lo_Sub	= new SubscriptionWeak<T>	(clientid, topic, action, allowmany, replace);
+							}
+						else
+							{
+								lo_Sub	= new Subscription<T>			(clientid, topic, action, allowmany, replace);
+							}
+
+						this.Subscribe(lo_Sub);
+						//.............................................
+						return	lo_Sub;
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public Guid Subscribe<T>(ISubscription<T> subscription)
 					{
 						var	lt_Subscriptions	= this.GetAddTopicSubscriptions(subscription.Topic);

@@ -6,7 +6,8 @@ namespace MsgHub
 		{
 			#region ** [Declarations] **
 
-				protected						Type			co_MyType;
+				protected	Type				co_MyType;
+				protected	Action<T>		co_Action;
 				//.................................................
 				protected readonly	Guid			cc_Token;
 				protected readonly	Guid			cc_ClientID;
@@ -24,6 +25,7 @@ namespace MsgHub
 				public bool		AllowMany		{ get { return	this.cb_AllowMany; } }
 				public bool		Replace			{ get { return	this.cb_Replace; } }
 				public Type		TypeOf			{ get { return	this.co_MyType; } }
+				public bool		IsAlive			{ get { return	this.GetIsAlive(); } }
 
 			#endregion
 			//___________________________________________________________________________________________
@@ -37,6 +39,7 @@ namespace MsgHub
 					{
 						this.co_MyType		= typeof(T);
 						this.cc_Token			= Guid.NewGuid();
+						this.co_Action		= null;
 						//...........................................
 						this.cc_ClientID	= clientid;
 						this.cc_Topic			= topic;
@@ -46,9 +49,23 @@ namespace MsgHub
 
 			#endregion
 			//___________________________________________________________________________________________
+			#region ** [Methods: Protected]**
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				protected virtual bool GetIsAlive()
+					{
+						return	true;
+					}
+
+			#endregion
+			//___________________________________________________________________________________________
 			#region ** [Methods: Exposed]**
 
-				public abstract void Invoke(T Message);
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public virtual void Invoke(T data)
+					{
+						this.co_Action?.Invoke(data);
+					}
 
 			#endregion
 

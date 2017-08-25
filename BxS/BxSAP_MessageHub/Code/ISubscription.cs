@@ -11,8 +11,8 @@ namespace MsgHub
 				string	Topic				{ get; }
 				bool		AllowMany		{ get; }
 				bool		Replace			{ get; }
-
 				Type		TypeOf			{	get; }
+				bool		IsAlive			{ get; }
 
 			#endregion
 			//___________________________________________________________________________________________
