@@ -29,6 +29,13 @@ namespace MsgHub
 																										bool			replace		= true		);
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				ISubscription<T>	Subscribe<T>(	Guid			clientid					,
+																				string		topic							,
+																				Action<T>	action						,
+																				bool			allowmany = false	,
+																				bool			replace		= true	,
+																				bool			asweak		= true		);
+
 				Guid	Subscribe<T>(ISubscription<T> subscription);
 				void	UnSubscribe<T>(ISubscription<T> subscription);
 				void	UnSubscribe(string topic);
