@@ -56,6 +56,7 @@
     <Compile Include="Unit Tests\MsgHub_UT_Subscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit Tests\MsgHub_UT_Subscriptions.cs" />
+    <Compile Include="Unit Tests\MsgHub_UT_V01_MsgHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BxSAP_MessageHub\BxSAP_MessageHub.csproj">

@@ -4,7 +4,7 @@ namespace MsgHub
 {
 	public sealed class Subscription<T> : SubscriptionBase<T>
 		{
-			#region ** [Constructors]**
+			#region **[Constructors]**
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public Subscription(Guid			clientid	,

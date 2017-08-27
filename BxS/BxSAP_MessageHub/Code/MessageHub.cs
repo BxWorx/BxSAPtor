@@ -13,11 +13,18 @@ namespace MsgHub
 
 			#endregion
 			//___________________________________________________________________________________________
+			#region **[Properties]**
+
+				public bool	AllowMultiple {get; private set; }
+
+			#endregion
+			//___________________________________________________________________________________________
 			#region **[Constructors]**
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				public MessageHub()
+				public MessageHub( bool allowmultiple = false )
 					{
+						this.AllowMultiple	= allowmultiple;
 						this.ct_SubsByTopic	= new ConcurrentDictionary<string,	SubscriptionsByTopic>();
 					}
 

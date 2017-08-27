@@ -6,9 +6,9 @@ namespace MsgHub
 {
 	public interface IMessageHub
 		{
-			#region **[Declarations]**
+			#region **[Properties]**
 
-				//private	readonly	ConcurrentDictionary<string, SubscriptionsByTopic>	ct_SubsByTopic;		// key=topic
+				bool AllowMultiple { get; }
 
 			#endregion
 			//_________________________________________________________________________________________

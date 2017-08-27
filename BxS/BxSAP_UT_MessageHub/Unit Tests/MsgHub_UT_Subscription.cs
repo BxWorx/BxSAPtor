@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MsgHub;
+using MsgHubv01;
 
 namespace BxSAP_UT_MessageHub.Unit_Tests
 {
@@ -65,8 +66,8 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 				var lo_guid		= Guid.NewGuid();
 				var lc_Topic	= "Test";
 
-				ISubscription<string> lo_Subw		= new SubscriptionWeak<string>(lo_guid, lc_Topic, this.test, false, true);
-				ISubscription<string> lo_Subs		= new Subscription<string>(lo_guid, lc_Topic, this.test, false, true);
+				ISubscription<string> lo_Subw		= new SubscriptionWeak<string>(lo_guid, lc_Topic, this.TestStr, false, true);
+				ISubscription<string> lo_Subs		= new Subscription<string>(lo_guid, lc_Topic, this.TestStr, false, true);
 
 				Assert.IsNotNull(lo_Subw);
 				Assert.AreNotEqual(co_GuidEmpty, lo_Subw.MyToken);
@@ -79,8 +80,50 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 			}
 
-		private void test(string msg)
+		[TestMethod]
+		public void MsgHub_UT_V01_Subscription_Base()
+			{
+				var lo_guid		= Guid.NewGuid();
+				var lc_Topic	= "Test";
+
+				var lo_ActionO	= new Action<string>	( (data) => this.TestStr(data) );
+				var lo_ActionX	= new Action<int>			( (data) => this.TestInt(data) );
+
+				ISubscription lo_Subw		= new SubscriptionWeak	( lc_Topic, lo_guid, lo_ActionO );
+				ISubscription	lo_Subs		= new Subscription			( lc_Topic, lo_guid, lo_ActionO );
+				ISubscription	lo_Sube		= new Subscription			( lc_Topic, lo_guid, lo_ActionX );
+
+				//ISubscription lo_Subw		= new SubscriptionWeak	( lc_Topic, lo_guid, new Action<string>( (msg) => this.test(msg) ) );
+				//ISubscription	lo_Subs		= new Subscription			( lc_Topic, lo_guid, new Action<string>( (msg) => this.test(msg) ) );
+
+				Assert.IsNotNull(lo_Subw);
+				Assert.IsNotNull(lo_Subs);
+
+				Assert.AreNotEqual(co_GuidEmpty			, lo_Subw.MyToken);
+				Assert.AreNotEqual(co_GuidEmpty			, lo_Subs.MyToken);
+				Assert.AreNotEqual(lo_Subw.MyToken	, lo_Subs.MyToken);
+
+				Assert.AreEqual(typeof(string).Name	, lo_Subw.TypeID);
+				Assert.AreEqual(lo_Subw.TypeID			, lo_Subs.TypeID);
+
+				lo_Subw?.Invoke("A");
+				Assert.AreEqual("A", this.cc_Test);
+
+				lo_Subs?.Invoke("B");
+				Assert.AreEqual("B", this.cc_Test);
+
+				lo_Sube?.Invoke(123);
+				Assert.AreEqual("123", this.cc_Test);
+
+				lo_Sube?.Invoke("456");
+				Assert.AreNotEqual("456", this.cc_Test);
+			}
+
+		private void TestStr(string msg)
 			{ this.cc_Test	= msg; }
+
+		private void TestInt(int data)
+			{ this.cc_Test	= String.Format("{0}",data); }
 
 	}
 }
