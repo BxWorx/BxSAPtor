@@ -185,19 +185,21 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					this.co_Hub.Publish(this.cc_Topic, "Hello-1");
 					this.co_Hub.Publish(this.cc_Topic, "Hello-2");
 
-					lo_test.UnSubscribe();
 					this.co_Hub.Publish(this.cc_Topic, "Bye-1");
-					this.co_Hub.Publish(this.cc_Topic, "Bye-2");
+					lo_test.UnSubscribe();
+					this.co_Hub.Publish(this.cc_Topic, "NOT Bye-2");
+
+					Assert.AreEqual(3, lo_test.Count, "MsgHub: WeakRef: 001: count");
 
 					lo_test.Subscribe();
 					this.co_Hub.Publish(this.cc_Topic, "Again-1");
+					Assert.AreEqual(4, lo_test.Count, "MsgHub: WeakRef: 001: count");
+
 					lo_test	= null;
+					GC.Collect();
 
-					Thread.Sleep(5);
 					this.co_Hub.Publish(this.cc_Topic, "NOT Again-1");
-											
-
-					//Assert.AreEqual(3, cn_Cnt, "MsgHub: Publish: 002: Sub count");
+					//Assert.AreEqual(4, lo_test?.Count, "MsgHub: WeakRef: 001: count");
 
 				}
 			//*************************************************************************
@@ -224,12 +226,15 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			private MsgHub.IMessageHub						co_Hub;
 			private string												cc_Topic;
 			private	MsgHub.ISubscription<string>	co_Sub1;
+			private int														cn_Cnt;
 
 			public UT_Weak(MsgHub.IMessageHub msghub , string topic)
 				{
 					this.co_Hub		= msghub;
 					this.cc_Topic	= topic;
 				}
+
+			public int Count { get { return this.cn_Cnt; } }
 
 			public void Subscribe()
 				{
@@ -243,6 +248,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 			private void test(string data)
 				{
+					this.cn_Cnt += 1;
 					Debug.WriteLine( string.Format("UT: {0}-{1}", this.cc_Topic,  data) );
 				}
 		}
