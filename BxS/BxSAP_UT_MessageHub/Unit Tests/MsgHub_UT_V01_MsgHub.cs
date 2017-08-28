@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MsgHubv01;
+using System.Threading;
 
 namespace BxSAP_UT_MessageHub.Unit_Tests
 {
@@ -15,6 +16,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 			private IMessageHub	co_Hub;
 			private int					cn_Int;
+			private static int	cn_Cnt;
 
 			public MsgHub_UT_V01_MsgHub()
 				{
@@ -68,7 +70,20 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			#endregion
 
 			[TestMethod]
-			public void MsgHub_UT_V01_MsgHub_Base()
+			public void MsgHub_UT_V01_MsgHub_Subscribe()
+				{
+					var lo_SubID		= Guid.NewGuid();
+					var lo_ActionO	= new Action<int>( (data) => this.TestInt(data) );
+
+					this.co_Hub.Subscribe("XX", lo_SubID, lo_ActionO);
+					this.co_Hub.Subscribe("YY", lo_SubID, lo_ActionO);
+					this.co_Hub.Subscribe("ZZ", lo_SubID, lo_ActionO);
+
+					Assert.AreEqual(3, this.co_Hub.Count);
+				}
+
+			[TestMethod]
+			public void MsgHub_UT_V01_MsgHub_Publish()
 				{
 					var lo_SubID		= Guid.NewGuid();
 					var ln_Int			= 12;
@@ -82,6 +97,11 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 				private void TestInt(int data)
 					{
 						this.cn_Int += data;
+					}
+
+				private void TestCnt(int data)
+					{
+						Interlocked.Add(ref	cn_Cnt, data);
 					}
 		}
 }

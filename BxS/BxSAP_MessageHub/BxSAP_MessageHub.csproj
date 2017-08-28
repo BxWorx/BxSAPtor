@@ -42,9 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeV01\IMessageHub.cs" />
+    <Compile Include="CodeV01\ISubscriptionsByTopic.cs" />
     <Compile Include="CodeV01\ISubscription.cs" />
     <Compile Include="CodeV01\MessageHub.cs" />
     <Compile Include="CodeV01\Subscription.cs" />
+    <Compile Include="CodeV01\SubscriptionsByTopic.cs" />
     <Compile Include="CodeV01\SubscriptionWeak.cs" />
     <Compile Include="Code\Subscription.cs" />
     <Compile Include="CodeV01\SubscriptionBase.cs" />

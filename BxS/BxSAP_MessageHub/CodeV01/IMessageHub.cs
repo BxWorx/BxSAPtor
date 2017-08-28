@@ -8,7 +8,8 @@
 		{
 			#region **[Properties]**
 
-				bool AllowMultiple { get; }
+				bool	AllowMultiple { get; }
+				int		Count					{ get; }
 
 			#endregion
 			//_________________________	________________________________________________________________

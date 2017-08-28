@@ -6,20 +6,23 @@
 	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Collections.Generic;
+	using System.Linq;
 
 	//•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 	public class MessageHub	: IMessageHub
 		{
 			#region **[Declarations]**
 
-				private	ConcurrentDictionary<Type, IList<ISubscription>>			ct_SubsByType;
-				private ConditionalWeakTable<SubscriptionKey, ISubscription>	co_cwt;
+				private	ConcurrentDictionary<Type, SubscriptionsByTopic>			ct_SubsByType;
+				private	object	co_Lock;
+				//private ConditionalWeakTable<SubscriptionKey, ISubscription>	co_cwt;
 
 			#endregion
 			//___________________________________________________________________________________________
 			#region **[Properties]**
 
 				public bool	AllowMultiple { get; private set; }
+				public int	Count					{ get {	return	this.CountAll(); } }
 
 			#endregion
 			//___________________________________________________________________________________________
@@ -28,9 +31,10 @@
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public MessageHub( bool allowmultiple = false )
 					{
+						this.co_Lock				= new object();
 						this.AllowMultiple	= allowmultiple;
-						this.co_cwt					= new ConditionalWeakTable<SubscriptionKey, ISubscription>();
-						this.ct_SubsByType	= new	ConcurrentDictionary<Type, IList<ISubscription>>();
+						//this.co_cwt					= new ConditionalWeakTable<SubscriptionKey, ISubscription>();
+						this.ct_SubsByType	= new	ConcurrentDictionary<Type, SubscriptionsByTopic>();
 					}
 
 			#endregion
@@ -40,32 +44,25 @@
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public void Subscribe<T>(string topic, Guid subscriberid, Action<T> action)
 					{
-											var	lo_Key	= new SubscriptionKey	(topic, subscriberid);
+											//var	lo_Key	= new SubscriptionKey	(topic, subscriberid);
 						ISubscription	lo_Sub	= new Subscription		(topic, subscriberid, action);
 
-						this.co_cwt.Add(lo_Key, lo_Sub);
-
+						//this.co_cwt.Add(lo_Key, lo_Sub);
 						
-						this.ct_SubsByType.GetOrAdd(typeof(T),() => new List<ISubscription>());
-
+						var lt_SubsType	=	this.ct_SubsByType.GetOrAdd(typeof(T), (key) => new SubscriptionsByTopic(this.AllowMultiple) );
+						lt_SubsType.Subscribe(lo_Sub);
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public void Publish<T>(string topic, Guid subscriberid, T data)
 					{
-											var	lo_Key	= new SubscriptionKey	(topic, subscriberid);
-						ISubscription	lo_Subs	= null;
+						//					var	lo_Key	= new SubscriptionKey	(topic, subscriberid);
+						//ISubscription	lo_Subs	= null;
 
-			foreach (var item in this.co_cwt)
-				{
-
-				}
-
-
-						if (this.co_cwt.TryGetValue(lo_Key, out lo_Subs))
-							{
-								lo_Subs.Invoke(data);
-							}
+						//if (this.co_cwt.TryGetValue(lo_Key, out lo_Subs))
+						//	{
+						//		lo_Subs.Invoke(data);
+						//	}
 					}
 
 
@@ -204,6 +201,22 @@
 			#endregion
 			//___________________________________________________________________________________________
 			#region **[Methods:Private]**
+
+				private int CountAll(string topic	= default(string), Guid subscriber	= default(Guid)	)
+					{
+						KeyValuePair<Type, SubscriptionsByTopic>[]	lt_Snap;
+
+						lock (this.co_Lock)
+							{
+								lt_Snap	= this.ct_SubsByType.Values.ToList().Where( (x) => x.  .ToArray().SelectMany ;
+							}
+
+							
+
+						return	(from lo_Typ in lt_Snap
+											select lo_Typ.Value.Count).Sum();
+					}
+
 
 				////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				//private void UnsubscribeFromTypes<T>(ISubscription subscription)
