@@ -51,16 +51,28 @@
 			//___________________________________________________________________________________________
 			#region **[Methods: Private]**
 				
+				private IList<ISubscription>	Subscibers(string topic	= default(string), Guid subscriber = default(Guid))
+					{
+
+						
+
+						return	new List<ISubscription>(this.ct_SubsByTopic.Values.ToList().Any(  );
+					}
+
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				private	int CountAll(string topic	= default(string), Guid subscriber = default(Guid))
 					{
-						IList<ISubscription>[]	ct_Topic;
+						//IList<ISubscription>[]	ct_Topic;
+						bool	lb_SkipTopic	= string.IsNullOrEmpty(topic)				? true : false;
+						bool	lb_SkipSubsc	=	subscriber.Equals(default(Guid))	? true : false;
 
 						lock (this.co_Lock)
 							{
-								var q = (from lo_Sub4Topic in this.ct_SubsByTopic
-													select lo_Sub4Topic.Value.Count).Sum();
-								return	q;
+								int lo_QTally	= (	from lo_S4T in this.ct_SubsByTopic
+																		where (lb_SkipTopic || lo_S4T.Key.Equals(topic)) &&
+																					(lb_SkipSubsc	|| lo_S4T.Value.First( x => x.SubscriberID == subscriber ) != null )
+																			select lo_S4T.Value.Count	).Sum();
+								return	lo_QTally;
 							}
 					}
 

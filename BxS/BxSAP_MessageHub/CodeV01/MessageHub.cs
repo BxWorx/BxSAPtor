@@ -208,13 +208,13 @@
 
 						lock (this.co_Lock)
 							{
-								lt_Snap	= this.ct_SubsByType.Values.ToList().Where( (x) => x.  .ToArray().SelectMany ;
+								//lt_Snap	= this.ct_SubsByType.Values.ToList().Where( (x) => x.  .ToArray().SelectMany ;
 							}
 
-							
+							return	0;
 
-						return	(from lo_Typ in lt_Snap
-											select lo_Typ.Value.Count).Sum();
+						//return	(from lo_Typ in lt_Snap
+						//					select lo_Typ.Value.Count).Sum();
 					}
 
 
