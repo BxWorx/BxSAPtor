@@ -19,12 +19,38 @@
 			//___________________________________________________________________________________________
 			#region **[Properties]**
 
-				internal int Count { get { return	this.CountAll(); } }
+				internal int CountAll { get { return	this.CountIt(); } }
 
 			#endregion
 			//___________________________________________________________________________________________
 			#region **[Methods:Exposed]**
 
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				internal int Count(string topic	= default(string), Guid subscriber = default(Guid))
+					{
+						return	this.CountIt(topic, subscriber);
+
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				internal IList<ISubscription> GetSubscriptions(string topic)
+					{
+						return	this.FetchSubscriptions(topic);
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				internal IList<ISubscription> GetSubscriptions(Guid subscriberid)
+					{
+						return	this.FetchSubscriptions(subscriberid);
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				internal IList<ISubscription> GetSubscriptions(string topic, Guid subscriberid)
+					{
+						return	this.FetchSubscriptions(topic, subscriberid);
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				internal void Subscribe(ISubscription subscription)
 					{
 						var lt_Subs	= this.ct_SubsByTopic.GetOrAdd(subscription.Topic, (key) => new List<ISubscription>());
@@ -32,7 +58,7 @@
 						lock (this.co_Lock)
 							{
 								lt_Subs.Add(subscription);
-							}				
+							}
 					}
 
 			#endregion
@@ -56,24 +82,44 @@
 
 						
 
-						return	new List<ISubscription>(this.ct_SubsByTopic.Values.ToList().Any(  );
+						return	new List<ISubscription>();	//		(this.ct_SubsByTopic.Values.ToList().Any(  );
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				private	int CountAll(string topic	= default(string), Guid subscriber = default(Guid))
+				private	int CountIt(	string	topic				= default(string)	,
+															Guid		subscriber	= default(Guid)			)
 					{
-						//IList<ISubscription>[]	ct_Topic;
-						bool	lb_SkipTopic	= string.IsNullOrEmpty(topic)				? true : false;
-						bool	lb_SkipSubsc	=	subscriber.Equals(default(Guid))	? true : false;
+						return	0;
 
-						lock (this.co_Lock)
-							{
-								int lo_QTally	= (	from lo_S4T in this.ct_SubsByTopic
-																		where (lb_SkipTopic || lo_S4T.Key.Equals(topic)) &&
-																					(lb_SkipSubsc	|| lo_S4T.Value.First( x => x.SubscriberID == subscriber ) != null )
-																			select lo_S4T.Value.Count	).Sum();
-								return	lo_QTally;
-							}
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				private IList<ISubscription> FetchSubscriptions(Guid subscriberid)
+					{
+						return	(	from lo in this.ct_SubsByTopic.Values
+												from le in lo
+													where le.SubscriberID	== subscriberid
+														select le	)
+										.ToList();
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				private IList<ISubscription> FetchSubscriptions(string topic, Guid subscriberid)
+					{
+						return	(	from le in this.FetchSubscriptions(topic)
+												where le.SubscriberID	== subscriberid
+													select le )
+										.ToList();
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				private IList<ISubscription> FetchSubscriptions(string topic)
+					{
+						IList<ISubscription> lt_List		= new	List<ISubscription>();
+
+						if (this.ct_SubsByTopic.TryGetValue(topic, out lt_List)) { };
+
+						return	lt_List;
 					}
 
 			#endregion

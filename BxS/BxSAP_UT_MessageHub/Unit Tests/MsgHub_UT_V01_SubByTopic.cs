@@ -78,6 +78,25 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					this.co_SbT.Subscribe(lo_Sub2);
 					this.co_SbT.Subscribe(lo_Sub3);
 					this.co_SbT.Subscribe(lo_Sub4);
+					
+					Assert.AreEqual(2, this.co_SbT.GetSubscriptions(lc_ID).Count);
+					Assert.AreEqual(1, this.co_SbT.GetSubscriptions("XX", lc_ID).Count);
+					Assert.AreEqual(2, this.co_SbT.GetSubscriptions("XX").Count);
+
+					Assert.AreEqual(0, this.co_SbT.GetSubscriptions(Guid.NewGuid()).Count);
+					Assert.AreEqual(0, this.co_SbT.GetSubscriptions("X!").Count);
+					Assert.AreEqual(0, this.co_SbT.GetSubscriptions("X!", lc_ID).Count);
+					Assert.AreEqual(0, this.co_SbT.GetSubscriptions("XX", Guid.NewGuid()).Count);
+
+
+					//Assert.AreEqual(4,	this.co_SbT.Count()						,	"001"	);
+					//Assert.AreEqual(2,	this.co_SbT.Count("XX")				,	"002"	);
+					//Assert.AreEqual(0,	this.co_SbT.Count("11")				,	"003"	);
+
+					//Assert.AreEqual(2,	this.co_SbT.Count(subscriber:	lc_ID),	"004"	);
+
+					//Assert.AreEqual(1,	this.co_SbT.Count("XX",	lc_ID),	"005"	);
+					//Assert.AreEqual(1,	this.co_SbT.Count("YY",	lc_ID),	"006"	);
 
 				}
 
