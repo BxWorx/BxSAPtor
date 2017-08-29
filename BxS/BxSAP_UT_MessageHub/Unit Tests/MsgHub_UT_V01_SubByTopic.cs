@@ -90,6 +90,13 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 					var lt_List	= this.co_SbT.GetSubscriptions();
 					Assert.AreEqual(4, lt_List.Count);
+
+					this.co_SbT.DeRegister(lo_Sub3);
+					Assert.AreEqual(3, this.co_SbT.Count());
+					this.co_SbT.Clear("XX");
+					Assert.AreEqual(1, this.co_SbT.Count());
+					this.co_SbT.Clear();
+					Assert.AreEqual(0, this.co_SbT.Count());
 				}
 
 

@@ -19,6 +19,55 @@
 			#region **[Methods:Exposed]**
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				internal void Clear(string topic = default(string))
+					{
+						if (string.IsNullOrEmpty(topic))
+							{
+								lock (this.co_Lock)
+									{
+										this.ct_SubsByTopic.Clear();
+									}
+							}
+						else
+							{
+								IList<ISubscription>	lt_Subs;
+
+								if (this.ct_SubsByTopic.TryGetValue(topic, out lt_Subs))
+									{
+										lock (this.co_Lock)
+											{
+												lt_Subs.Clear();
+											}
+									}
+							}
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				internal void DeRegister(ISubscription subscription)
+					{
+						IList<ISubscription>	lt_Subs;
+
+						if (this.ct_SubsByTopic.TryGetValue(subscription.Topic, out lt_Subs))
+							{
+								lock (this.co_Lock)
+									{
+										lt_Subs.Remove(subscription);
+									}
+							}
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				internal void Register(ISubscription subscription)
+					{
+						var lt_Subs	= this.ct_SubsByTopic.GetOrAdd(subscription.Topic, (key) => new List<ISubscription>());
+
+						lock (this.co_Lock)
+							{
+								lt_Subs.Add(subscription);
+							}
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				internal int Count(string topic	= default(string), Guid subscriber = default(Guid))
 					{
 						return	this.CountIt(topic, subscriber);
@@ -46,17 +95,6 @@
 				internal IList<ISubscription> GetSubscriptions(string topic, Guid subscriberid)
 					{
 						return	this.FetchSubscriptions(topic, subscriberid);
-					}
-
-				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				internal void Register(ISubscription subscription)
-					{
-						var lt_Subs	= this.ct_SubsByTopic.GetOrAdd(subscription.Topic, (key) => new List<ISubscription>());
-
-						lock (this.co_Lock)
-							{
-								lt_Subs.Add(subscription);
-							}
 					}
 
 			#endregion
