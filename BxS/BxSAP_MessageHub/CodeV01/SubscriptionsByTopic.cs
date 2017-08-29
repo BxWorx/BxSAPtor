@@ -4,7 +4,6 @@
 	using System.Collections.Concurrent;
 	using System.Collections.Generic;
 	using System.Linq;
-
 	//•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 	internal sealed class SubscriptionsByTopic
 		{
@@ -17,19 +16,18 @@
 
 			#endregion
 			//___________________________________________________________________________________________
-			#region **[Properties]**
-
-				internal int CountAll { get { return	this.CountIt(); } }
-
-			#endregion
-			//___________________________________________________________________________________________
 			#region **[Methods:Exposed]**
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				internal int Count(string topic	= default(string), Guid subscriber = default(Guid))
 					{
 						return	this.CountIt(topic, subscriber);
+					}
 
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				internal IList<ISubscription> GetSubscriptions()
+					{
+						return	this.FetchSubscriptions();
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -51,7 +49,7 @@
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				internal void Subscribe(ISubscription subscription)
+				internal void Register(ISubscription subscription)
 					{
 						var lt_Subs	= this.ct_SubsByTopic.GetOrAdd(subscription.Topic, (key) => new List<ISubscription>());
 
@@ -77,30 +75,45 @@
 			//___________________________________________________________________________________________
 			#region **[Methods: Private]**
 				
-				private IList<ISubscription>	Subscibers(string topic	= default(string), Guid subscriber = default(Guid))
-					{
-
-						
-
-						return	new List<ISubscription>();	//		(this.ct_SubsByTopic.Values.ToList().Any(  );
-					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				private	int CountIt(	string	topic				= default(string)	,
 															Guid		subscriber	= default(Guid)			)
 					{
-						return	0;
+						if (string.IsNullOrEmpty(topic) && subscriber == default(Guid))
+							{ return	this.FetchSubscriptions().Count; }
 
+						else if (!string.IsNullOrEmpty(topic) && subscriber != default(Guid))
+							{ return	this.FetchSubscriptions(topic, subscriber).Count; }
+
+						else if (subscriber != default(Guid))
+							{ return	this.FetchSubscriptions(subscriber).Count; }
+
+						else
+							{ return	this.FetchSubscriptions(topic).Count; }
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				private IList<ISubscription> FetchSubscriptions(Guid subscriberid)
+				private IList<ISubscription> FetchSubscriptions(string topic = default(string))
 					{
+						IList<ISubscription> lt_List;
+
+						if (!this.ct_SubsByTopic.TryGetValue(topic, out lt_List))
+							{ lt_List	= new	List<ISubscription>(); }
+
+						return	lt_List;
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				private IList<ISubscription> FetchSubscriptions(Guid subscriberid = default(Guid))
+					{
+						bool lb_Skip	= subscriberid == default(Guid) ? true : false ;
+
 						return	(	from lo in this.ct_SubsByTopic.Values
 												from le in lo
-													where le.SubscriberID	== subscriberid
-														select le	)
-										.ToList();
+													where lb_Skip || le.SubscriberID	== subscriberid
+														select le
+										 ).ToList();
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -108,18 +121,14 @@
 					{
 						return	(	from le in this.FetchSubscriptions(topic)
 												where le.SubscriberID	== subscriberid
-													select le )
-										.ToList();
+													select le
+										 ).ToList();
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				private IList<ISubscription> FetchSubscriptions(string topic)
+				private IList<ISubscription> FetchSubscriptions()
 					{
-						IList<ISubscription> lt_List		= new	List<ISubscription>();
-
-						if (this.ct_SubsByTopic.TryGetValue(topic, out lt_List)) { };
-
-						return	lt_List;
+						return	this.ct_SubsByTopic.SelectMany(kvp => kvp.Value).ToList();
 					}
 
 			#endregion

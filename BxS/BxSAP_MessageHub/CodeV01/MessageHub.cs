@@ -50,7 +50,7 @@
 						//this.co_cwt.Add(lo_Key, lo_Sub);
 						
 						var lt_SubsType	=	this.ct_SubsByType.GetOrAdd(typeof(T), (key) => new SubscriptionsByTopic(this.AllowMultiple) );
-						lt_SubsType.Subscribe(lo_Sub);
+						lt_SubsType.Register(lo_Sub);
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
