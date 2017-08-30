@@ -4,11 +4,13 @@
 	using System.Collections.Concurrent;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Threading;
 	//•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 	internal sealed class SubscriptionsByTopic
 		{
 			#region **[Declarations]**
 
+				private	ReaderWriterLockSlim																co_cacheLock;
 				private ConcurrentDictionary<string, IList<ISubscription>>	ct_SubsByTopic;
 
 				private bool		cb_AllowMultiple;
@@ -23,10 +25,12 @@
 					{
 						if (string.IsNullOrEmpty(topic))
 							{
-								lock (this.co_Lock)
-									{
-										this.ct_SubsByTopic.Clear();
-									}
+								this.co_cacheLock.EnterWriteLock();
+
+								try
+									{	this.ct_SubsByTopic.Clear(); }
+								finally
+									{	this.co_cacheLock.ExitWriteLock(); }
 							}
 						else
 							{
@@ -46,25 +50,32 @@
 				internal void DeRegister(ISubscription subscription)
 					{
 						IList<ISubscription>	lt_Subs;
+						
+						this.co_cacheLock.EnterWriteLock();
 
-						if (this.ct_SubsByTopic.TryGetValue(subscription.Topic, out lt_Subs))
+						try
 							{
-								lock (this.co_Lock)
+								if (this.ct_SubsByTopic.TryGetValue(subscription.Topic, out lt_Subs))
 									{
 										lt_Subs.Remove(subscription);
 									}
 							}
+						finally
+							{	this.co_cacheLock.ExitWriteLock(); }
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				internal void Register(ISubscription subscription)
 					{
-						var lt_Subs	= this.ct_SubsByTopic.GetOrAdd(subscription.Topic, (key) => new List<ISubscription>());
+						this.co_cacheLock.EnterWriteLock();
 
-						lock (this.co_Lock)
+						try
 							{
+								var lt_Subs	= this.ct_SubsByTopic.GetOrAdd(subscription.Topic, (key) => new List<ISubscription>());
 								lt_Subs.Add(subscription);
 							}
+						finally
+							{	this.co_cacheLock.ExitWriteLock(); }
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -88,7 +99,14 @@
 					{
 						this.co_Lock					= new object();
 						this.cb_AllowMultiple	= allowmultiple;
+						this.co_cacheLock			= new ReaderWriterLockSlim();
 						this.ct_SubsByTopic		= new	ConcurrentDictionary<string, IList<ISubscription>>();
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				~SubscriptionsByTopic()
+					{	
+						if (this.co_cacheLock	!= null)	this.co_cacheLock.Dispose();
 					}
 
 			#endregion
@@ -99,8 +117,10 @@
 				private IList<ISubscription> FetchSubscriptions( string topic, Guid	subscriberid, Guid subscriptionid )
 					{
 						IList<ISubscription> lt_List;
+						
+						this.co_cacheLock.EnterReadLock();
 
-						lock (this.co_Lock)
+						try
 							{
 								if (string.IsNullOrEmpty(topic) && subscriberid == default(Guid))
 									{
@@ -132,12 +152,14 @@
 																.Where(kvp => kvp.Key == topic)
 																.SelectMany(val => val.Value)
 																.ToList(); }
-							}
-							//.............................................
-							if (subscriberid != default(Guid))
-								{	return	lt_List.Where(sub => sub.MyToken == subscriberid).ToList();	}
+								//.............................................
+								if (subscriptionid != default(Guid))
+									{	return	lt_List.Where(sub => sub.MyToken == subscriptionid).ToList();	}
 
-							return	lt_List;
+								return	lt_List;
+							}
+						finally
+							{	this.co_cacheLock.ExitReadLock();	}
 					}
 
 			#endregion

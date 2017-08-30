@@ -41,9 +41,9 @@ namespace MsgHub
 				void	UnSubscribe(string topic);
 				void	UnSubscribeAll();
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				void	Publish<T>(string topic, T message, CancellationToken ct = default(CancellationToken));
-				Task	PublishAsync<T>(string topic, T message, CancellationToken ct = default(CancellationToken));
-				void	PublishBackground<T>(string topic, T message, CancellationToken ct = default(CancellationToken));
+				void	Publish<T>						(string topic, T message, CancellationToken ct = default(CancellationToken));
+				Task	PublishAsync<T>				(string topic, T message, CancellationToken ct = default(CancellationToken));
+				void	PublishBackground<T>	(string topic, T message, CancellationToken ct = default(CancellationToken));
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				int		SubscriptionCount(string topic);
 

@@ -16,10 +16,11 @@
 
 				int	Count( string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
 				//.................................................
-				void Subscribe<T>( string Topic, Guid SubscriberID, Action<T> Action, bool AsWeak = false );
+				void Subscribe<T>( Action<T> Action, string Topic = default(string), Guid SubscriberID = default(Guid), bool AsWeak = false );
 				//.................................................
-				void Publish<T>( string Topic, Guid SubscriberID, T Data );
-				void PublishBackgroundTasks<T>( string Topic, Guid SubscriberID, T Data );
+				void Publish<T>										( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
+				Task PublishAsync<T>							( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
+				void PublishAsBackgroundTasks<T>	( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
 
 
 				////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
