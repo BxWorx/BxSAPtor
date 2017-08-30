@@ -67,25 +67,26 @@
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				internal void Register(ISubscription subscription)
 					{
-						this.co_cacheLock.EnterWriteLock();
+						var lt_Subs	= this.ct_SubsByTopic.GetOrAdd(	subscription.Topic									,
+																												(key) => new List<ISubscription>()		);
 
-						try
-							{
-								var lt_Subs	= this.ct_SubsByTopic.GetOrAdd(subscription.Topic, (key) => new List<ISubscription>());
-								lt_Subs.Add(subscription);
-							}
-						finally
-							{	this.co_cacheLock.ExitWriteLock(); }
+						this.co_cacheLock.EnterWriteLock();
+						try			{	lt_Subs.Add(subscription); }
+						finally {	this.co_cacheLock.ExitWriteLock(); }
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				internal int Count(string topic	= default(string), Guid subscriberid = default(Guid), Guid subscriptionid = default(Guid))
+				internal int Count(	string	topic						= default(string)	,
+														Guid		subscriberid		= default(Guid)		,
+														Guid		subscriptionid	= default(Guid)			)
 					{
 						return	this.FetchSubscriptions(topic, subscriberid, subscriptionid).Count();
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				internal IList<ISubscription> GetSubscriptions(string topic	= default(string), Guid subscriberid = default(Guid), Guid subscriptionid = default(Guid))
+				internal IList<ISubscription> GetSubscriptions(	string	topic						= default(string)	,
+																												Guid		subscriberid		= default(Guid)		,
+																												Guid		subscriptionid	= default(Guid)			)
 					{
 						return	this.FetchSubscriptions(topic, subscriberid, subscriptionid);
 					}
@@ -114,7 +115,9 @@
 			#region **[Methods: Private]**
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				private IList<ISubscription> FetchSubscriptions( string topic, Guid	subscriberid, Guid subscriptionid )
+				private IList<ISubscription> FetchSubscriptions(	string	topic						,
+																													Guid		subscriberid		,
+																													Guid		subscriptionid		)
 					{
 						IList<ISubscription> lt_List;
 						
