@@ -79,7 +79,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					this.co_Hub.Subscribe("YY", lo_SubID, lo_ActionO);
 					this.co_Hub.Subscribe("ZZ", lo_SubID, lo_ActionO);
 
-					Assert.AreEqual(3, this.co_Hub.Count);
+					Assert.AreEqual(3, this.co_Hub.Count());
 				}
 
 			[TestMethod]

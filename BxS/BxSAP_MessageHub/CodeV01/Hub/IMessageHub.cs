@@ -9,15 +9,17 @@
 			#region **[Properties]**
 
 				bool	AllowMultiple { get; }
-				int		Count					{ get; }
 
 			#endregion
 			//_________________________	________________________________________________________________
 			#region **[Methods:Exposed]**
 
-				void Subscribe<T>(string Topic, Guid SubscriberID, Action<T> Action);
-
-				void Publish<T>(string Topic, Guid SubscriberID, T Data);
+				int	Count( string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
+				//.................................................
+				void Subscribe<T>( string Topic, Guid SubscriberID, Action<T> Action, bool AsWeak = false );
+				//.................................................
+				void Publish<T>( string Topic, Guid SubscriberID, T Data );
+				void PublishBackgroundTasks<T>( string Topic, Guid SubscriberID, T Data );
 
 
 				////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨

@@ -79,11 +79,11 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					this.co_SbT.Register(lo_Sub3);
 					this.co_SbT.Register(lo_Sub4);
 					
-					Assert.AreEqual(2, this.co_SbT.Count(subscriber: lc_ID));
+					Assert.AreEqual(2, this.co_SbT.Count(subscriberid: lc_ID));
 					Assert.AreEqual(1, this.co_SbT.Count("XX", lc_ID));
 					Assert.AreEqual(2, this.co_SbT.Count("XX"));
 
-					Assert.AreEqual(0, this.co_SbT.Count(subscriber: Guid.NewGuid()));
+					Assert.AreEqual(0, this.co_SbT.Count(subscriberid: Guid.NewGuid()));
 					Assert.AreEqual(0, this.co_SbT.Count("X!"));
 					Assert.AreEqual(0, this.co_SbT.Count("X!", lc_ID));
 					Assert.AreEqual(0, this.co_SbT.Count("XX", Guid.NewGuid()));

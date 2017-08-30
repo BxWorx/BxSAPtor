@@ -41,22 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeV01\IMessageHub.cs" />
-    <Compile Include="CodeV01\ISubscriptionsByTopic.cs" />
-    <Compile Include="CodeV01\ISubscription.cs" />
-    <Compile Include="CodeV01\MessageHub.cs" />
-    <Compile Include="CodeV01\Subscription.cs" />
-    <Compile Include="CodeV01\SubscriptionsByTopic.cs" />
-    <Compile Include="CodeV01\SubscriptionWeak.cs" />
+    <Compile Include="CodeV01\Hub\IMessageHub.cs" />
+    <Compile Include="CodeV01\Subscription\ISubscription.cs" />
+    <Compile Include="CodeV01\Hub\MessageHub.cs" />
+    <Compile Include="CodeV01\Subscription\Subscription.cs" />
+    <Compile Include="CodeV01\Hub\SubscriptionsByTopic.cs" />
+    <Compile Include="CodeV01\Subscription\SubscriptionWeak.cs" />
     <Compile Include="Code\Subscription.cs" />
-    <Compile Include="CodeV01\SubscriptionBase.cs" />
+    <Compile Include="CodeV01\Subscription\SubscriptionBase.cs" />
     <Compile Include="Code\ISubscription.cs" />
     <Compile Include="Code\IMessageHub.cs" />
     <Compile Include="Code\SubscriptionWeak.cs" />
     <Compile Include="Code\SubscriptionBase.cs" />
     <Compile Include="Code\SubscriptionsByType.cs" />
     <Compile Include="Code\MessageHub.cs" />
-    <Compile Include="CodeV01\SubscriptionKey.cs" />
     <Compile Include="Code\SubscriptionsByTopic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
