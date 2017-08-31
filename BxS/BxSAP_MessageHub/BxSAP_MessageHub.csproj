@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeV01\Hub\IMessageHub.cs" />
+    <Compile Include="CodeV01\Hub\Subscriptions.cs" />
+    <Compile Include="CodeV01\Hub\Topics.cs" />
     <Compile Include="CodeV01\Subscription\ISubscription.cs" />
     <Compile Include="CodeV01\Hub\MessageHub.cs" />
     <Compile Include="CodeV01\Subscription\Subscription.cs" />
