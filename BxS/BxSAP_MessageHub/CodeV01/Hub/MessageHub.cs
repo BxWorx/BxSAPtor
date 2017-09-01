@@ -69,15 +69,47 @@
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public async Task<IList<ISubscription>> PublishAsAsync<T>(T				data															,
-																					string	Topic						= default(string)	,
-																					Guid		SubscriberID		= default(Guid)		,
-																					Guid		SubscriptionID	= default(Guid)		,
-																					CancellationToken		ct	= default( CancellationToken ) )
+																																	string	Topic						= default(string)	,
+																																	Guid		SubscriberID		= default(Guid)		,
+																																	Guid		SubscriptionID	= default(Guid)		,
+																																	CancellationToken		ct	= default( CancellationToken ) )
 					{
+						IList<Task<ISubscription>>	lo_Tasks		= new List<Task<ISubscription>>();
+						IList<ISubscription>				lt_Results	= new	List<ISubscription>();
 
-						IList<ISubscription>	lt_list = new List<ISubscription>();
+						var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
 
-						return	lt_list;
+						foreach (var lo_Sub in lt_Subs)
+							{
+								ISubscription lo_ExecSub = lo_Sub;
+								//lo_Tasks.Add(
+								//Task.Factory.StartNew(	() =>
+								//	{
+								//		lo_ExecSub.Invoke( data );
+								//	},	ct																	,
+								//			TaskCreationOptions.PreferFairness	,
+								//			TaskScheduler.Default									);
+								//	)
+							}
+
+						while (lo_Tasks.Count > 0)
+							{
+								if (ct.IsCancellationRequested)
+									{
+										ct.ThrowIfCancellationRequested();
+									}
+								//.........................................
+								Task<ISubscription> lo_FinishedTask	= await Task.WhenAny(lo_Tasks);
+								lo_Tasks.Remove(lo_FinishedTask);
+
+								if (lo_FinishedTask.Status == TaskStatus.RanToCompletion)
+									{ lt_Results.Add(lo_FinishedTask.Result); }
+
+							}
+
+
+
+						return	lt_Results;
 
 						//var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
 
