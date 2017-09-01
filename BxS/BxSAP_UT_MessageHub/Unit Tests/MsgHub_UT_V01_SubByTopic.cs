@@ -15,6 +15,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 				private int cn_Cnt;
 				private SubscriptionsByTopic	co_SbT;
+				private Topics								co_Topics;
 
 			public MsgHub_UT_V01_SubByTopic()
 				{
@@ -55,6 +56,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			 public void MyTestInitialize()
 				{
 					this.co_SbT	= new SubscriptionsByTopic();
+					this.co_Topics	= new Topics();
 				}
 			
 			// Use TestCleanup to run code after each test has run
