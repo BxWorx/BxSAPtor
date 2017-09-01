@@ -53,11 +53,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Unit Tests\MsgHub_UT_MsgHub.cs" />
-    <Compile Include="Unit Tests\MsgHub_UT_V01_SubByTopic.cs" />
-    <Compile Include="Unit Tests\MsgHub_UT_Subscription.cs" />
+    <Compile Include="Unit Tests\MsgHub_UT03_V01_Topic.cs" />
+    <Compile Include="Unit Tests\MsgHub_UT01_V01_Subscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit Tests\MsgHub_UT_Subscriptions.cs" />
-    <Compile Include="Unit Tests\MsgHub_UT_V01_MsgHub.cs" />
+    <Compile Include="Unit Tests\MsgHub_UT02_V01_Subscriptions.cs" />
+    <Compile Include="Unit Tests\MsgHub_UT04_V01_MsgHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BxSAP_MessageHub\BxSAP_MessageHub.csproj">

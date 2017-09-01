@@ -9,13 +9,13 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 	/// Summary description for MsgHub_UT_Subscription
 	/// </summary>
 	[TestClass]
-	public class MsgHub_UT_Subscription
+	public class MsgHub_UT01_V01_Subscription
 	{
 
 	  private string cc_Test;
 		private static Guid co_GuidEmpty;
 
-		public MsgHub_UT_Subscription()
+		public MsgHub_UT01_V01_Subscription()
 		{
 			co_GuidEmpty = new Guid();
 		}
@@ -61,27 +61,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 		#endregion
 
 		[TestMethod]
-		public void MsgHub_UT_Subscription_Base()
-			{
-				var lo_guid		= Guid.NewGuid();
-				var lc_Topic	= "Test";
-
-				ISubscription<string> lo_Subw		= new SubscriptionWeak<string>(lo_guid, lc_Topic, this.TestStr, false, true);
-				ISubscription<string> lo_Subs		= new Subscription<string>(lo_guid, lc_Topic, this.TestStr, false, true);
-
-				Assert.IsNotNull(lo_Subw);
-				Assert.AreNotEqual(co_GuidEmpty, lo_Subw.MyToken);
-
-				lo_Subw?.Invoke("A");
-				Assert.AreEqual("A", this.cc_Test);
-
-				lo_Subs?.Invoke("B");
-				Assert.AreEqual("B", this.cc_Test);
-
-			}
-
-		[TestMethod]
-		public void MsgHub_UT_V01_Subscription_Base()
+		public void MsgHub_UT01_V01_Subscription_Base()
 			{
 				var lo_guid		= Guid.NewGuid();
 				var lc_Topic	= "Test";
@@ -92,9 +72,6 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 				ISubscription lo_Subw		= new SubscriptionWeak	( lc_Topic, lo_guid, lo_ActionO );
 				ISubscription	lo_Subs		= new Subscription			( lc_Topic, lo_guid, lo_ActionO );
 				ISubscription	lo_Sube		= new Subscription			( lc_Topic, lo_guid, lo_ActionX );
-
-				//ISubscription lo_Subw		= new SubscriptionWeak	( lc_Topic, lo_guid, new Action<string>( (msg) => this.test(msg) ) );
-				//ISubscription	lo_Subs		= new Subscription			( lc_Topic, lo_guid, new Action<string>( (msg) => this.test(msg) ) );
 
 				Assert.IsNotNull(lo_Subw);
 				Assert.IsNotNull(lo_Subs);

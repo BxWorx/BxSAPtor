@@ -10,6 +10,7 @@
 			#region **[Declarations]**
 
 				private ConcurrentDictionary<Guid, ISubscription>	ct_Subs;
+				private Guid																			co_DefGuid;
 
 			#endregion
 			//___________________________________________________________________________________________
@@ -25,13 +26,15 @@
 				internal void DeRegister(ISubscription subscription)
 					{
 						ISubscription	lo_Sub;
-						this.ct_Subs.TryRemove(subscription.MyToken, out lo_Sub);
+						if (this.ct_Subs.TryRemove(subscription.MyToken, out lo_Sub))
+							{ }
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				internal void Register(ISubscription subscription)
 					{
-						this.ct_Subs.TryAdd(subscription.MyToken, subscription);
+						if (this.ct_Subs.TryAdd(subscription.MyToken, subscription))
+							{ }
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -55,7 +58,8 @@
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				internal Subscriptions()
 					{
-						this.ct_Subs	= new	ConcurrentDictionary<Guid, ISubscription>();
+						this.ct_Subs			= new	ConcurrentDictionary<Guid, ISubscription>();
+						this.co_DefGuid		= default(Guid);
 					}
 
 			#endregion
@@ -66,31 +70,31 @@
 				private IList<ISubscription> FetchSubscriptions(	Guid	subscriberid		,
 																													Guid	subscriptionid		)
 					{
-						IList<ISubscription> lt_List;
-						
-						if (subscriberid == default(Guid) && subscriptionid == default(Guid))
+						if (subscriptionid != this.co_DefGuid)
 							{
-								lt_List	= this.ct_Subs.Values.ToList();		// true snapshot
-							}
+								IList<ISubscription>	lt_List		= new List<ISubscription>();
+								ISubscription					lo_Sub;
 
-						else if (subscriberid != default(Guid))
-							{
-								lt_List	= this.ct_Subs.Values
-														.ToList()
-														.Where(sub => sub.SubscriberID == subscriberid)
-														.ToList();
-							}
+								if (this.ct_Subs.TryGetValue(subscriptionid, out lo_Sub))
+									lt_List.Add(lo_Sub);
 
+								return	lt_List;
+							}
 						else
 							{
-								ISubscription lo_Sub;
-
-								lt_List	= new List<ISubscription>();
-								if (this.ct_Subs.TryGetValue(subscriptionid, out lo_Sub))
-									lt_List.Add(this.ct_Subs[subscriptionid]);
+								if (subscriberid != this.co_DefGuid)
+									{
+										return	this.ct_Subs.Values
+															.ToList()																				// true snapshot
+															.Where(sub => sub.SubscriberID == subscriberid)
+															.ToList();
+									}
+								else
+									{
+										return	this.ct_Subs.Values
+															.ToList();																			// true snapshot
+									}
 							}
-
-						return	lt_List;
 					}
 
 			#endregion

@@ -10,9 +10,8 @@
 		{
 			#region **[Declarations]**
 
-				private	ReaderWriterLockSlim																co_cacheLock;
-				private ConcurrentDictionary<string, ReaderWriterLockSlim>	ct_Locks;
-				private ConcurrentDictionary<string, Subscriptions>					ct_Topics;
+				private	ReaderWriterLockSlim													co_cacheLock;
+				private ConcurrentDictionary<string, Subscriptions>		ct_Topics;
 
 				private bool		cb_AllowMultiple;
 
@@ -38,21 +37,12 @@
 
 								try
 									{
-										var lo_Lock	=	this.ct_Locks.GetOrAdd(topic, (key) => new ReaderWriterLockSlim());
+										Subscriptions	lo_Subs;
 
-										lo_Lock.EnterWriteLock();
-
-										try
-											{
-												Subscriptions	lo_Subs;
-
-												if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
-													{	
-														lo_Subs.Clear();
-													}
+										if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
+											{	
+												lo_Subs.Clear();
 											}
-										finally
-											{	lo_Lock.ExitWriteLock(); }
 									}
 								finally
 									{	this.co_cacheLock.ExitReadLock(); }
@@ -65,21 +55,12 @@
 						this.co_cacheLock.EnterReadLock();
 						try
 							{
-								var lo_Lock	=	this.ct_Locks.GetOrAdd(subscription.Topic, (key) => new ReaderWriterLockSlim());
-
-								lo_Lock.EnterReadLock();
-
-								try
-									{
-										Subscriptions	lo_Subs;
+								Subscriptions	lo_Subs;
 						
-										if (this.ct_Topics.TryGetValue(subscription.Topic, out lo_Subs))
-											{
-												lo_Subs.DeRegister(subscription);
-											}
+								if (this.ct_Topics.TryGetValue(subscription.Topic, out lo_Subs))
+									{
+										lo_Subs.DeRegister(subscription);
 									}
-									finally
-										{	lo_Lock.ExitReadLock(); }
 							}
 						finally
 							{	this.co_cacheLock.ExitReadLock(); }
@@ -89,20 +70,12 @@
 				internal void Register(ISubscription subscription)
 					{
 						this.co_cacheLock.EnterReadLock();
+
 						try
 							{
-								var lo_Lock	=	this.ct_Locks.GetOrAdd(subscription.Topic, (key) => new ReaderWriterLockSlim());
-
-								lo_Lock.EnterReadLock();
-
-								try
-									{
-										var lo_Subs	= this.ct_Topics.GetOrAdd(	subscription.Topic	,
-																														(key) => new Subscriptions()	);
-										lo_Subs.Register(subscription);
-									}
-									finally
-										{	lo_Lock.ExitReadLock(); }
+								var lo_Subs	= this.ct_Topics.GetOrAdd(	subscription.Topic	,
+																												(key) => new Subscriptions()	);
+								lo_Subs.Register(subscription);
 							}
 						finally
 							{	this.co_cacheLock.ExitReadLock(); }
@@ -134,7 +107,6 @@
 						this.cb_AllowMultiple	= allowmultiple;
 						//.............................................
 						this.co_cacheLock			= new ReaderWriterLockSlim();
-						this.ct_Locks					= new	ConcurrentDictionary<string, ReaderWriterLockSlim>();
 						this.ct_Topics				= new	ConcurrentDictionary<string, Subscriptions>();
 					}
 
@@ -147,36 +119,37 @@
 																													Guid		subscriberid		,
 																													Guid		subscriptionid		)
 					{
-						this.co_cacheLock.EnterReadLock();
+						this.co_cacheLock.EnterUpgradeableReadLock();
+
 						try
 							{
-								if (!string.IsNullOrEmpty(topic))		// most likely case so handle specifically
+
+								if (!string.IsNullOrEmpty(topic))						// most likely case so handle specifically
 									{
-										var lo_Lock	=	this.ct_Locks.GetOrAdd(topic, (key) => new ReaderWriterLockSlim());
+										Subscriptions lo_Subs;
 
-										lo_Lock.EnterReadLock();
-
-										try
-											{
-												Subscriptions lo_Subs;
-
-												if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
-													{	return	lo_Subs.GetSubscriptions(subscriberid, subscriptionid); }
-												else
-													{ return	new List<ISubscription>(); }
-											}
-											finally
-												{	lo_Lock.ExitReadLock(); }
+										if (this.ct_Topics.TryGetValue(topic, out lo_Subs))
+											{	return	lo_Subs.GetSubscriptions(subscriberid, subscriptionid); }
+										else
+											{ return	new List<ISubscription>(); }
 									}
 								//.............................................
-								return	this.ct_Topics
-														.Values
-														.SelectMany( val => val.GetSubscriptions(subscriberid, subscriptionid) )				
-														.ToList();
+								// Although only reading want a true snapshot so prevent a further updates to all
+								// for the purpose of this collection
+								this.co_cacheLock.EnterWriteLock();
+
+								try
+									{
+										return	this.ct_Topics.Values
+																.ToList()										// true snapshot
+																.SelectMany( val => val.GetSubscriptions(subscriberid, subscriptionid) )				
+																.ToList();
+									}
+								finally { this.co_cacheLock.ExitWriteLock(); }
+
 							}
-						finally
-							{	this.co_cacheLock.ExitReadLock(); }
-					}
+						finally	{	this.co_cacheLock.ExitUpgradeableReadLock(); }
+						}
 
 			#endregion
 

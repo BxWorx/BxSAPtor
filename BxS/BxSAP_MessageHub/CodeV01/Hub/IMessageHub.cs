@@ -1,26 +1,28 @@
 ﻿namespace MsgHubv01
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Threading;
 	using System.Threading.Tasks;
 	//•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 	public interface IMessageHub
 		{
-			#region **[Properties]**
-
-				bool	AllowMultiple { get; }
-
-			#endregion
-			//_________________________	________________________________________________________________
 			#region **[Methods:Exposed]**
 
-				int	Count( string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
+				int	Count<T>( string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
 				//.................................................
-				void Subscribe<T>( Action<T> Action, string Topic = default(string), Guid SubscriberID = default(Guid), bool AsWeak = false );
+				void					Subscribe<T>( ISubscription Subscription );
+				ISubscription	Subscribe<T>( Action<T> Action, string Topic = default(string), Guid SubscriberID = default(Guid), bool AsWeak = false );
 				//.................................................
-				void Publish<T>										( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
-				Task PublishAsync<T>							( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
-				void PublishAsBackgroundTasks<T>	( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
+				void												Publish<T>									( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
+				Task												PublishAsync<T>							( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
+				Task<IList<ISubscription>>	PublishAsAsync<T>						( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
+				void												PublishAsBackgroundTasks<T>	( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
+
+			#endregion
+
+		}
+}
 
 
 				////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -58,7 +60,3 @@
 				////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				//int		SubscriptionCount(string topic);
 
-			#endregion
-
-		}
-}

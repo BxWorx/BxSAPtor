@@ -11,15 +11,9 @@
 		{
 			#region **[Declarations]**
 
-				private	ConcurrentDictionary<Type, SubscriptionsByTopic>	ct_SubsByType;
-
-				private	object	co_Lock;
-
-			#endregion
-			//___________________________________________________________________________________________
-			#region **[Properties]**
-
-				public bool	AllowMultiple { get; private set; }
+				private	ReaderWriterLockSlim									co_cacheLock;
+				private	ConcurrentDictionary<Type, Topics>		ct_SubsByType;
+				private readonly bool													cb_AllowMultiple;
 
 			#endregion
 			//___________________________________________________________________________________________
@@ -28,33 +22,40 @@
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public MessageHub( bool allowmultiple = false )
 					{
-						this.co_Lock				= new object();
-						this.AllowMultiple	= allowmultiple;
-						this.ct_SubsByType	= new	ConcurrentDictionary<Type, SubscriptionsByTopic>();
+						this.co_cacheLock				= new ReaderWriterLockSlim();
+						this.cb_AllowMultiple		= allowmultiple;
+						this.ct_SubsByType			= new	ConcurrentDictionary<Type, Topics>();
 					}
 
 			#endregion
 			//___________________________________________________________________________________________
 			#region **[Methods:Exposed]**
 
-				public int Count( string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) )
+				public int Count<T>( string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) )
 					{
-						return	this.ct_SubsByType
-											.SelectMany( kvp => kvp.Value.GetSubscriptions( Topic, SubscriberID, SubscriptionID ))
+						return	this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID )
 											.Count();
+					}
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public void Subscribe<T>(ISubscription Subscription)
+					{
+						Topics	lo_Topic;
+
+						lo_Topic	=	this.ct_SubsByType.GetOrAdd(typeof(T), (key) => new Topics(this.cb_AllowMultiple) );
+						lo_Topic.Register(Subscription);
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				public void Subscribe<T>(Action<T> Action, string Topic = default(string), Guid SubscriberID = default(Guid), bool AsWeak = false)
+				public ISubscription Subscribe<T>(Action<T> Action, string Topic = default(string), Guid SubscriberID = default(Guid), bool AsWeak = false)
 					{
-						ISubscription					lo_Sub;
-						SubscriptionsByTopic	lo_Topic;
-						//.............................................
+						ISubscription		lo_Sub;
+
 						if (AsWeak) { lo_Sub	= new SubscriptionWeak	(Topic, SubscriberID, Action); }
 						else				{	 lo_Sub	= new Subscription			(Topic, SubscriberID, Action); }
 						//.............................................
-						lo_Topic	=	this.ct_SubsByType.GetOrAdd(typeof(T), (key) => new SubscriptionsByTopic(this.AllowMultiple) );
-						lo_Topic.Register(lo_Sub);
+						this.Subscribe<T>(lo_Sub);
+						//.............................................
+						return	lo_Sub;
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
@@ -65,6 +66,32 @@
 								lo_Sub.Invoke(data);
 							}
 					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public async Task<IList<ISubscription>> PublishAsAsync<T>(T				data															,
+																					string	Topic						= default(string)	,
+																					Guid		SubscriberID		= default(Guid)		,
+																					Guid		SubscriptionID	= default(Guid)		,
+																					CancellationToken		ct	= default( CancellationToken ) )
+					{
+
+						IList<ISubscription>	lt_list = new List<ISubscription>();
+
+						return	lt_list;
+
+						//var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
+
+						//await Task.Factory.StartNew( () =>
+						//	{
+						//		foreach (var lo_Sub in lt_Subs )
+						//			{
+						//				lo_Sub.Invoke( data );
+						//			}
+						//	},	ct																	,
+						//			TaskCreationOptions.PreferFairness	,
+						//			TaskScheduler.Default									);
+					}
+
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public async Task PublishAsync<T>(T				data															,
@@ -107,8 +134,35 @@
 							}
 						}
 
+			#endregion
+			//___________________________________________________________________________________________
+			#region **[Methods:Private]**
 
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				private IList<ISubscription> GetSubscriptions<T>(	string	topic						,
+																													Guid		subscriberid		,
+																													Guid		subscriptionid		)
+					{
+						this.co_cacheLock.EnterReadLock();
 
+						try
+							{
+								Topics	lo_Topic;
+								//.............................................
+								if (this.ct_SubsByType.TryGetValue(typeof(T), out lo_Topic))
+									{
+										return	lo_Topic.GetSubscriptions(topic, subscriberid, subscriptionid);
+									}
+								//.............................................
+								return	new List<ISubscription>();
+							}
+						finally	{	this.co_cacheLock.ExitReadLock(); }
+					}
+
+			#endregion
+
+		}
+}
 		////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 		//public ISubscription	CreateSubscription<T>(Guid			clientid					,
 		//																							string		topic							,
@@ -141,14 +195,14 @@
 		////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 		//public void UnSubscribe(Guid subscriptionid)
 		//	{
-		//		//SubscriptionsByTopic lo_Subs;
+		//		//Topics lo_Subs;
 
 		//		//if (this.ct_SubsByTopic.TryGetValue(topic, out lo_Subs))		lo_Subs.Reset();							
 		//	}
 		////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 		//public void UnSubscribe(string topic)
 		//	{
-		//		SubscriptionsByTopic lo_Subs;
+		//		Topics lo_Subs;
 
 		//		if (this.ct_SubsByTopic.TryGetValue(topic, out lo_Subs))		lo_Subs.Reset();							
 		//	}
@@ -162,31 +216,10 @@
 		////¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 		//public int SubscriptionCount(string topic)
 		//	{
-		//		SubscriptionsByTopic lo_Subs;
+		//		Topics lo_Subs;
 
 		//		if (this.ct_SubsByTopic.TryGetValue(topic, out lo_Subs))
 		//			{	return	lo_Subs.Count; }
 		//		else
 		//			{ return 0;	}
 		//	}
-
-			#endregion
-			//___________________________________________________________________________________________
-			#region **[Methods:Private]**
-
-				private IList<ISubscription> GetSubscriptions<T>(string topic, Guid subscriberid, Guid subscriptionid)
-					{
-						SubscriptionsByTopic	lo_Topic;
-						//.............................................
-						if (this.ct_SubsByType.TryGetValue(typeof(T), out lo_Topic))
-							{
-								return	lo_Topic.GetSubscriptions(topic, subscriberid, subscriptionid);
-							}
-						//.............................................
-						return	new List<ISubscription>();
-					}
-
-			#endregion
-
-		}
-}

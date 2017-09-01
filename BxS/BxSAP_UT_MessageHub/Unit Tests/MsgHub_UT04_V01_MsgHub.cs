@@ -10,14 +10,14 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 	/// Summary description for UnitTest1
 	/// </summary>
 	[TestClass]
-	public class MsgHub_UT_V01_MsgHub
+	public class MsgHub_UT04_V01_MsgHub
 		{
 
 			private IMessageHub	co_Hub;
 			private int					cn_Int;
 			private static int	cn_Cnt;
 
-			public MsgHub_UT_V01_MsgHub()
+			public MsgHub_UT04_V01_MsgHub()
 				{
 				//
 				// TODO: Add constructor logic here
@@ -69,20 +69,27 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			#endregion
 
 			[TestMethod]
-			public void MsgHub_UT_V01_MsgHub_Subscribe()
+			public void MsgHub_UT04_V01_MsgHub_Subscribe()
 				{
 					var lo_SubID		= Guid.NewGuid();
 					var lo_ActionO	= new Action<int>( (data) => this.TestInt(data) );
+					var lo_Subm			= new Subscription("MM", Guid.NewGuid(), lo_ActionO);
 
 					this.co_Hub.Subscribe(lo_ActionO, "XX", lo_SubID);
 					this.co_Hub.Subscribe(lo_ActionO, "YY", lo_SubID);
 					this.co_Hub.Subscribe(lo_ActionO, "ZZ", lo_SubID);
 
-					Assert.AreEqual(3, this.co_Hub.Count());
+					Assert.AreEqual(3, this.co_Hub.Count<int>());
+
+					var lo_sub	= this.co_Hub.Subscribe(lo_ActionO, "11", lo_SubID);
+					Assert.AreEqual("11", lo_sub.Topic);
+
+					this.co_Hub.Subscribe<int>(lo_Subm);
+					Assert.AreEqual(5, this.co_Hub.Count<int>());
 				}
 
 			[TestMethod]
-			public void MsgHub_UT_V01_MsgHub_Publish()
+			public void MsgHub_UT04_V01_MsgHub_Publish()
 				{
 					var lo_SubID		= Guid.NewGuid();
 					var lo_ActionO	= new Action<int>( (data) => this.TestInt(data) );
@@ -98,7 +105,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 			//*************************************************************************
 			[TestMethod]
-			public void MsgHub_UT_V01_MsgHub_PublishAsync()
+			public void MsgHub_UT04_V01_MsgHub_PublishAsync()
 				{
 					string	lc_Topic	= "XX";
 					int			ln_Qty		= 10;
@@ -126,8 +133,6 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 							this.co_Hub.Subscribe(lo_ActionO, topic, Guid.NewGuid());
 						}
 				}
-
-
 
 				private void TestInt(int data)
 					{

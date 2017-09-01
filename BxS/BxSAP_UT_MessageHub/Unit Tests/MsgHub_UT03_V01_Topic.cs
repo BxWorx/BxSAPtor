@@ -10,14 +10,13 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 	/// Summary description for MsgHub_UT_SubByTopic
 	/// </summary>
 	[TestClass]
-	public class MsgHub_UT_V01_SubByTopic
+	public class MsgHub_UT03_V01_Topic
 		{
 
-				private int cn_Cnt;
-				private SubscriptionsByTopic	co_SbT;
-				private Topics								co_Topics;
+				private int				cn_Cnt;
+				private Topics		co_SbT;
 
-			public MsgHub_UT_V01_SubByTopic()
+			public MsgHub_UT03_V01_Topic()
 				{
 				}
 
@@ -55,8 +54,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			 [TestInitialize()]
 			 public void MyTestInitialize()
 				{
-					this.co_SbT	= new SubscriptionsByTopic();
-					this.co_Topics	= new Topics();
+					this.co_SbT	= new Topics();
 				}
 			
 			// Use TestCleanup to run code after each test has run
@@ -66,8 +64,9 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			#endregion
 
 			[TestMethod]
-			public void MsgHub_UT_V01_SubByTopic_Base()
+			public void MsgHub_UT03_V01_SubByTopic_Base()
 				{
+					IList<ISubscription> lt_List;
 					this.cn_Cnt		= 0;
 					Guid	lc_ID		= Guid.NewGuid();
 
@@ -91,7 +90,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					Assert.AreEqual(0, this.co_SbT.Count("X!", lc_ID));
 					Assert.AreEqual(0, this.co_SbT.Count("XX", Guid.NewGuid()));
 
-					var lt_List	= this.co_SbT.GetSubscriptions();
+					lt_List	= this.co_SbT.GetSubscriptions();
 					Assert.AreEqual(4, lt_List.Count);
 
 					this.co_SbT.DeRegister(lo_Sub3);
