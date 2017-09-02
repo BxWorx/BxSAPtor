@@ -7,6 +7,7 @@
 	//•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 	public interface IMessageHub
 		{
+
 			#region **[Methods:Exposed]**
 
 				int	Count<T>( string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
@@ -15,7 +16,7 @@
 				ISubscription	Subscribe<T>( Action<T> Action, string Topic = default(string), Guid SubscriberID = default(Guid), bool AsWeak = false );
 				//.................................................
 				void												Publish<T>									( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) );
-				Task												PublishAsync<T>							( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
+				Task												PublishAsOneTaskAsync<T>		( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
 				Task<IList<ISubscription>>	PublishAsAsync<T>						( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
 				void												PublishAsBackgroundTasks<T>	( T data, string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid), CancellationToken ct = default( CancellationToken ) );
 

@@ -81,56 +81,41 @@
 
 						foreach (var lo_Sub in lt_Subs)
 							{
-								ISubscription lo_ExecSub = lo_Sub;
-								//lo_Tasks.Add(
-								//Task.Factory.StartNew(	() =>
-								//	{
-								//		lo_ExecSub.Invoke( data );
-								//	},	ct																	,
-								//			TaskCreationOptions.PreferFairness	,
-								//			TaskScheduler.Default									);
-								//	)
-							}
+								ISubscription lo_ExecSub		= lo_Sub;
+								T							lo_ExecData		= data;
 
+								lo_Tasks.Add(
+									Task<ISubscription>.Factory.StartNew(
+										() =>	{
+														lo_ExecSub.Invoke( lo_ExecData );
+														return	lo_ExecSub;
+													},	ct																	,
+															TaskCreationOptions.PreferFairness	,
+															TaskScheduler.Default		)
+														);
+							}
+						//.............................................
 						while (lo_Tasks.Count > 0)
 							{
 								if (ct.IsCancellationRequested)
-									{
-										ct.ThrowIfCancellationRequested();
-									}
+									ct.ThrowIfCancellationRequested();
 								//.........................................
 								Task<ISubscription> lo_FinishedTask	= await Task.WhenAny(lo_Tasks);
 								lo_Tasks.Remove(lo_FinishedTask);
 
 								if (lo_FinishedTask.Status == TaskStatus.RanToCompletion)
 									{ lt_Results.Add(lo_FinishedTask.Result); }
-
 							}
-
-
-
+						//.............................................
 						return	lt_Results;
-
-						//var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
-
-						//await Task.Factory.StartNew( () =>
-						//	{
-						//		foreach (var lo_Sub in lt_Subs )
-						//			{
-						//				lo_Sub.Invoke( data );
-						//			}
-						//	},	ct																	,
-						//			TaskCreationOptions.PreferFairness	,
-						//			TaskScheduler.Default									);
 					}
 
-
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				public async Task PublishAsync<T>(T				data															,
-																					string	Topic						= default(string)	,
-																					Guid		SubscriberID		= default(Guid)		,
-																					Guid		SubscriptionID	= default(Guid)		,
-																					CancellationToken		ct	= default( CancellationToken ) )
+				public async Task PublishAsOneTaskAsync<T>(	T				data															,
+																										string	Topic						= default(string)	,
+																										Guid		SubscriberID		= default(Guid)		,
+																										Guid		SubscriptionID	= default(Guid)		,
+																										CancellationToken		ct	= default( CancellationToken ) )
 					{
 						var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
 

@@ -68,6 +68,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 			//
 			#endregion
 
+			//*************************************************************************
 			[TestMethod]
 			public void MsgHub_UT04_V01_MsgHub_Subscribe()
 				{
@@ -88,6 +89,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					Assert.AreEqual(5, this.co_Hub.Count<int>());
 				}
 
+			//*************************************************************************
 			[TestMethod]
 			public void MsgHub_UT04_V01_MsgHub_Publish()
 				{
@@ -105,16 +107,11 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 			//*************************************************************************
 			[TestMethod]
-			public void MsgHub_UT04_V01_MsgHub_PublishAsync()
+			public void MsgHub_UT04_V01_MsgHub_PublishBackground()
 				{
 					string	lc_Topic	= "XX";
 					int			ln_Qty		= 10;
 					this.LoadSubscribers(lc_Topic, ln_Qty);
-
-					cn_Cnt	= 0;
-					this.co_Hub.PublishAsync(1, lc_Topic).Wait();
-					Assert.AreEqual(ln_Qty, cn_Cnt, "MsgHub: Publish: Async: 001: Count Error");
-					Debug.WriteLine( "--------------------------" );
 
 					cn_Cnt	= 0;
 					this.co_Hub.PublishAsBackgroundTasks(1, lc_Topic);
@@ -122,6 +119,32 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					Assert.AreEqual(ln_Qty, cn_Cnt, "MsgHub: Publish: As background: 001: Count Error");
 				}
 
+			//*************************************************************************
+			[TestMethod]
+			public void MsgHub_UT04_V01_MsgHub_PublishOneTaskAsync()
+				{
+					string	lc_Topic	= "XX";
+					int			ln_Qty		= 10;
+					this.LoadSubscribers(lc_Topic, ln_Qty);
+
+					cn_Cnt	= 0;
+					this.co_Hub.PublishAsOneTaskAsync(1, lc_Topic).Wait();
+					Assert.AreEqual(ln_Qty, cn_Cnt, "MsgHub: Publish: Async: 001: Count Error");
+				}
+
+			//*************************************************************************
+			[TestMethod]
+			public void MsgHub_UT04_V01_MsgHub_PublishTasksAsync()
+				{
+					string	lc_Topic	= "XX";
+					int			ln_Qty		= 10;
+					this.LoadSubscribers(lc_Topic, ln_Qty);
+
+					cn_Cnt	= 0;
+					this.co_Hub.PublishAsBackgroundTasks(1, lc_Topic);
+					Thread.Sleep( (ln_Qty*10)+1 );
+					Assert.AreEqual(ln_Qty, cn_Cnt, "MsgHub: Publish: As background: 001: Count Error");
+				}
 
 			//*************************************************************************
 			private void LoadSubscribers(string topic, int howmany)
