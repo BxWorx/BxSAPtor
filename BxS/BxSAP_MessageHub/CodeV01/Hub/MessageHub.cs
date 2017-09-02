@@ -68,6 +68,47 @@
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public void PublishAsBackgroundTasks<T>(	T				data															,
+																									string	Topic						= default(string)	,
+																									Guid		SubscriberID		= default(Guid)		,
+																									Guid		SubscriptionID	= default(Guid)		,
+																									CancellationToken		ct	= default( CancellationToken ) )
+					{
+						var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
+
+						foreach (var lo_Sub in lt_Subs)
+							{
+								ISubscription lo_ExecSub = lo_Sub;
+								Task.Factory.StartNew(	() =>
+									{
+										lo_ExecSub.Invoke( data );
+									},	ct																	,
+											TaskCreationOptions.PreferFairness	,
+											TaskScheduler.Default									);
+							}
+						}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public async Task PublishAsOneTaskAsync<T>(	T				data															,
+																										string	Topic						= default(string)	,
+																										Guid		SubscriberID		= default(Guid)		,
+																										Guid		SubscriptionID	= default(Guid)		,
+																										CancellationToken		ct	= default( CancellationToken ) )
+					{
+						var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
+
+						await Task.Factory.StartNew( () =>
+							{
+								foreach (var lo_Sub in lt_Subs )
+									{
+										lo_Sub.Invoke( data );
+									}
+							},	ct																	,
+									TaskCreationOptions.PreferFairness	,
+									TaskScheduler.Default									);
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public async Task<IList<ISubscription>> PublishAsAsync<T>(T				data															,
 																																	string	Topic						= default(string)	,
 																																	Guid		SubscriberID		= default(Guid)		,
@@ -109,47 +150,6 @@
 						//.............................................
 						return	lt_Results;
 					}
-
-				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				public async Task PublishAsOneTaskAsync<T>(	T				data															,
-																										string	Topic						= default(string)	,
-																										Guid		SubscriberID		= default(Guid)		,
-																										Guid		SubscriptionID	= default(Guid)		,
-																										CancellationToken		ct	= default( CancellationToken ) )
-					{
-						var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
-
-						await Task.Factory.StartNew( () =>
-							{
-								foreach (var lo_Sub in lt_Subs )
-									{
-										lo_Sub.Invoke( data );
-									}
-							},	ct																	,
-									TaskCreationOptions.PreferFairness	,
-									TaskScheduler.Default									);
-					}
-
-				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				public void PublishAsBackgroundTasks<T>(	T				data															,
-																									string	Topic						= default(string)	,
-																									Guid		SubscriberID		= default(Guid)		,
-																									Guid		SubscriptionID	= default(Guid)		,
-																									CancellationToken		ct	= default( CancellationToken ) )
-					{
-						var lt_Subs	= this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID );
-
-						foreach (var lo_Sub in lt_Subs)
-							{
-								ISubscription lo_ExecSub = lo_Sub;
-								Task.Factory.StartNew(	() =>
-									{
-										lo_ExecSub.Invoke( data );
-									},	ct																	,
-											TaskCreationOptions.PreferFairness	,
-											TaskScheduler.Default									);
-							}
-						}
 
 			#endregion
 			//___________________________________________________________________________________________

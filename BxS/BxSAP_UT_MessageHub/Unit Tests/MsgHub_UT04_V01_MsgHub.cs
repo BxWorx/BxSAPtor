@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MsgHubv01;
 using System.Threading;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BxSAP_UT_MessageHub.Unit_Tests
 {
@@ -107,7 +108,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 			//*************************************************************************
 			[TestMethod]
-			public void MsgHub_UT04_V01_MsgHub_PublishBackground()
+			public void MsgHub_UT04_V01_MsgHub_PublishAsBackground()
 				{
 					string	lc_Topic	= "XX";
 					int			ln_Qty		= 10;
@@ -121,7 +122,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 			//*************************************************************************
 			[TestMethod]
-			public void MsgHub_UT04_V01_MsgHub_PublishOneTaskAsync()
+			public void MsgHub_UT04_V01_MsgHub_PublishAsOneTaskAsync()
 				{
 					string	lc_Topic	= "XX";
 					int			ln_Qty		= 10;
@@ -134,16 +135,16 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 
 			//*************************************************************************
 			[TestMethod]
-			public void MsgHub_UT04_V01_MsgHub_PublishTasksAsync()
+			public async Task MsgHub_UT04_V01_MsgHub_PublishAsAsync()
 				{
 					string	lc_Topic	= "XX";
 					int			ln_Qty		= 10;
 					this.LoadSubscribers(lc_Topic, ln_Qty);
 
 					cn_Cnt	= 0;
-					this.co_Hub.PublishAsBackgroundTasks(1, lc_Topic);
-					Thread.Sleep( (ln_Qty*10)+1 );
-					Assert.AreEqual(ln_Qty, cn_Cnt, "MsgHub: Publish: As background: 001: Count Error");
+					var lt_Results	= await this.co_Hub.PublishAsAsync(1, lc_Topic);
+					Assert.AreEqual(ln_Qty, cn_Cnt					, "MsgHub: Publish: As background: 001: Count Error");
+					Assert.AreEqual(ln_Qty, lt_Results.Count, "MsgHub: Publish: As background: 002: Count Error");
 				}
 
 			//*************************************************************************
