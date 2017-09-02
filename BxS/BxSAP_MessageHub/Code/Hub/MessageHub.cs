@@ -23,19 +23,45 @@
 				public MessageHub( bool allowmultiple = false )
 					{
 						this.co_cacheLock				= new ReaderWriterLockSlim();
-						this.cb_AllowMultiple		= allowmultiple;
 						this.ct_SubsByType			= new	ConcurrentDictionary<Type, Topics>();
+						this.cb_AllowMultiple		= allowmultiple;
 					}
 
 			#endregion
 			//___________________________________________________________________________________________
 			#region **[Methods:Exposed]**
+				
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public int Count( string	Topic						= default(string)	,
+													Guid		SubscriberID		= default(Guid)			)
+					{
+						return	this.GetSubscriptions( Topic, SubscriberID )
+											.Count();
+					}
 
-				public int Count<T>( string Topic = default(string), Guid SubscriberID = default(Guid), Guid SubscriptionID = default(Guid) )
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public int Count<T>(	string	Topic						= default(string)	,
+															Guid		SubscriberID		= default(Guid)		,
+															Guid		SubscriptionID	= default(Guid)			)
 					{
 						return	this.GetSubscriptions<T>( Topic, SubscriberID, SubscriptionID )
 											.Count();
 					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public ISubscription CreateSubscription<T>(	Action<T> Action													,
+																										string		Topic					= default(string)	,
+																										Guid			SubscriberID	= default(Guid)		,
+																										bool			AsWeak				= false							)
+					{
+						ISubscription		lo_Sub;
+
+						if (AsWeak) {	lo_Sub	= new SubscriptionWeak	(Topic, SubscriberID, Action); }
+						else				{	lo_Sub	= new Subscription			(Topic, SubscriberID, Action); }
+						//.............................................
+						return	lo_Sub;
+					}
+
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				public void Subscribe<T>(ISubscription Subscription)
 					{
@@ -46,13 +72,12 @@
 					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-				public ISubscription Subscribe<T>(Action<T> Action, string Topic = default(string), Guid SubscriberID = default(Guid), bool AsWeak = false)
+				public ISubscription Subscribe<T>(	Action<T> Action													,
+																						string		Topic					= default(string)	,
+																						Guid			SubscriberID	= default(Guid)		,
+																						bool			AsWeak				= false							)
 					{
-						ISubscription		lo_Sub;
-
-						if (AsWeak) { lo_Sub	= new SubscriptionWeak	(Topic, SubscriberID, Action); }
-						else				{	 lo_Sub	= new Subscription			(Topic, SubscriberID, Action); }
-						//.............................................
+						ISubscription	lo_Sub	= this.CreateSubscription( Action, Topic, SubscriberID, AsWeak );
 						this.Subscribe<T>(lo_Sub);
 						//.............................................
 						return	lo_Sub;
@@ -151,9 +176,51 @@
 						return	lt_Results;
 					}
 
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public void UnSubscribeAll()
+					{
+						this.co_cacheLock.EnterWriteLock();
+
+						try
+							{ this.ct_SubsByType.Values
+									.ToList()
+									.ForEach( (top) => top.Clear() );
+							}
+						finally	{	this.co_cacheLock.ExitWriteLock(); }
+					}
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				public void UnSubscribe(string Topic)
+					{
+						this.co_cacheLock.EnterWriteLock();
+
+						try
+							{ this.ct_SubsByType.Values
+									.ToList()
+									.ForEach( (top) => top.Clear(Topic) );
+							}
+						finally	{	this.co_cacheLock.ExitWriteLock(); }
+					}
+
 			#endregion
 			//___________________________________________________________________________________________
 			#region **[Methods:Private]**
+
+				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+				private IList<ISubscription> GetSubscriptions(	string	topic					,
+																												Guid		subscriberid		)
+					{
+						this.co_cacheLock.EnterReadLock();
+
+						try
+							{
+								return	this.ct_SubsByType.Values
+													.ToList()
+													.SelectMany( top => top.GetSubscriptions(topic, subscriberid))
+													.ToList();
+							}
+						finally	{	this.co_cacheLock.ExitReadLock(); }
+					}
 
 				//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
 				private IList<ISubscription> GetSubscriptions<T>(	string	topic						,

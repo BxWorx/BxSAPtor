@@ -76,6 +76,7 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					var lo_SubID		= Guid.NewGuid();
 					var lo_ActionO	= new Action<int>( (data) => this.TestInt(data) );
 					var lo_Subm			= new Subscription("MM", Guid.NewGuid(), lo_ActionO);
+					var lo_Subc			= this.co_Hub.CreateSubscription(lo_ActionO, "MM", Guid.NewGuid());
 
 					this.co_Hub.Subscribe(lo_ActionO, "XX", lo_SubID);
 					this.co_Hub.Subscribe(lo_ActionO, "YY", lo_SubID);
@@ -87,7 +88,22 @@ namespace BxSAP_UT_MessageHub.Unit_Tests
 					Assert.AreEqual("11", lo_sub.Topic);
 
 					this.co_Hub.Subscribe<int>(lo_Subm);
-					Assert.AreEqual(5, this.co_Hub.Count<int>());
+					this.co_Hub.Subscribe<int>(lo_Subc);
+					Assert.AreEqual(6, this.co_Hub.Count<int>());
+					Assert.AreEqual(6, this.co_Hub.Count());
+					Assert.AreEqual(2, this.co_Hub.Count("MM"));
+
+					this.co_Hub.UnSubscribeAll();
+					Assert.AreEqual(0, this.co_Hub.Count("MM"));
+					Assert.AreEqual(0, this.co_Hub.Count());
+
+					this.co_Hub.Subscribe<int>(lo_Subm);
+					this.co_Hub.Subscribe<int>(lo_Subc);
+					Assert.AreEqual(2, this.co_Hub.Count("MM"));
+					this.co_Hub.UnSubscribe("xx");
+					Assert.AreEqual(2, this.co_Hub.Count("MM"));
+					this.co_Hub.UnSubscribe("MM");
+					Assert.AreEqual(0, this.co_Hub.Count("MM"));
 				}
 
 			//*************************************************************************

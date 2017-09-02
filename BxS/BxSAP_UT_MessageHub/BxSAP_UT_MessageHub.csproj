@@ -52,7 +52,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Unit Tests\MsgHub_UT_MsgHub.cs" />
     <Compile Include="Unit Tests\MsgHub_UT03_V01_Topic.cs" />
     <Compile Include="Unit Tests\MsgHub_UT01_V01_Subscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
