@@ -17,8 +17,7 @@
 		<ToolBar x:Name="toolBar"
 						 VerticalAlignment="Top"
 						 DockPanel.Dock="Top">
-			<Button Content="Save"
-							IsCancel="True" />
+			<Button Content="Save" />
 			<Button Content="Refresh" />
 		</ToolBar>
 	</DockPanel>

@@ -139,11 +139,11 @@ namespace MVVM
 					if (!_isExecuting && _canExecute == null) return true;
 					return (!_isExecuting && _canExecute(parameter));
 					}
-
+	
 				public event EventHandler CanExecuteChanged
 					{
-					add { CommandManager.RequerySuggested += value; }
-					remove { CommandManager.RequerySuggested -= value; }
+						add			{ CommandManager.RequerySuggested += value; }
+						remove	{ CommandManager.RequerySuggested -= value; }
 					}
 
 				public async void Execute(object parameter)

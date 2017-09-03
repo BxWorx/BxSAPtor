@@ -44,6 +44,7 @@
     <Compile Include="Code\Hub\IMessageHub.cs" />
     <Compile Include="Code\Hub\Subscriptions.cs" />
     <Compile Include="Code\Hub\Topics.cs" />
+    <Compile Include="Code\Message Types\SysCommand.cs" />
     <Compile Include="Code\Subscription\ISubscription.cs" />
     <Compile Include="Code\Hub\MessageHub.cs" />
     <Compile Include="Code\Subscription\Subscription.cs" />
