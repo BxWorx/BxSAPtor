@@ -130,14 +130,14 @@ namespace MVVM
 
 				public RelayCommandAsync(Func<Task> execute, Predicate<object> canExecute)
 					{
-					_execute = execute;
+					_execute		= execute;
 					_canExecute = canExecute;
 					}
 
 				public bool CanExecute(object parameter)
 					{
-					if (!_isExecuting && _canExecute == null) return true;
-					return (!_isExecuting && _canExecute(parameter));
+						if (!_isExecuting && _canExecute == null) return true;
+						return (!_isExecuting && _canExecute(parameter));
 					}
 	
 				public event EventHandler CanExecuteChanged
