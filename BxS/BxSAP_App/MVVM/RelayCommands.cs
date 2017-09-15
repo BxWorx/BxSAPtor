@@ -126,6 +126,7 @@ namespace MVVM
 				private readonly Predicate<object>	_canExecute;
 				private bool												_isExecuting;
 
+
 				public RelayCommandAsync(Func<Task> execute) : this(execute, null) { }
 
 				public RelayCommandAsync(Func<Task> execute, Predicate<object> canExecute)
